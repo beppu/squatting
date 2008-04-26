@@ -17,8 +17,6 @@ our %EXPORT_TAGS = (
   views       => [qw(%cookies %input $s R)]
 );
 
-require Squatting::Controller;
-
 our $app;
 our $cr;
 our %cookies; #incoming
@@ -27,6 +25,8 @@ our %input;
 our %headers;
 our $status;
 our $s;
+
+require Squatting::Controller;
 
 # controller constructing function
 sub C {
