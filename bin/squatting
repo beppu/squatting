@@ -1,0 +1,90 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+use Squatting;
+use Getopt::Long;
+use Data::Dump qw(dump);
+
+# defaults
+$_{port} = 4234;
+
+# command line options
+GetOptions(
+  \%_,
+  'host|h=s',
+  'port|p=i',
+  'log|l=s',
+  'console|C',
+  'help',
+  'version|v',
+);
+
+if ($_{version}) {
+
+} elsif ($_{help}) {
+
+} elsif ($_{log}) {
+
+} elsif ($_{console}) {
+
+} else {
+
+}
+
+print dump(\%_), "\n", dump(\@ARGV), "\n";
+
+exit 0;
+
+__END__
+
+=head1 NAME
+
+squatting -- start up a Squatting server
+
+=head1 SYNOPSIS
+
+Usage
+
+  squatting [OPTION]... APPLICATION
+
+Example:  Starting Bavl on port 4234
+
+  squatting -p 4234 Bavl
+
+=head1 DESCRIPTION
+
+We're here to stay.
+
+=head1 OPTIONS
+
+=over 2
+
+=item -h, --host HOSTNAME
+
+TODO - Host for web server to bind to (default is all IPs)
+
+=item -p, --port NUM
+
+TODO - Port for web server (defaults to 4234)
+
+=item -l, --log FILE
+
+TODO - Start a log file ('-' for STDOUT)
+
+=item -C, --console
+
+TODO - Run in console mode with pirl
+
+=item -?, --help
+
+TODO - Show the help message
+
+=item -v, --version
+
+TODO - Show version
+
+=back
+
+=cut
