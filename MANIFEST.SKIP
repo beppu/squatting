@@ -1,4 +1,4 @@
-\bCVS\b
+^\.git
 ^MANIFEST\.bak$
 ^Makefile$
 \..*\.swp$
