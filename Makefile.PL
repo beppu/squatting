@@ -5,6 +5,7 @@ WriteMakefile (
     'AUTHOR'        => 'John Beppu <beppu@cpan.org>',
     'VERSION_FROM'  => 'lib/Squatting.pm',
     'ABSTRACT_FROM' => 'lib/Squatting.pm',
+    'EXE_FILES'     => [ 'bin/squatting' ],
     'PREREQ_PM'     => {
 	'HTTP::Daemon'     => 0,
     },
