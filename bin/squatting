@@ -34,11 +34,13 @@ if ($_{version}) {
 }
 
 my $module = shift;
-require "$module.pm";
-my $app = basename $module;
-$app->go(
-  port => $_{port}
-);
+if ($module) {
+  require "$module.pm";
+  my $app = basename $module;
+  $app->go(
+    port => $_{port}
+  );
+}
 
 exit 0;
 
