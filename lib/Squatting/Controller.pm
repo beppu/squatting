@@ -9,7 +9,8 @@ use Squatting ':controllers';
 sub new {
   my $class = shift;
   my $name  = shift;
-  bless({ name => $name, urls => [], @_ } => $class);
+  my $urls  = shift;
+  bless({ name => $name, urls => $urls, @_ } => $class);
 }
 
 # arrayref of URL patterns that this controller responds to
