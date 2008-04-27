@@ -1,0 +1,28 @@
+                ____                    _   _   _               
+               / ___|  __ _ _   _  __ _| |_| |_(_)_ __   __ _   
+               \___ \ / _` | | | |/ _` | __| __| | '_ \ / _` |  
+                ___) | (_| | |_| | (_| | |_| |_| | | | | (_| |  
+               |____/ \__, |\__,_|\__,_|\__|\__|_|_| |_|\__, |  
+                         |_|                            |___/   
+
+           . . . a Camping-inspired Web Microframework for Perl . . .
+
+            A note for Awwaiid -- your first impression might be
+            that I completely missed the point of Continuity, but
+            do not worry.  I am not done w/ Squatting, yet.
+
+            RESTless controllers are coming soon, and they will
+       (not RESTful)                        take full advantage of
+                                             the foundation that
+                                              Continuity has provided
+                                               for the Squatting Microframework.
+
+
+
+
+            A note for _why (if he happens to ever wander in here).
+            I can't thank you enough for Camping.
+            It's API is beautiful!
+
+            (That's why I must share it with the Perl people.)
+
