@@ -5,7 +5,7 @@ use warnings;
 
 use Squatting;
 use Getopt::Long;
-use Data::Dump qw(dump);
+use File::Basename;
 
 # defaults
 $_{port} = 4234;
@@ -33,7 +33,12 @@ if ($_{version}) {
 
 }
 
-print dump(\%_), "\n", dump(\@ARGV), "\n";
+my $module = shift;
+require "$module.pm";
+my $app = basename $module;
+$app->go(
+  port => $_{port}
+);
 
 exit 0;
 

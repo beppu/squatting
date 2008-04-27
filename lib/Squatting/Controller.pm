@@ -41,11 +41,11 @@ sub post {
 
 # default 404 controller
 our $r404 = Squatting::Controller->new(
-  'R404',
-  get => sub {
+  'R404'  => [],
+  get     => sub {
     "$ENV{REQUEST_PATH} not found.";
   },
-  post => sub {
+  post    => sub {
     "$ENV{REQUEST_PATH} not found.";
   }
 );
