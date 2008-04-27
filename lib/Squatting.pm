@@ -4,6 +4,7 @@ use strict;
 use warnings;
 use base 'Exporter';
 use Continuity;
+use Squatting::Mapper;
 use CGI::Simple;
 use CGI::Simple::Cookie;
 use Data::Dump qw(dump);
@@ -135,20 +136,22 @@ sub go {
   # Putting a RESTful face on Continuity since 2008.
   Continuity->new(
     port     => 4234,
-    callback => sub {
-      $cr = shift;
-      local %headers;
-      local %cookies;
-      local $cookies = {};
-      local %ENV     = env($cr->http_request);
-      my ($c, $p)    = D($ENV{REQUEST_PATH});
-      %input         = input($cr);
-      $status        = 200;
-      my $content    = $class->service($c, @$p);
-      my $response   = HTTP::Response->new($status, '', [%headers], $content);
-      $cr->conn->send_response($response);
-      $cr->end_request;
-    },
+    mapper   => Squatting::Mapper->new(
+      callback => sub {
+        $cr = shift;
+        local %headers;
+        local %cookies;
+        local $cookies = {};
+        local %ENV     = env($cr->http_request);
+        my ($c, $p)    = D($ENV{REQUEST_PATH});
+        %input         = input($cr);
+        $status        = 200;
+        my $content    = $class->service($c, @$p);
+        my $response   = HTTP::Response->new($status, '', [%headers], $content);
+        $cr->conn->send_response($response);
+        $cr->end_request;
+      }
+    ),
     @_
   )->loop;
 }
