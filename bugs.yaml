@@ -20,6 +20,24 @@ issues:
     - John Beppu <beppu@localhost>
     - created
     - ""
+- !ditz.rubyforge.org,2008-03-06/issue 
+  title: Implement the routing function, R().
+  desc: ""
+  type: :feature
+  component: Squatting
+  release: "0.10"
+  reporter: John Beppu <john.beppu@gmail.com>
+  status: :unstarted
+  disposition: 
+  creation_time: 2008-04-26 17:37:36.882709 -07:00
+  references: []
+
+  id: 9f09ed795f941e1b7a838b737c8bcc0c29891f33
+  log_events: 
+  - - 2008-04-26 17:37:38.115515 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - created
+    - ""
 components: 
 - !ditz.rubyforge.org,2008-03-06/component 
   name: Squatting
