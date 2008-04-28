@@ -30,12 +30,12 @@ our $s;
 
 require Squatting::Controller;
 
-# controller constructing function
+# $controller = C($name => \@urls, %opts)  # Construct a Squatting::Controller
 sub C {
-  ref($_[0]) ? $_[0] : Squatting::Controller->new(@_);
+  Squatting::Controller->new(@_);
 }
 
-# ($controller, \@regex_captures) = D($path)  # controller and captures for a path
+# ($controller, \@regex_captures) = D($path)  # Return controller and captures for a path
 sub D {
   my $C = \@{$app.'::Controllers::C'};
   my ($controller, @regex_captures);
@@ -49,7 +49,7 @@ sub D {
   ($Squatting::Controller::r404, []);
 }
 
-# $url = R(Controller, params..., { cgi => vars })
+# $url = R(Controller, params..., { cgi => vars }) TODO
 sub R {
 }
 
@@ -119,7 +119,6 @@ sub service {
 
 # Start the server.
 sub go {
-  no warnings; # life can be surprising
   $app = shift;
 
   # Putting a RESTful face on Continuity since 2008.
