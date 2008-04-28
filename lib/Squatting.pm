@@ -107,9 +107,7 @@ sub service {
   my ($class, $controller, @params) = @_;
   my $method  = lc $ENV{REQUEST_METHOD};
   my $content;
-  eval {
-    $content = $controller->$method(@params);
-  };
+  eval { $content = $controller->$method(@params) };
   warn "@{[$controller->name]}->$method => $content\n";
   headers('Set-Cookie') = join("; ", map { 
     CGI::Simple::Cookie->new(-name => $_, %{$cookies->{$_}}) 
