@@ -1,4 +1,6 @@
 Makefile
+*.~
+*.bak
 *.sw?
 blib
 pm_to_blib
