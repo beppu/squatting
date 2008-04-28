@@ -19,12 +19,14 @@ sub name {
   exists $_[1] ? $_[0]->{name} = $_[1] : $_[0]->{name};
 }
 
-# $content = $view->render($template)
+# $content = $view->render($template)       # render $template
+# $content = $view->render($template, '_')  # render the generic template
 sub _render {
-  ($self, my($template)) = @_;
+  ($self, my($template, $alt)) = @_;
   if (exists $self->{layout} && ($template !~ /^_/)) {
     join "", $self->{layout}( $self->{$template}() );
   } else {
+    $template = $alt if defined $alt;
     join "", $self->{$template}();
   }
 }
@@ -36,7 +38,7 @@ sub AUTOLOAD {
   if (exists $_[0]->{$template} && ref($_[0]->{$template}) eq 'CODE') {
     $_[0]->_render($template);
   } elsif (exists $_[0]->{_}) {
-    $_[0]->_render(q^_^);
+    $_[0]->_render($template, '_');
   } else {
     die("$template cannot be rendered.");
   }
