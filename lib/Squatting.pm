@@ -12,11 +12,11 @@ use Data::Dump qw(dump);
 
 our $VERSION     = '0.01';
 our @EXPORT_OK   = qw(
-  C $cr %cookies cookies %input $headers headers $status $s R redirect render
+  C R V $cr %cookies cookies %input $headers headers $status $state $v redirect render $yield
 );
 our %EXPORT_TAGS = (
-  controllers => [qw(C $cr %cookies cookies %input $headers headers $status $s R redirect render)],
-  views       => [qw(%cookies %input $s R)]
+  controllers => [qw(C R $cr %cookies cookies %input $headers headers $status $state $v redirect render)],
+  views       => [qw(R V %cookies %input $state $v $yield)]
 );
 
 our $app;
@@ -26,11 +26,12 @@ our %cookies; #incoming
 our $cookies; #outgoing
 our $headers;
 our $status;
-our $s;
+our $state;
+our $v;
 
 require Squatting::Controller;
 
-# $controller = C($name => \@urls, %opts)  # Construct a Squatting::Controller
+# $controller = C($name => \@urls, %subs)  # Construct a Squatting::Controller
 sub C {
   Squatting::Controller->new(@_);
 }
@@ -53,9 +54,14 @@ sub D {
 sub R {
 }
 
+# $view = V($name, %subs)  # Construct a Squatting::View  TODO
+sub V {
+}
+
 # $content = render($template, $view) TODO
 sub render { 
   my ($t, $v) = @_;
+  @_;
 }
 
 # redirect($url, $status_code)
@@ -70,7 +76,7 @@ sub e {
   my $r = shift;
   my %env;
   my $uri = $r->uri;
-  $env{QUERY_STRING}   = $uri->query;
+  $env{QUERY_STRING}   = $uri->query || '';
   $env{REQUEST_PATH}   = $uri->path;
   $env{REQUEST_METHOD} = $r->method;
   $r->scan(sub{
@@ -129,6 +135,8 @@ sub go {
         %cookies     = c($ENV{HTTP_COOKIE});
         $cookies     = {};
         $headers     = {};
+        $state       = {};
+        $v           = {};
         my ($c, $p)  = D($ENV{REQUEST_PATH});
         %input       = i($cr);
         $status      = 200;
