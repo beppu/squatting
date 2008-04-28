@@ -12,11 +12,11 @@ use Data::Dump qw(dump);
 
 our $VERSION     = '0.01';
 our @EXPORT_OK   = qw(
-  C R V $cr %cookies cookies %input $headers headers $status $state $v redirect render $yield
+  C R V $cr %cookies cookies %input $headers headers $status $state $v redirect render
 );
 our %EXPORT_TAGS = (
   controllers => [qw(C R $cr %cookies cookies %input $headers headers $status $state $v redirect render)],
-  views       => [qw(R V %cookies %input $state $v $yield)]
+  views       => [qw(R V %cookies %input $state $v)]
 );
 
 our $app;
@@ -28,7 +28,6 @@ our $headers;
 our $status;
 our $state;
 our $v;
-our $yield;
 
 require Squatting::Controller;
 require Squatting::View;
@@ -141,7 +140,6 @@ sub go {
         $headers     = {};
         $state       = {};
         $v           = {};
-        $yield       = "";
         $status      = 200;
         my $content  = $app->service($c, @$p);
         my $response = HTTP::Response->new($status, 'orz', [%$headers], $content);
