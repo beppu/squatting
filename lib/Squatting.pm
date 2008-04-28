@@ -124,6 +124,7 @@ sub service {
   my $content;
   eval { $content = $controller->$method(@params) };
   warn "EXCEPTION: $@" if ($@);
+  warn "_" x 78 . "\n";
   warn "@{[$controller->name]}(@{[ join(', '=>@params) ]})->$method => @{[dump($v)]}";
   headers('Set-Cookie') = join(";", map { 
     CGI::Simple::Cookie->new(-name => $_, %{$cookies->{$_}}) 
