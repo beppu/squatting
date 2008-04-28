@@ -134,14 +134,14 @@ sub go {
       callback => sub {
         $cr = shift;
         local %ENV   = e($cr->http_request);
+        my ($c, $p)  = D($ENV{REQUEST_PATH});
         %cookies     = c($ENV{HTTP_COOKIE});
+        %input       = i($cr);
         $cookies     = {};
         $headers     = {};
         $state       = {};
         $v           = {};
         $yield       = "";
-        my ($c, $p)  = D($ENV{REQUEST_PATH});
-        %input       = i($cr);
         $status      = 200;
         my $content  = $app->service($c, @$p);
         my $response = HTTP::Response->new($status, 'orz', [%$headers], $content);
