@@ -55,19 +55,21 @@ sub D {
 sub R {
 }
 
-# $view = V($name, %subs)  # Construct a Squatting::View  TODO
+# $view = V($name, %subs)  # Construct a Squatting::View
 sub V {
+  Squatting::View->new(@_);
 }
 
-# $content = render($template, $view) TODO
+# $content = render($template, $view_name)
 sub render { 
-  my ($t, $v) = @_;
-  if (defined($v)) {
-    $v = ${$app."::Views::V"}{$v}; #  hash
-  } else {                         #    vs
-    $v = ${$app."::Views::V"}[00]; # array -- Perl provides a lot of 'namespaces' so why not use them?
+  my ($template, $vn) = @_;
+  my $view;
+  if (defined($vn)) {
+    $view = ${$app."::Views::V"}{$vn}; #  hash
+  } else {                             #    vs
+    $view = ${$app."::Views::V"}[000]; # array -- Perl provides a lot of 'namespaces' so why not use them?
   }
-  $v->$t();
+  $view->$template();
 }
 
 # redirect($url, $status_code)
@@ -121,7 +123,7 @@ sub service {
   my $content;
   eval { $content = $controller->$method(@params) };
   warn "@{[$controller->name]}->$method => $content\n";
-  headers('Set-Cookie') = join("; ", map { 
+  headers('Set-Cookie') = join(";", map { 
     CGI::Simple::Cookie->new(-name => $_, %{$cookies->{$_}}) 
   } keys %$cookies) if (%$cookies);
   return $content;
@@ -212,14 +214,14 @@ Squatting - a web microframework for Perl that was inspired by Camping
     use Squatting ':view';
 
     V(
-      'HTML',
+      'html',
       home   => sub { "<h1>" . $s->{title} . "</h1>" },
       login  => sub { },
       search => sub { }
     );
 
     V(
-      'JSON',
+      'json',
       search => sub { to_json($s) },
     )
   }
