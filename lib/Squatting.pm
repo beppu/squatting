@@ -37,12 +37,11 @@ sub C {
 
 # ($controller, \@regex_captures) = D($path)  # controller and captures for a path
 sub D {
-  my $path = shift;
-  my $C    = \@{$app.'::Controllers::C'};
+  my $C = \@{$app.'::Controllers::C'};
   my ($controller, @regex_captures);
   foreach $controller (@$C) {
     foreach (@{$controller->urls}) {
-      if (@regex_captures = ($path =~ qr{^$_$})) {
+      if (@regex_captures = ($_[0] =~ qr{^$_$})) {
         return ($controller, \@regex_captures);
       }
     }
@@ -120,16 +119,8 @@ sub service {
 
 # Start the server.
 sub go {
-  no warnings;
+  no warnings; # life can be surprising
   $app = shift;
-
-  my $models      = $app . "::Models";
-  my $controllers = $app . "::Controllers";
-  my $views       = $app . "::Views";
-
-  $models->create    if ($models->can('create'));
-  $controllers->init if ($controllers->can('init'));
-  $views->init       if ($views->can('init'));
 
   # Putting a RESTful face on Continuity since 2008.
   Continuity->new(
@@ -154,7 +145,7 @@ sub go {
   )->loop;
 }
 
-1;
+1
 
 __END__
 
@@ -176,8 +167,7 @@ Squatting - a web microframework for Perl that was inspired by Camping
     use Squatting ':controllers';
 
     C(
-      'Home',
-      urls => [ '/' ],
+      Home => [ '/' ],
       get  => sub {
         $s->{title} = loc('Hello, World!');
         render 'home'
@@ -185,13 +175,12 @@ Squatting - a web microframework for Perl that was inspired by Camping
     );
 
     C(
-      'Login',
-      urls => [ '/log/(in|out)' ],
-      get  => sub {
+      Login => [ '/log/(in|out)' ],
+      get   => sub {
         my $in_or_out = shift;
         render 'login'
       },
-      post => sub {
+      post  => sub {
         my $in_or_out = shift;
         my $username = $input->{username};
         my $password = $input->{password};
