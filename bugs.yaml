@@ -17,7 +17,7 @@ issues:
   id: 4c4cd01cef06f5da620bcc5a31d9aa2e5cd8b4e2
   log_events: 
   - - 2008-04-23 11:55:58.482346 -07:00
-    - John Beppu <beppu@localhost>
+    - John Beppu <john.beppu@gmail.com>
     - created
     - ""
   - - 2008-04-26 17:39:26.677032 -07:00
@@ -92,7 +92,7 @@ releases:
   release_time: 
   log_events: 
   - - 2008-04-23 11:53:38.160024 -07:00
-    - John Beppu <beppu@localhost>
+    - John Beppu <john.beppu@gmail.com>
     - created
     - The goal of the first release is to be able to get the HTTP server up and running.
 - !ditz.rubyforge.org,2008-03-06/release 

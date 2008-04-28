@@ -28,8 +28,10 @@ our $headers;
 our $status;
 our $state;
 our $v;
+our $yield;
 
 require Squatting::Controller;
+require Squatting::View;
 
 # $controller = C($name => \@urls, %subs)  # Construct a Squatting::Controller
 sub C {
@@ -137,6 +139,7 @@ sub go {
         $headers     = {};
         $state       = {};
         $v           = {};
+        $yield       = "";
         my ($c, $p)  = D($ENV{REQUEST_PATH});
         %input       = i($cr);
         $status      = 200;
