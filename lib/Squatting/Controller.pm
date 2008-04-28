@@ -29,25 +29,22 @@ sub name {
 
 # method for handling HTTP GET requests
 sub get {
-  my $self = shift;
-  $self->{get}->($self, @_);
+  $self = shift;
+  $self->{get}->(@_);
 }
 
 # method for handling HTTP POST requests
 sub post {
-  my $self = shift;
-  $self->{post}->($self, @_);
+  $self = shift;
+  $self->{post}->(@_);
 }
 
 # default 404 controller
+my $not_found = sub { "$ENV{REQUEST_PATH} not found." };
 our $r404 = Squatting::Controller->new(
-  'R404'  => [],
-  get     => sub {
-    "$ENV{REQUEST_PATH} not found.";
-  },
-  post    => sub {
-    "$ENV{REQUEST_PATH} not found.";
-  }
+  'R404' => [],
+  get    => $not_found,
+  post   => $not_found
 );
 
 1;

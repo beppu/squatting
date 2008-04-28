@@ -12,13 +12,14 @@ use Data::Dump qw(dump);
 
 our $VERSION     = '0.01';
 our @EXPORT_OK   = qw(
-  C R V $cr %cookies cookies %input $headers headers $status $state $v redirect render
+  $self C R V $cr %cookies cookies %input $headers headers $status $state $v redirect render
 );
 our %EXPORT_TAGS = (
-  controllers => [qw(C R $cr %cookies cookies %input $headers headers $status $state $v redirect render)],
-  views       => [qw(R V %cookies %input $state $v)]
+  controllers => [qw($self C R $cr %cookies cookies %input $headers headers $status $state $v redirect render)],
+  views       => [qw($self R V %cookies %input $state $v)]
 );
 
+our $self;    # Oh?  Can we make `my $self = shift` go away?
 our $app;
 our $cr;      #.
 our %input;   #|
@@ -118,11 +119,12 @@ sub headers : lvalue {
 
 # Override this method if you want to take actions before or after a request is handled.
 sub service {
-  my ($class, $controller, @params) = @_;
+  my ($class, $controller, @params) = grep { defined } @_;
   my $method  = lc $ENV{REQUEST_METHOD};
   my $content;
   eval { $content = $controller->$method(@params) };
-  warn "@{[$controller->name]}->$method => $content\n";
+  warn "EXCEPTION: $@" if ($@);
+  warn "@{[$controller->name]}(@{[ join(', '=>@params) ]})->$method => @{[dump($v)]}";
   headers('Set-Cookie') = join(";", map { 
     CGI::Simple::Cookie->new(-name => $_, %{$cookies->{$_}}) 
   } keys %$cookies) if (%$cookies);
