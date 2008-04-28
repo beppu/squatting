@@ -11,19 +11,19 @@ use Data::Dump qw(dump);
 
 our $VERSION     = '0.01';
 our @EXPORT_OK   = qw(
-  C $cr %cookies cookies %input %headers $status $s R redirect render
+  C $cr %cookies cookies %input $headers headers $status $s R redirect render
 );
 our %EXPORT_TAGS = (
-  controllers => [qw(C $cr %cookies cookies %input %headers $status $s R redirect render)],
+  controllers => [qw(C $cr %cookies cookies %input $headers headers $status $s R redirect render)],
   views       => [qw(%cookies %input $s R)]
 );
 
 our $app;
 our $cr;
+our %input;
 our %cookies; #incoming
 our $cookies; #outgoing
-our %input;
-our %headers;
+our $headers;
 our $status;
 our $s;
 
@@ -31,10 +31,7 @@ require Squatting::Controller;
 
 # controller constructing function
 sub C {
-  no strict 'refs';
-  my $c = shift;
-  my $controller = ref($c) ? $c : Squatting::Controller->new($c, @_);
-  $controller;
+  ref($_[0]) ? $_[0] : Squatting::Controller->new(@_);
 }
 
 # stubs
@@ -49,19 +46,19 @@ sub render {
 # redirect($url, $status_code)
 sub redirect {
   my ($l, $s) = @_;
-  $headers{Location} = $l || '/';
-  $status            = $s || 302;
+  headers('Location') = $l || '/';
+  $status             = $s || 302;
 }
 
-# %ENV = env($http_request)  # Extract data from HTTP::Request.
-sub env {
+# %ENV = e($http_request)  # Extract data from HTTP::Request.
+sub e {
   my $r = shift;
   my %env;
   my $uri = $r->uri;
   $env{QUERY_STRING}   = $uri->query;
   $env{REQUEST_PATH}   = $uri->path;
   $env{REQUEST_METHOD} = $r->method;
-  $r->scan(sub {
+  $r->scan(sub{
     my ($header, $value) = @_;
     my $key = uc $header;
     $key =~ s/-/_/g;
@@ -71,14 +68,22 @@ sub env {
   %env;
 }
 
-# %input = input($cr)  # Extract CGI parameters for Continuity::Request.
-sub input {
+# %input = i($cr)  # Extract CGI parameters from Continuity::Request.
+sub i {
   $_[0]->params;
 }
 
-# cookies($name) = { -value => 'chocolate' }  # Set outgoing cookies.
+sub c {
+}
+
+# cookies($name) = { -value => 'chocolate_chip' }  # Set outgoing cookies.
 sub cookies : lvalue { 
   $cookies->{$_[0]};
+}
+
+# headers($name) = "value"  # Set an outgoing header.
+sub headers : lvalue {
+  $headers->{$_[0]};
 }
 
 # Override this method if you want to take actions before or after a request is handled.
@@ -86,14 +91,14 @@ sub service {
   my ($class, $controller, @params) = @_;
   my $method  = lc $ENV{REQUEST_METHOD};
   my $content;
-  {
+  eval {
     no strict 'refs';
     no warnings;
     *render = sub { "fuck you, <h2>@_</h2>" };
     $content = $controller->$method(@params);
-  }
+  };
   warn "@{[$controller->name]}->$method => $content\n";
-  $headers{'Set-Cookie'} = join("; ", map { 
+  headers('Set-Cookie') = join("; ", map { 
     CGI::Simple::Cookie->new(-name => $_, %{$cookies->{$_}}) 
   } keys %$cookies) if (%$cookies);
   return $content;
@@ -139,15 +144,15 @@ sub go {
     mapper   => Squatting::Mapper->new(
       callback => sub {
         $cr = shift;
-        local %headers;
-        local %cookies;
+        local %cookies = c($cr->http_request);
         local $cookies = {};
-        local %ENV     = env($cr->http_request);
+        local $headers = {};
+        local %ENV     = e($cr->http_request);
         my ($c, $p)    = D($ENV{REQUEST_PATH});
-        %input         = input($cr);
+        %input         = i($cr);
         $status        = 200;
         my $content    = $class->service($c, @$p);
-        my $response   = HTTP::Response->new($status, '', [%headers], $content);
+        my $response   = HTTP::Response->new($status, '', [%$headers], $content);
         $cr->conn->send_response($response);
         $cr->end_request;
       }
