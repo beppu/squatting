@@ -1,6 +1,7 @@
 package Squatting;
 
 use strict;
+no  strict 'refs';
 use warnings;
 use base 'Exporter';
 use Continuity;
@@ -34,13 +35,28 @@ sub C {
   ref($_[0]) ? $_[0] : Squatting::Controller->new(@_);
 }
 
-# stubs
-sub D { }
-sub R { warn 'No!' }
+# ($controller, \@regex_captures) = D($path)  # controller and captures for a path
+sub D {
+  my $path = shift;
+  my $C    = \@{$app.'::Controllers::C'};
+  my ($controller, @regex_captures);
+  foreach $controller (@$C) {
+    foreach (@{$controller->urls}) {
+      if (@regex_captures = ($path =~ qr{^$_$})) {
+        return ($controller, \@regex_captures);
+      }
+    }
+  }
+  ($Squatting::Controller::r404, []);
+}
 
-# $content = render($template, $view)
+# $url = R(Controller, params..., { cgi => vars })
+sub R {
+}
+
+# $content = render($template, $view) TODO
 sub render { 
-  "<h2>@_</h2>"
+  my ($t, $v) = @_;
 }
 
 # redirect($url, $status_code)
@@ -50,7 +66,7 @@ sub redirect {
   $status             = $s || 302;
 }
 
-# %ENV = e($http_request)  # Extract data from HTTP::Request.
+# %ENV = e($http_request)  # Get request headers from HTTP::Request.
 sub e {
   my $r = shift;
   my %env;
@@ -73,6 +89,7 @@ sub i {
   $_[0]->params;
 }
 
+# %cookies = c($cookie_header)  # Parse Cookie header(s). TODO
 sub c {
 }
 
@@ -92,9 +109,6 @@ sub service {
   my $method  = lc $ENV{REQUEST_METHOD};
   my $content;
   eval {
-    no strict 'refs';
-    no warnings;
-    *render = sub { "fuck you, <h2>@_</h2>" };
     $content = $controller->$method(@params);
   };
   warn "@{[$controller->name]}->$method => $content\n";
@@ -106,37 +120,16 @@ sub service {
 
 # Start the server.
 sub go {
-  no strict 'refs';
   no warnings;
+  $app = shift;
 
-  my $class = shift;
-  my $models      = $class . "::Models";
-  my $controllers = $class . "::Controllers";
-  my $views       = $class . "::Views";
+  my $models      = $app . "::Models";
+  my $controllers = $app . "::Controllers";
+  my $views       = $app . "::Views";
 
   $models->create    if ($models->can('create'));
   $controllers->init if ($controllers->can('init'));
   $views->init       if ($views->can('init'));
-
-  # ($controller, \@regex_captures) = D($path)
-  local *D = sub {
-    my $path = shift;
-    my $C    = \@{$controllers.'::C'};
-    my ($controller, @regex_captures);
-    foreach $controller (@$C) {
-      foreach (@{$controller->urls}) {
-        if (@regex_captures = ($path =~ qr{^$_$})) {
-          return ($controller, \@regex_captures);
-        }
-      }
-    }
-    ($Squatting::Controller::r404, []);
-  };
-
-  # $url = R(Controller, params..., { cgi => vars })
-  local *R = sub {
-    warn "Yes!!!";
-  };
 
   # Putting a RESTful face on Continuity since 2008.
   Continuity->new(
@@ -144,15 +137,15 @@ sub go {
     mapper   => Squatting::Mapper->new(
       callback => sub {
         $cr = shift;
-        local %cookies = c($cr->http_request);
-        local $cookies = {};
-        local $headers = {};
-        local %ENV     = e($cr->http_request);
-        my ($c, $p)    = D($ENV{REQUEST_PATH});
-        %input         = i($cr);
-        $status        = 200;
-        my $content    = $class->service($c, @$p);
-        my $response   = HTTP::Response->new($status, '', [%$headers], $content);
+        local %ENV   = e($cr->http_request);
+        %cookies     = c($ENV{HTTP_COOKIE});
+        $cookies     = {};
+        $headers     = {};
+        my ($c, $p)  = D($ENV{REQUEST_PATH});
+        %input       = i($cr);
+        $status      = 200;
+        my $content  = $app->service($c, @$p);
+        my $response = HTTP::Response->new($status, 'orz', [%$headers], $content);
         $cr->conn->send_response($response);
         $cr->end_request;
       }
