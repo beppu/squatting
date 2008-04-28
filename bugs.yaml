@@ -29,7 +29,7 @@ issues:
   desc: ""
   type: :feature
   component: Squatting
-  release: "0.10"
+  release: "0.20"
   reporter: John Beppu <john.beppu@gmail.com>
   status: :unstarted
   disposition: 
@@ -39,6 +39,46 @@ issues:
   id: 9f09ed795f941e1b7a838b737c8bcc0c29891f33
   log_events: 
   - - 2008-04-26 17:37:38.115515 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - created
+    - ""
+  - - 2008-04-27 20:26:10.310059 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - assigned to release 0.20 from 0.10
+    - ""
+- !ditz.rubyforge.org,2008-03-06/issue 
+  title: Implement Squatting::View
+  desc: ""
+  type: :feature
+  component: Squatting
+  release: "0.20"
+  reporter: John Beppu <john.beppu@gmail.com>
+  status: :unstarted
+  disposition: 
+  creation_time: 2008-04-27 20:31:03.496209 -07:00
+  references: []
+
+  id: d3c356f6e49bd41dd8bf30b44711405aa3288c90
+  log_events: 
+  - - 2008-04-27 20:31:04.575126 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - created
+    - ""
+- !ditz.rubyforge.org,2008-03-06/issue 
+  title: Setup a rudimentary test suite
+  desc: ""
+  type: :feature
+  component: Squatting
+  release: "0.10"
+  reporter: John Beppu <john.beppu@gmail.com>
+  status: :unstarted
+  disposition: 
+  creation_time: 2008-04-27 20:32:49.771654 -07:00
+  references: []
+
+  id: 22d4422b43f8e2ed2a45b9ec50f6ddb757e3a08b
+  log_events: 
+  - - 2008-04-27 20:32:50.426794 -07:00
     - John Beppu <john.beppu@gmail.com>
     - created
     - ""
