@@ -24,6 +24,7 @@ sub name {
 sub _render {
   ($self, my($template, $alt)) = @_;
   if (exists $self->{layout} && ($template !~ /^_/)) {
+    $template = $alt if defined $alt;
     join "", $self->{layout}( $self->{$template}() );
   } else {
     $template = $alt if defined $alt;
