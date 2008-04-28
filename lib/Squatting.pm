@@ -20,14 +20,14 @@ our %EXPORT_TAGS = (
 );
 
 our $app;
-our $cr;
-our %input;
+our $cr;      #.
+our %input;   #|
 our %cookies; #incoming
 our $cookies; #outgoing
-our $headers;
-our $status;
-our $state;
-our $v;
+our $headers; #|
+our $status;  #|
+our $state;   #|
+our $v;       #'
 
 require Squatting::Controller;
 require Squatting::View;
@@ -62,7 +62,12 @@ sub V {
 # $content = render($template, $view) TODO
 sub render { 
   my ($t, $v) = @_;
-  @_;
+  if (defined($v)) {
+    $v = ${$app."::Views::V"}{$v}; #  hash
+  } else {                         #    vs
+    $v = ${$app."::Views::V"}[00]; # array -- Perl provides a lot of 'namespaces' so why not use them?
+  }
+  $v->$t();
 }
 
 # redirect($url, $status_code)
@@ -125,6 +130,8 @@ sub service {
 # Start the server.
 sub go {
   $app = shift;
+  %{$app."::Views::V"} = map { $_->name => $_ }
+  @{$app."::Views::V"};
 
   # Putting a RESTful face on Continuity since 2008.
   Continuity->new(
