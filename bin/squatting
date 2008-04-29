@@ -18,13 +18,13 @@ GetOptions(
   'port|p=i',
   'log|l=s',
   'console|C',
-  'debug|d=i',
+  'debug=i',
   'help',
   'version|v',
 );
 
 sub help {
-  print qq{Start a squatting application.
+  print qq{Start a Squatting application.
 
 Usage: squatting [OPTIONS]... App
 
@@ -32,6 +32,9 @@ Options:
     -p, --port NUM                   Port for web server (defaults to 4234)
     -l, --log FILE                   Log file
     -C, --console                    Run in console mode with Shell::Perl
+    -v, --version                    Display Squatting version
+    --debug NUM                      Continuity debug_level (defaults to 0)
+    --help                           Display this help message
 };
 }
 
