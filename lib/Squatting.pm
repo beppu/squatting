@@ -21,14 +21,14 @@ our %EXPORT_TAGS = (
 
 our $self;    # Oh?  Can we make `my $self = shift` go away?
 our $app;
-our $cr;      #.
 our %input;   #|
 our %cookies; #incoming
+our $cr;      #+
 our $cookies; #outgoing
 our $headers; #|
 our $status;  #|
 our $state;   #|
-our $v;       #'
+our $v;       #|
 
 require Squatting::Controller;
 require Squatting::View;
@@ -123,8 +123,8 @@ sub service {
   my $method  = lc $ENV{REQUEST_METHOD};
   my $content;
   eval { $content = $controller->$method(@params) };
-  warn "EXCEPTION: $@" if ($@);
   warn "_" x 78 . "\n";
+  warn "EXCEPTION: $@" if ($@);
   warn "@{[$controller->name]}(@{[ join(', '=>@params) ]})->$method => @{[dump($v)]}";
   headers('Set-Cookie') = join(";", map { 
     CGI::Simple::Cookie->new(-name => $_, %{$cookies->{$_}}) 
