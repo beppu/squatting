@@ -9,7 +9,8 @@ use Getopt::Long;
 use File::Basename;
 
 # defaults
-$_{port} = 4234;
+$_{port}  = 4234;
+$_{debug} = 0;
 
 # command line options
 GetOptions(
@@ -17,6 +18,7 @@ GetOptions(
   'port|p=i',
   'log|l=s',
   'console|C',
+  'debug|d=i',
   'help',
   'version|v',
 );
@@ -68,8 +70,9 @@ if ($module) {
     $pirl->run;
   } else {
     $app->go(
-      port => $_{port},
-      log  => $_{log}
+      port        => $_{port},
+      log         => $_{log},
+      debug_level => $_{debug},
     );
   }
 } else {

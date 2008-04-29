@@ -123,9 +123,8 @@ sub service {
   my $method  = lc $ENV{REQUEST_METHOD};
   my $content;
   eval { $content = $controller->$method(@params) };
-  warn "_" x 78 . "\n";
   warn "EXCEPTION: $@" if ($@);
-  warn "@{[$controller->name]}(@{[ join(', '=>@params) ]})->$method => @{[dump($v)]}";
+  warn "[$status] @{[$controller->name]}(@{[ join(', '=>@params) ]})->$method => @{[dump($v)]}";
   headers('Set-Cookie') = join(";", map { 
     CGI::Simple::Cookie->new(-name => $_, %{$cookies->{$_}}) 
   } keys %$cookies) if (%$cookies);
@@ -154,9 +153,12 @@ sub go {
         $status      = 200;
         my $content  = $app->service($c, @$p);
         my $response = HTTP::Response->new($status, 'orz', [%$headers], $content);
+        #$cr->conn->send_basic_header;
+        #$cr->print($content);
         $cr->conn->send_response($response);
         $cr->end_request;
-      }
+      },
+      @_
     ),
     @_
   )->loop;
