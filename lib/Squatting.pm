@@ -70,7 +70,7 @@ sub render {
   } else {                             #    vs
     $view = ${$app."::Views::V"}[000]; # array -- Perl provides a lot of 'namespaces' so why not use them?
   }
-  $view->$template();
+  $view->$template;
 }
 
 # redirect($url, $status_code)
@@ -137,7 +137,6 @@ sub go {
   $app = shift;
   %{$app."::Views::V"} = map { $_->name => $_ }
   @{$app."::Views::V"};
-
   # Putting a RESTful face on Continuity since 2008.
   Continuity->new(
     port     => 4234,

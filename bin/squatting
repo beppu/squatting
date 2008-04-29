@@ -1,6 +1,7 @@
 #!/usr/bin/perl
 
 use strict;
+no  strict 'refs';
 use warnings;
 
 use Squatting;
@@ -13,7 +14,6 @@ $_{port} = 4234;
 # command line options
 GetOptions(
   \%_,
-  'host|h=s',
   'port|p=i',
   'log|l=s',
   'console|C',
@@ -21,13 +21,25 @@ GetOptions(
   'version|v',
 );
 
+sub help {
+  print qq{Start a squatting application.
+
+Usage: squatting [OPTIONS]... App
+
+Options:
+    -p, --port NUM                   Port for web server (defaults to 4234)
+    -l, --log FILE                   Log file
+    -C, --console                    Run in console mode with Shell::Perl
+};
+}
+
 if ($_{version}) {
-
+  print "Version $Squatting::VERSION\n";
+  exit 0;
 } elsif ($_{help}) {
-
+  help;
+  exit 0;
 } elsif ($_{log}) {
-
-} elsif ($_{console}) {
 
 } else {
 
@@ -37,9 +49,31 @@ my $module = shift;
 if ($module) {
   require "$module.pm";
   my $app = basename $module;
-  $app->go(
-    port => $_{port}
-  );
+  if ($_{console}) {
+    eval { require Shell::Perl };
+    if ($@) {
+      print "Please install Shell::Perl if you'd like to use the squatting console.\n";
+      exit 1;
+    }
+    $Squatting::app = $app;
+    %{$app."::Controllers::C"} = map { $_->name => $_ } 
+    @{$app."::Controllers::C"};
+    %{$app."::Views::V"} = map { $_->name => $_ } 
+    @{$app."::Views::V"};
+    *{$app."::get" } = sub { ${$app."::Controllers::C"}{$_[1]}->get (@_[2..$#_]) };
+    *{$app."::post"} = sub { ${$app."::Controllers::C"}{$_[1]}->post(@_[2..$#_]) };
+    $0 = $module;
+    my $pirl = Shell::Perl->new;
+    $pirl->set_package($module."::Controllers");
+    $pirl->run;
+  } else {
+    $app->go(
+      port => $_{port},
+      log  => $_{log}
+    );
+  }
+} else {
+  help;
 }
 
 exit 0;
