@@ -10,7 +10,7 @@ use Data::Dump 'dump';
 
 our %Q;
 
-sub session_queue : ATTR(CODE) {
+sub Q : ATTR(CODE) {
   my ($package, $symbol, $coderef, $attr, $queue_suffix) = @_;
   $Q{$coderef} = $queue_suffix;
 }

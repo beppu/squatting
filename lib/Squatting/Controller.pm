@@ -13,38 +13,39 @@ sub new {
   bless({ name => $name, urls => $urls, @_ } => $class);
 }
 
+# (shallow) copy constructor
+sub clone {
+  bless { %{$_[0]} } => ref($_[0]);
+}
+
 # arrayref of URL patterns that this controller responds to
-sub urls {
-  if (@_ > 1) {
-    $_[0]->{urls} = $_[1]
-  } else {
-    $_[0]->{urls}
-  }
+sub urls : lvalue {
+  $_[0]->{urls}
 }
 
 # name of controller
-sub name {
-  exists $_[1] ? $_[0]->{name} = $_[1] : $_[0]->{name};
+sub name : lvalue {
+  $_[0]->{name};
 }
 
 # method for handling HTTP GET requests
 sub get {
-  $self = shift;
+  my $self = shift;
   $self->{get}->(@_);
 }
 
 # method for handling HTTP POST requests
 sub post {
-  $self = shift;
+  my $self = shift;
   $self->{post}->(@_);
 }
 
 # default 404 controller
 my $not_found = sub { $status = 404; "$ENV{REQUEST_PATH} not found." };
 our $r404 = Squatting::Controller->new(
-  'R404' => [],
-  get    => $not_found,
-  post   => $not_found
+  R404 => [],
+  get  => $not_found,
+  post => $not_found
 );
 
 1;

@@ -77,8 +77,8 @@ issues:
   component: Squatting
   release: "0.10"
   reporter: John Beppu <john.beppu@gmail.com>
-  status: :unstarted
-  disposition: 
+  status: :closed
+  disposition: :fixed
   creation_time: 2008-04-27 20:32:49.771654 -07:00
   references: []
 
@@ -88,8 +88,12 @@ issues:
     - John Beppu <john.beppu@gmail.com>
     - created
     - ""
+  - - 2008-05-02 21:42:58.535257 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - closed issue with disposition fixed
+    - I'm just checking syntax right now.
 - !ditz.rubyforge.org,2008-03-06/issue 
-  title: Make incoming cookies accessible via %cookies
+  title: Make incoming cookies accessible via $self->cookies
   desc: ""
   type: :feature
   component: Squatting
@@ -105,6 +109,10 @@ issues:
   - - 2008-04-28 19:03:13.533882 -07:00
     - John Beppu <john.beppu@gmail.com>
     - created
+    - ""
+  - - 2008-05-02 21:44:12.594468 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - changed title
     - ""
 - !ditz.rubyforge.org,2008-03-06/issue 
   title: Turn controller/view package vars into lexical vars

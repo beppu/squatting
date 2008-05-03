@@ -11,18 +11,18 @@ our $AUTOLOAD;
 sub new {
   my $class = shift;
   my $name  = shift;
-  bless({ name => $name, @_ } => $class);
+  bless { name => $name, @_ } => $class;
 }
 
 # name of view
-sub name {
-  exists $_[1] ? $_[0]->{name} = $_[1] : $_[0]->{name};
+sub name : lvalue {
+  $_[0]->{name};
 }
 
 # $content = $view->render($template)       # render $template
 # $content = $view->render($template, '_')  # render the generic template
 sub _render {
-  ($self, my($template, $alt)) = @_;
+  my ($self, $template, $alt) = @_;
   if (exists $self->{layout} && ($template !~ /^_/)) {
     $template = $alt if defined $alt;
     join "", $self->{layout}( $self->{$template}() );
