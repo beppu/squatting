@@ -1,9 +1,11 @@
 package Squatting::Controller;
 
 use strict;
+no  strict 'refs';
 use warnings;
 
 use Squatting ':controllers';
+use Data::Dump 'dump';
 
 our $AUTOLOAD;
 
@@ -65,6 +67,11 @@ sub cookies : lvalue {
   $_[0]->{cookies}
 }
 
+# incoming CGI variables
+sub input : lvalue {
+  $_[0]->{input}
+}
+
 # outgoing vars
 sub v : lvalue {
   $_[0]->{v}
@@ -97,21 +104,18 @@ sub set_cookie {
 
 # method for handling HTTP GET requests
 sub get {
-  my $self = shift;
-  $self->{get}->(@_);
+  $_[0]->{get}->(@_);
 }
 
 # method for handling HTTP POST requests
 sub post {
-  my $self = shift;
-  $self->{post}->(@_);
+  $_[0]->{post}->(@_);
 }
 
 # $content = $self->render($template, $vars)
 sub render { 
   my ($self, $template, $vn) = @_;
   my $view;
-  my $app = $self->app;
   if (defined($vn)) {
     $view = ${$app."::Views::V"}{$vn}; #  hash
   } else {                             #    vs
@@ -125,14 +129,6 @@ sub redirect {
   my ($self, $l, $s) = @_;
   $self->headers(Location => $l || '/');
   $self->status = $s || 302;
-}
-
-# forward unknown methods to Continuity::Request object
-sub AUTOLOAD {
-  my $self = shift;
-  my $method = $AUTOLOAD;
-  $method =~ s/.*://;
-  $self->cr->$method(@_);
 }
 
 sub DESTROY { }

@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use Squatting ':views';
+use Data::Dump 'dump';
 
 our $AUTOLOAD;
 

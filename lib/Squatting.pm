@@ -9,10 +9,10 @@ use Squatting::Mapper;
 use Data::Dump qw(dump);
 
 our $VERSION     = '0.01';
-our @EXPORT_OK   = qw(C R V);
+our @EXPORT_OK   = qw($app C R V);
 our %EXPORT_TAGS = (
-  controllers => [qw(C R)],
-  views       => [qw(R V)]
+  controllers => [qw($app C R)],
+  views       => [qw($app R V)]
 );
 
 # Kill $app, and we might have a chance of working under  mod_perl.
@@ -52,12 +52,12 @@ sub V {
 # Override this method if you want to take actions before or after a request is handled.
 sub service {
   my ($class, $controller, @params) = grep { defined } @_;
-  my $method  = lc $ENV{REQUEST_METHOD};
+  my $method  = lc $controller->env->{REQUEST_METHOD};
   my $content;
   eval { $content = $controller->$method(@params) };
   warn "EXCEPTION: $@" if ($@);
   my $status = $controller->status;
-  my $cookies = $controller->set_cookies;
+  my $cookies = $controller->{set_cookies};
   warn "[$status] @{[$controller->name]}(@{[ join(', '=>@params) ]})->$method => $content";
   headers('Set-Cookie') = join(";", map { 
     CGI::Cookie->new(-name => $_, %{$cookies->{$_}}) 
@@ -68,10 +68,6 @@ sub service {
 # Initialize $app
 sub init {
   $app = shift;
-  eval {
-    require $app."::Controllers";
-    require $app."::Views";
-  };
   %{$app."::Controllers::C"} = map { $_->name => $_ } 
   @{$app."::Controllers::C"};
   %{$app."::Views::V"} = map { $_->name => $_ }
@@ -89,10 +85,12 @@ sub go {
       callback => sub {
         my $cr = shift;
         my ($c, $p)  = D($cr->uri->path);
-        $c->init($cr);
-        my $content = $app->service($c, @$p);
+        my $cc = $c->clone;
+        $cc->init($cr);
+        dump($cc->{headers});
+        my $content = $app->service($cc, @$p);
         my $response = HTTP::Response->new(
-          $c->status, 'orz', [%{$c->headers}], $content);
+          $cc->status, 'orz', [%{$cc->{headers}}], $content);
         $cr->conn->send_response($response);
         $cr->end_request;
       },
