@@ -15,6 +15,21 @@ sub new {
   bless { name => $name, urls => $urls, @_ } => $class;
 }
 
+# init w/ Continuity 
+sub init {
+  my $self = shift;
+  my $cr   = shift;
+  $self->{cr}          = $cr;
+  $self->{env}         = e($cr->http_request);
+  $self->{cookies}     = c($self->env->{HTTP_COOKIE});
+  $self->{input}       = i($self->env->{QUERY_STRING});
+  $self->{set_cookies} = {};
+  $self->{headers}     = {};
+  $self->{v}           = {};
+  $self->{status}      = 200;
+  $self;
+}
+
 # (shallow) copy constructor
 sub clone {
   bless { %{$_[0]} } => ref($_[0]);
@@ -55,14 +70,14 @@ sub cookies : lvalue {
   $_[0]->{cookies}
 }
 
+# outgoing vars
+sub v : lvalue {
+  $_[0]->{v}
+}
+
 # outgoing HTTP Response status
-sub status {
-  my ($self, $value) = @_;
-  if (defined($value)) {
-    $self->{status} = $value;
-  } else {
-    $self->{status};
-  }
+sub status : lvalue {
+  $_[0]->{status}
 }
 
 # outgoing HTTP headers
@@ -79,9 +94,9 @@ sub headers {
 sub set_cookie {
   my ($self, $name, $value) = @_;
   if (defined($value)) {
-    $self->{set_cookie}->{$name} = $value;
+    $self->{set_cookies}->{$name} = $value;
   } else {
-    $self->{set_cookie}->{$name};
+    $self->{set_cookies}->{$name};
   }
 }
 
@@ -115,7 +130,7 @@ sub render {
 sub redirect {
   my ($self, $l, $s) = @_;
   $self->headers(Location => $l || '/');
-  $self->status($s || 302);
+  $self->status = $s || 302;
 }
 
 # forward unknown methods to Continuity::Request object
@@ -128,8 +143,44 @@ sub AUTOLOAD {
 
 sub DESTROY { }
 
+# \%env = e($http_request)  # Get request headers from HTTP::Request.
+sub e {
+  my $r = shift;
+  my %env;
+  my $uri = $r->uri;
+  $env{QUERY_STRING}   = $uri->query || '';
+  $env{REQUEST_PATH}   = $uri->path;
+  $env{REQUEST_METHOD} = $r->method;
+  $r->scan(sub{
+    my ($header, $value) = @_;
+    my $key = uc $header;
+    $key =~ s/-/_/g;
+    $key = "HTTP_$key";
+    $env{$key} = $value;
+  });
+  \%env;
+}
+
+# \%input = i($query_string)  # Extract CGI parameters from QUERY_STRING
+sub i {
+  my $q = CGI->new($_[0]);
+  my %i = $q->Vars;
+  my %input = map { 
+    if ($i{$_} =~ /\0/) {
+      $_ => split("\0", $i{$_});
+    } else {
+      $_ => $i{$_};
+    }
+  } keys %i;
+  \%input;
+}
+
+# \%cookies = c($cookie_header)  # Parse Cookie header(s). TODO
+sub c {
+}
+
 # default 404 controller
-my $not_found = sub { $status = 404; "$ENV{REQUEST_PATH} not found." };
+my $not_found = sub { $_[0]->status(404); $_[0]->env->{REQUEST_PATH}." not found." };
 our $r404 = Squatting::Controller->new(
   R404 => [],
   get  => $not_found,

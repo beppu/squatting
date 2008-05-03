@@ -15,16 +15,15 @@ our %EXPORT_TAGS = (
   views       => [qw(R V)]
 );
 
+# Kill $app, and we might have a chance of working under  mod_perl.
+our $app;
+
 require Squatting::Controller;
 require Squatting::View;
 
-our $app;
-
 # $controller = C($name => \@urls, %subs)  # Construct a Squatting::Controller
 sub C {
-  my ($app) = caller;
-  $app =~ s/::Controllers$//;
-  Squatting::Controller->new(app => $app, @_);
+  Squatting::Controller->new(@_);
 }
 
 # ($controller, \@regex_captures) = D($path)  # Return controller and captures for a path
@@ -50,33 +49,6 @@ sub V {
   Squatting::View->new(@_);
 }
 
-# %ENV = e($http_request)  # Get request headers from HTTP::Request.
-sub e {
-  my $r = shift;
-  my %env;
-  my $uri = $r->uri;
-  $env{QUERY_STRING}   = $uri->query || '';
-  $env{REQUEST_PATH}   = $uri->path;
-  $env{REQUEST_METHOD} = $r->method;
-  $r->scan(sub{
-    my ($header, $value) = @_;
-    my $key = uc $header;
-    $key =~ s/-/_/g;
-    $key = "HTTP_$key";
-    $env{$key} = $value;
-  });
-  %env;
-}
-
-# %input = i($cr)  # Extract CGI parameters from Continuity::Request.
-sub i {
-  $_[0]->params;
-}
-
-# %cookies = c($cookie_header)  # Parse Cookie header(s). TODO
-sub c {
-}
-
 # Override this method if you want to take actions before or after a request is handled.
 sub service {
   my ($class, $controller, @params) = grep { defined } @_;
@@ -84,37 +56,39 @@ sub service {
   my $content;
   eval { $content = $controller->$method(@params) };
   warn "EXCEPTION: $@" if ($@);
-  warn "[$status] @{[$controller->name]}(@{[ join(', '=>@params) ]})->$method => @{[dump($v)]}";
+  my $status = $controller->status;
+  my $cookies = $controller->set_cookies;
+  warn "[$status] @{[$controller->name]}(@{[ join(', '=>@params) ]})->$method => $content";
   headers('Set-Cookie') = join(";", map { 
     CGI::Cookie->new(-name => $_, %{$cookies->{$_}}) 
   } keys %$cookies) if (%$cookies);
   return $content;
 }
 
+# Initialize $app
+sub init {
+  $app = shift;
+  require $app."::Controllers";
+  require $app."::Views";
+  %{$app."::Views::V"} = map { $_->name => $_ }
+  @{$app."::Views::V"};
+}
+
 # Start the server.
 sub go {
   $app = shift;
-  %{$app."::Views::V"} = map { $_->name => $_ }
-  @{$app."::Views::V"};
+  $app->init;
   # Putting a RESTful face on Continuity since 2008.
   Continuity->new(
     port     => 4234,
     mapper   => Squatting::Mapper->new(
       callback => sub {
-        $cr = shift;
-        local %ENV   = e($cr->http_request);
-        my ($c, $p)  = D($ENV{REQUEST_PATH});
-        %cookies     = c($ENV{HTTP_COOKIE});
-        %input       = i($cr);
-        $cookies     = {};
-        $headers     = {};
-        $state       = {};
-        $v           = {};
-        $status      = 200;
-        my $content  = $app->service($c, @$p);
-        my $response = HTTP::Response->new($status, 'orz', [%$headers], $content);
-        #$cr->conn->send_basic_header;
-        #$cr->print($content);
+        my $cr = shift;
+        my ($c, $p)  = D($cr->uri->path);
+        $c->init($cr);
+        my $content = $app->service($c, @$p);
+        my $response = HTTP::Response->new(
+          $c->status, 'orz', [%{$c->headers}], $content);
         $cr->conn->send_response($response);
         $cr->end_request;
       },
