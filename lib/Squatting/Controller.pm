@@ -45,11 +45,6 @@ sub urls : lvalue {
   $_[0]->{urls}
 }
 
-# name of view to use for rendering
-sub view : lvalue {
-  $_[0]->{view}
-}
-
 # name of the app this controller belongs to
 sub app : lvalue {
   $_[0]->{app}
@@ -114,16 +109,15 @@ sub post {
 
 # $content = $self->render($template, $vars)
 sub render { 
-  my ($self, $template, $vars) = @_;
+  my ($self, $template, $vn) = @_;
   my $view;
-  my $vn  = $self->view;
   my $app = $self->app;
   if (defined($vn)) {
     $view = ${$app."::Views::V"}{$vn}; #  hash
   } else {                             #    vs
     $view = ${$app."::Views::V"}[000]; # array -- Perl provides a lot of 'namespaces' so why not use them?
   }
-  $view->$template($vars);
+  $view->$template($self->v);
 }
 
 # $self->redirect($url, $status_code)
