@@ -14,7 +14,7 @@ sub get_session_id_from_hit {
   my $queue   = $Squatting::Q{$coderef};
   if (defined($queue)) {
     $session_id .= ".$queue";
-    $self->Continuity::debug(2, "    Session: got RESTless '$session_id'");
+    $self->Continuity::debug(2, "    Session: got queue '$session_id'");
   }
   $session_id;
 }
