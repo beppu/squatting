@@ -33,6 +33,7 @@ sub D {
   foreach $controller (@$C) {
     foreach (@{$controller->urls}) {
       if (@regex_captures = ($_[0] =~ qr{^$_$})) {
+        pop @regex_captures if ($#+ == 0);
         return ($controller, \@regex_captures);
       }
     }
