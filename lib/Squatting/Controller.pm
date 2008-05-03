@@ -131,8 +131,6 @@ sub redirect {
   $self->status = $s || 302;
 }
 
-sub DESTROY { }
-
 # \%env = e($http_request)  # Get request headers from HTTP::Request.
 sub e {
   my $r = shift;

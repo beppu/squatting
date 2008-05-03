@@ -3,6 +3,7 @@ package Squatting::Mapper;
 use strict;
 use warnings;
 use base 'Continuity::Mapper';
+use Squatting::Q;
 
 sub get_session_id_from_hit {
   my ($self, $request) = @_;
