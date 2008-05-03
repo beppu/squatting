@@ -6,8 +6,6 @@ use warnings;
 use base 'Exporter';
 use Continuity;
 use Squatting::Mapper;
-use CGI::Simple;
-use CGI::Simple::Cookie;
 use Data::Dump qw(dump);
 
 our $VERSION     = '0.01';
@@ -126,7 +124,7 @@ sub service {
   warn "EXCEPTION: $@" if ($@);
   warn "[$status] @{[$controller->name]}(@{[ join(', '=>@params) ]})->$method => @{[dump($v)]}";
   headers('Set-Cookie') = join(";", map { 
-    CGI::Simple::Cookie->new(-name => $_, %{$cookies->{$_}}) 
+    CGI::Cookie->new(-name => $_, %{$cookies->{$_}}) 
   } keys %$cookies) if (%$cookies);
   return $content;
 }
