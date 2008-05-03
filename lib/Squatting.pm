@@ -15,8 +15,10 @@ our %EXPORT_TAGS = (
   views       => [qw($app R V)]
 );
 
-# Kill $app, and we might have a chance of working under  mod_perl.
+# Kill the following package vars,
+# and we might have a chance of working under mod_perl.
 our $app;
+our %Q;
 
 require Squatting::Controller;
 require Squatting::View;

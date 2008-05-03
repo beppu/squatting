@@ -49,4 +49,4 @@ sub AUTOLOAD {
 
 sub DESTROY { }
 
-1;
+11;

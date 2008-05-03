@@ -3,7 +3,6 @@ package Squatting::Mapper;
 use strict;
 use warnings;
 use base 'Continuity::Mapper';
-use Squatting::RESTlessly;
 
 sub get_session_id_from_hit {
   my ($self, $request) = @_;
@@ -11,7 +10,7 @@ sub get_session_id_from_hit {
   my ($controller, $params) = Squatting::D($request->uri->path);
   my $method  = lc $request->method;
   my $coderef = $controller->{$method};
-  my $queue   = $Squatting::RESTlessly::Q{$coderef};
+  my $queue   = $Squatting::Q{$coderef};
   if (defined($queue)) {
     $session_id .= ".$queue";
     $self->Continuity::debug(2, "    Session: got RESTless '$session_id'");

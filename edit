@@ -1,2 +1,2 @@
 #!/bin/sh
-gvim -p bin/squatting lib/Squatting.pm lib/Squatting/Controller.pm lib/Squatting/View.pm lib/Squatting/Mapper.pm lib/Squatting/RESTlessly.pm
+gvim -p bin/squatting lib/Squatting.pm lib/Squatting/Controller.pm lib/Squatting/View.pm lib/Squatting/Mapper.pm lib/Squatting/Q.pm
