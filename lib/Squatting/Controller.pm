@@ -171,7 +171,7 @@ sub c {
 }
 
 # default 404 controller
-my $not_found = sub { $_[0]->status(404); $_[0]->env->{REQUEST_PATH}." not found." };
+my $not_found = sub { $_[0]->status = 404; $_[0]->env->{REQUEST_PATH}." not found." };
 our $r404 = Squatting::Controller->new(
   R404 => [],
   get  => $not_found,

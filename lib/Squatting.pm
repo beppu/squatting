@@ -58,7 +58,7 @@ sub service {
   warn "EXCEPTION: $@" if ($@);
   my $status = $controller->status;
   my $cookies = $controller->{set_cookies};
-  warn "[$status] @{[$controller->name]}(@{[ join(', '=>@params) ]})->$method => $content";
+  warn "[$status] @{[$controller->name]}(@{[ join(', '=>@params) ]})->$method";
   headers('Set-Cookie') = join(";", map { 
     CGI::Cookie->new(-name => $_, %{$cookies->{$_}}) 
   } keys %$cookies) if (%$cookies);
@@ -87,7 +87,6 @@ sub go {
         my ($c, $p)  = D($cr->uri->path);
         my $cc = $c->clone;
         $cc->init($cr);
-        dump($cc->{headers});
         my $content = $app->service($cc, @$p);
         my $response = HTTP::Response->new(
           $cc->status, 'orz', [%{$cc->{headers}}], $content);
