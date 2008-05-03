@@ -106,6 +106,27 @@ issues:
     - John Beppu <john.beppu@gmail.com>
     - created
     - ""
+- !ditz.rubyforge.org,2008-03-06/issue 
+  title: Turn controller/view package vars into lexical vars
+  desc: |-
+    A major API redesign is needed in order to make Squatting work with Continuity.
+    My attempt at simulating the Camping API in Perl failed, so I'm going to have
+    to put a lot of info in $self.
+  type: :bugfix
+  component: Squatting
+  release: "0.20"
+  reporter: John Beppu <john.beppu@gmail.com>
+  status: :unstarted
+  disposition: 
+  creation_time: 2008-05-02 20:55:56.612317 -07:00
+  references: []
+
+  id: f24bb181e7d7021074315bcc79500c49e84d1102
+  log_events: 
+  - - 2008-05-02 20:55:57.708149 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - created
+    - ""
 components: 
 - !ditz.rubyforge.org,2008-03-06/component 
   name: Squatting
