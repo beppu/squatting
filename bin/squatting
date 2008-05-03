@@ -60,11 +60,7 @@ if ($module) {
       print "Please install Shell::Perl if you'd like to use the squatting console.\n";
       exit 1;
     }
-    $Squatting::app = $app;
-    %{$app."::Controllers::C"} = map { $_->name => $_ } 
-    @{$app."::Controllers::C"};
-    %{$app."::Views::V"} = map { $_->name => $_ } 
-    @{$app."::Views::V"};
+    $app->init;
     *{$app."::get" } = sub { ${$app."::Controllers::C"}{$_[1]}->get (@_[2..$#_]) };
     *{$app."::post"} = sub { ${$app."::Controllers::C"}{$_[1]}->post(@_[2..$#_]) };
     $0 = $module;

@@ -150,6 +150,7 @@ sub e {
   my $uri = $r->uri;
   $env{QUERY_STRING}   = $uri->query || '';
   $env{REQUEST_PATH}   = $uri->path;
+  $env{REQUEST_URI}    = $uri->path_query;
   $env{REQUEST_METHOD} = $r->method;
   $r->scan(sub{
     my ($header, $value) = @_;

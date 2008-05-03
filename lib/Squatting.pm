@@ -68,8 +68,12 @@ sub service {
 # Initialize $app
 sub init {
   $app = shift;
-  require $app."::Controllers";
-  require $app."::Views";
+  eval {
+    require $app."::Controllers";
+    require $app."::Views";
+  };
+  %{$app."::Controllers::C"} = map { $_->name => $_ } 
+  @{$app."::Controllers::C"};
   %{$app."::Views::V"} = map { $_->name => $_ }
   @{$app."::Views::V"};
 }
