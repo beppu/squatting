@@ -33,7 +33,9 @@ require Squatting::View;
 
 # $controller = C($name => \@urls, %subs)  # Construct a Squatting::Controller
 sub C {
-  Squatting::Controller->new(@_);
+  my ($app) = caller;
+  $app =~ s/::Controllers$//;
+  Squatting::Controller->new(app => $app, @_);
 }
 
 # ($controller, \@regex_captures) = D($path)  # Return controller and captures for a path
