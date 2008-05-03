@@ -87,13 +87,15 @@ sub go {
     mapper   => Squatting::Mapper->new(
       callback => sub {
         my $cr = shift;
-        my ($c, $p)  = D($cr->uri->path);
-        my $cc = $c->clone->init($cr);
-        my $content = $app->service($cc, @$p);
-        my $response = HTTP::Response->new(
-          $cc->status, 'orz', [%{$cc->{headers}}], $content);
-        $cr->conn->send_response($response);
-        $cr->end_request;
+        while (1) {
+          my ($c, $p) = D($cr->uri->path);
+          my $cc = $c->clone->init($cr);
+          my $content = $app->service($cc, @$p);
+          my $response = HTTP::Response->new(
+            $cc->status, 'orz', [%{$cc->{headers}}], $content);
+          $cr->conn->send_response($response);
+          $cr->next;
+        }
       },
       @_
     ),
