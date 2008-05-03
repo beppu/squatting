@@ -41,8 +41,48 @@ sub app : lvalue {
 }
 
 # Continuity::Request object
-sub c : lvalue {
-  $_[0]->{c}
+sub cr : lvalue {
+  $_[0]->{cr}
+}
+
+# incoming request headers and misc info like %ENV in the CGI days
+sub env : lvalue {
+  $_[0]->{env}
+}
+
+# incoming cookies
+sub cookies : lvalue {
+  $_[0]->{cookies}
+}
+
+# outgoing HTTP Response status
+sub status {
+  my ($self, $value) = @_;
+  if (defined($value)) {
+    $self->{status} = $value;
+  } else {
+    $self->{status};
+  }
+}
+
+# outgoing HTTP headers
+sub headers {
+  my ($self, $name, $value) = @_;
+  if (defined($value)) {
+    $self->{headers}->{$name} = $value;
+  } else {
+    $self->{headers}->{$name};
+  }
+}
+
+# outgoing cookies
+sub set_cookie {
+  my ($self, $name, $value) = @_;
+  if (defined($value)) {
+    $self->{set_cookie}->{$name} = $value;
+  } else {
+    $self->{set_cookie}->{$name};
+  }
 }
 
 # method for handling HTTP GET requests
@@ -71,12 +111,19 @@ sub render {
   $view->$template($vars);
 }
 
+# $self->redirect($url, $status_code)
+sub redirect {
+  my ($self, $l, $s) = @_;
+  $self->headers(Location => $l || '/');
+  $self->status($s || 302);
+}
+
 # forward unknown methods to Continuity::Request object
 sub AUTOLOAD {
   my $self = shift;
   my $method = $AUTOLOAD;
   $method =~ s/.*://;
-  $self->c->$method(@_);
+  $self->cr->$method(@_);
 }
 
 sub DESTROY { }

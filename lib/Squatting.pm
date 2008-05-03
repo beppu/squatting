@@ -9,27 +9,16 @@ use Squatting::Mapper;
 use Data::Dump qw(dump);
 
 our $VERSION     = '0.01';
-our @EXPORT_OK   = qw(
-  $self C R V $cr %cookies cookies %input $headers headers $status $state $v redirect render
-);
+our @EXPORT_OK   = qw(C R V);
 our %EXPORT_TAGS = (
-  controllers => [qw($self C R $cr %cookies cookies %input $headers headers $status $state $v redirect render)],
-  views       => [qw($self R V %cookies %input $state $v)]
+  controllers => [qw(C R)],
+  views       => [qw(R V)]
 );
-
-our $self;    # Oh?  Can we make `my $self = shift` go away?
-our $app;
-our %input;   #|
-our %cookies; #incoming
-our $cr;      #+
-our $cookies; #outgoing
-our $headers; #|
-our $status;  #|
-our $state;   #|
-our $v;       #|
 
 require Squatting::Controller;
 require Squatting::View;
+
+our $app;
 
 # $controller = C($name => \@urls, %subs)  # Construct a Squatting::Controller
 sub C {
@@ -61,25 +50,6 @@ sub V {
   Squatting::View->new(@_);
 }
 
-# $content = render($template, $view_name)
-sub render { 
-  my ($template, $vn) = @_;
-  my $view;
-  if (defined($vn)) {
-    $view = ${$app."::Views::V"}{$vn}; #  hash
-  } else {                             #    vs
-    $view = ${$app."::Views::V"}[000]; # array -- Perl provides a lot of 'namespaces' so why not use them?
-  }
-  $view->$template;
-}
-
-# redirect($url, $status_code)
-sub redirect {
-  my ($l, $s) = @_;
-  headers('Location') = $l || '/';
-  $status             = $s || 302;
-}
-
 # %ENV = e($http_request)  # Get request headers from HTTP::Request.
 sub e {
   my $r = shift;
@@ -105,16 +75,6 @@ sub i {
 
 # %cookies = c($cookie_header)  # Parse Cookie header(s). TODO
 sub c {
-}
-
-# cookies($name) = { -value => 'chocolate_chip' }  # Set outgoing cookies.
-sub cookies : lvalue { 
-  $cookies->{$_[0]};
-}
-
-# headers($name) = "value"  # Set an outgoing header.
-sub headers : lvalue {
-  $headers->{$_[0]};
 }
 
 # Override this method if you want to take actions before or after a request is handled.

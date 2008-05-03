@@ -6,7 +6,6 @@ use warnings;
 no  warnings 'redefine';
 
 use Attribute::Handlers;
-use Data::Dump 'dump';
 
 our %Q;
 
