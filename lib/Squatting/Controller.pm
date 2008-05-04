@@ -85,20 +85,28 @@ sub status : lvalue {
 # outgoing HTTP headers
 sub headers {
   my ($self, $name, $value) = @_;
-  if (defined($value)) {
-    $self->{headers}->{$name} = $value;
+  if (defined($name)) {
+    if (defined($value)) {
+      $self->{headers}->{$name} = $value;
+    } else {
+      $self->{headers}->{$name};
+    }
   } else {
-    $self->{headers}->{$name};
+    $self->{headers};
   }
 }
 
 # outgoing cookies
 sub set_cookie {
   my ($self, $name, $value) = @_;
-  if (defined($value)) {
-    $self->{set_cookies}->{$name} = $value;
+  if (defined($name)) {
+    if (defined($value)) {
+      $self->{set_cookies}->{$name} = $value;
+    } else {
+      $self->{set_cookies}->{$name};
+    }
   } else {
-    $self->{set_cookies}->{$name};
+    $self->{set_cookies};
   }
 }
 
