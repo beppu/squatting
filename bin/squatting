@@ -61,8 +61,25 @@ if ($module) {
       exit 1;
     }
     $app->init;
-    *{$app."::get" } = sub { ${$app."::Controllers::C"}{$_[1]}->get (@_[2..$#_]) };
-    *{$app."::post"} = sub { ${$app."::Controllers::C"}{$_[1]}->post(@_[2..$#_]) };
+    sub Squatting::Controller::mock_init {
+      my $self = shift;
+      $self->{cr}          = {};
+      $self->{env}         = { %ENV, REQUEST_PATH => Squatting::R($self->name, @_) };
+      $self->{cookies}     = {};
+      $self->{input}       = {};
+      $self->{set_cookies} = {};
+      $self->{headers}     = {};
+      $self->{v}           = {};
+      $self->{status}      = 200;
+      $self;
+    };
+    foreach my $method qw(get post) {
+      *{$app."::$method" } = sub { 
+        my $cc = ${$app."::Controllers::C"}{$_[1]}->clone->mock_init(@_[2..$#_]);
+        my $content = $cc->$method(@_[2..$#_]);
+        ($cc, $content);
+      };
+    }
     $0 = $module;
     my $pirl = Shell::Perl->new;
     $pirl->set_package($module."::Controllers");
