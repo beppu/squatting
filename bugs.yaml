@@ -47,7 +47,7 @@ issues:
     - assigned to release 0.20 from 0.10
     - ""
 - !ditz.rubyforge.org,2008-03-06/issue 
-  title: Implement Squatting::View
+  title: Implement Squatting::View.
   desc: ""
   type: :feature
   component: Squatting
@@ -70,6 +70,10 @@ issues:
     - |-
       wow
       I even made `my $self = shift` go away.
+  - - 2008-05-04 11:52:11.675174 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - changed title
+    - ""
 - !ditz.rubyforge.org,2008-03-06/issue 
   title: Setup a rudimentary test suite
   desc: ""
@@ -119,11 +123,11 @@ issues:
     - changed title
     - ""
 - !ditz.rubyforge.org,2008-03-06/issue 
-  title: Turn controller/view package vars into lexical vars
+  title: Turn controller/view package vars into lexical vars.
   desc: |-
-    A major API redesign is needed in order to make Squatting work with Continuity.
-    My attempt at simulating the Camping API in Perl failed, so I'm going to have
-    to put a lot of info in $self.
+    A major API redesign is needed in order to make Squatting work
+    with Continuity.  My attempt at simulating the Camping API in
+    Perl failed, so I'm going to have to put a lot of info in $self.
   type: :bugfix
   component: Squatting
   release: "0.20"
@@ -143,6 +147,10 @@ issues:
     - John Beppu <john.beppu@gmail.com>
     - closed issue with disposition fixed
     - wow, i did it.
+  - - 2008-05-04 11:52:44.632670 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - changed title, changed description
+    - ""
 - !ditz.rubyforge.org,2008-03-06/issue 
   title: Make POSTed variables accessible via $self->input.
   desc: ""
