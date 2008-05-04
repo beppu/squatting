@@ -122,41 +122,57 @@ Squatting - a Camping-inspired Web Microframework for Perl
 
 =head1 SYNOPSIS
 
+A Basic Application
+
   {
-    package Bavl;
+    package App;
     use base 'Squatting';
+    use App::Controllers;
+    use App::Views;
   }
 
   {
-    package Bavl::Controllers;
+    package App::Controllers;
     use Squatting ':controllers';
 
+    # setup a list of controller objects using the C() function
     our @C = (
       C(
         Home => [ '/' ],
         get  => sub {
           my $self = shift;
           my $v = $self->v;
-          $v->{title} = loc('Hello, World!');
+          $v->{title} = 'Hello, World!';
           $self->render('home');
           # $self->render('home', 'json');
         },
+        post => sub { }
+      ),
+      C(
+        Profile => [ '/~(\w+)/', '/~(\w+)\.(\w+)' ],
+        get => sub {
+          my ($self, $name, $format) = @_;
+          $format ||= 'html';
+          $self->v->{name} = $name;
+          $self->render('profile', $format);
+        },
+        post => sub { }
       ),
     );
   }
 
   {
-    package Bavl::Views;
+    package App::Views;
     use Squatting ':views';
     use JSON::XS;
 
+    # setup a list of view objects using the V() function
     our @V = (
       V(
         'html',
-        layout => sub { my $v = shift; "<html><body>@_</body></html>" },
-        home   => sub { my $v = shift; "<h1>$v->{title}</h1>" },
-        login  => sub { },
-        search => sub { }
+        layout  => sub { my $v = shift; "<html><body>@_</body></html>" },
+        home    => sub { my $v = shift; "<h1>$v->{title}</h1>" },
+        profile => sub { my $v = shift; "<h1>I am $v->{name}.</h1>" },
       ),
       V(
         'json',
@@ -165,13 +181,17 @@ Squatting - a Camping-inspired Web Microframework for Perl
     );
   }
 
+Running Your App
+
+  squatting App
+
 =head1 DESCRIPTION
 
-This is beppu's attempt to bring the conciseness of Camping to Perl.
+This is my attempt to bring the conciseness of Camping to Perl.
 
 This is also my attempt to show that you don't need to have a huge
-proliferation of classes to keep code well-organized.  (JavaScript and
-prototype-based OO has taught me this.)
+proliferation of classes to keep code well-organized.  (Prototype-based OO has
+taught me this.)
 
 =head1 AUTHOR
 
