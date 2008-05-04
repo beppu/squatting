@@ -6,6 +6,7 @@ use warnings;
 use base 'Exporter';
 use Continuity;
 use Squatting::Mapper;
+use HTTP::Status;
 use Data::Dump qw(dump);
 
 our $VERSION     = '0.01';
@@ -62,9 +63,15 @@ sub service {
   my $status = $controller->status;
   my $cookies = $controller->{set_cookies};
   warn "[$status] @{[$controller->name]}(@{[ join(', '=>@params) ]})->$method";
-  headers('Set-Cookie') = join(";", map { 
+  $controller->headers('Set-Cookie' => join("; ", map { 
     CGI::Cookie->new(-name => $_, %{$cookies->{$_}}) 
-  } keys %$cookies) if (%$cookies);
+  } keys %$cookies)) if (%$cookies);
+  if (my $cr_cookies = $controller->cr->cookies) {
+    $cr_cookies =~ s/^Set-Cookie: //;
+    $controller->headers('Set-Cookie' =>
+      join("; ", grep { defined } 
+        ($controller->headers('Set-Cookie'), $cr_cookies)));
+  }
   return $content;
 }
 
@@ -87,15 +94,17 @@ sub go {
     mapper   => Squatting::Mapper->new(
       callback => sub {
         my $cr = shift;
-        while (1) {
-          my ($c, $p) = D($cr->uri->path);
-          my $cc = $c->clone->init($cr);
-          my $content = $app->service($cc, @$p);
-          my $response = HTTP::Response->new(
-            $cc->status, 'orz', [%{$cc->{headers}}], $content);
-          $cr->conn->send_response($response);
-          $cr->next;
-        }
+        my ($c, $p) = D($cr->uri->path);
+        my $cc = $c->clone->init($cr);
+        my $content = $app->service($cc, @$p);
+        my $response = HTTP::Response->new(
+          $cc->status, 
+          status_message($cc->status), 
+          [%{$cc->{headers}}], 
+          $content
+        );
+        $cr->conn->send_response($response);
+        $cr->end_request;
       },
       @_
     ),
