@@ -93,7 +93,7 @@ issues:
     - closed issue with disposition fixed
     - I'm just checking syntax right now.
 - !ditz.rubyforge.org,2008-03-06/issue 
-  title: Make incoming cookies accessible via $self->cookies
+  title: Make incoming cookies accessible via $self->cookies.
   desc: ""
   type: :feature
   component: Squatting
@@ -111,6 +111,10 @@ issues:
     - created
     - ""
   - - 2008-05-02 21:44:12.594468 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - changed title
+    - ""
+  - - 2008-05-04 06:16:41.396271 -07:00
     - John Beppu <john.beppu@gmail.com>
     - changed title
     - ""
@@ -163,13 +167,17 @@ components:
 releases: 
 - !ditz.rubyforge.org,2008-03-06/release 
   name: "0.10"
-  status: :unreleased
-  release_time: 
+  status: :released
+  release_time: 2008-05-04 06:17:05.512232 -07:00
   log_events: 
   - - 2008-04-23 11:53:38.160024 -07:00
     - John Beppu <john.beppu@gmail.com>
     - created
     - The goal of the first release is to be able to get the HTTP server up and running.
+  - - 2008-05-04 06:17:05.512276 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - released
+    - first release
 - !ditz.rubyforge.org,2008-03-06/release 
   name: "0.20"
   status: :unreleased
