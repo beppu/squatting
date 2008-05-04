@@ -217,6 +217,24 @@ issues:
     - John Beppu <john.beppu@gmail.com>
     - closed issue with disposition fixed
     - ""
+- !ditz.rubyforge.org,2008-03-06/issue 
+  title: View templates need access to $self.
+  desc: This will make it easier for templates to combine with other templates.
+  type: :feature
+  component: Squatting
+  release: "0.20"
+  reporter: John Beppu <john.beppu@gmail.com>
+  status: :unstarted
+  disposition: 
+  creation_time: 2008-05-04 12:14:04.614899 -07:00
+  references: []
+
+  id: 1c29b483903c6f66d183093aa829622f963b1e72
+  log_events: 
+  - - 2008-05-04 12:14:05.873941 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - created
+    - ""
 components: 
 - !ditz.rubyforge.org,2008-03-06/component 
   name: Squatting
