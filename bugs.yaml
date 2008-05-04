@@ -124,14 +124,36 @@ issues:
   component: Squatting
   release: "0.20"
   reporter: John Beppu <john.beppu@gmail.com>
-  status: :unstarted
-  disposition: 
+  status: :closed
+  disposition: :fixed
   creation_time: 2008-05-02 20:55:56.612317 -07:00
   references: []
 
   id: f24bb181e7d7021074315bcc79500c49e84d1102
   log_events: 
   - - 2008-05-02 20:55:57.708149 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - created
+    - ""
+  - - 2008-05-04 06:09:22.969758 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - closed issue with disposition fixed
+    - wow, i did it.
+- !ditz.rubyforge.org,2008-03-06/issue 
+  title: Make POSTed variables accessible via $self->input.
+  desc: ""
+  type: :bugfix
+  component: Squatting
+  release: "0.20"
+  reporter: John Beppu <john.beppu@gmail.com>
+  status: :unstarted
+  disposition: 
+  creation_time: 2008-05-04 06:10:23.631706 -07:00
+  references: []
+
+  id: bda00825ffdcf00322c5dc41b832987f22b2989c
+  log_events: 
+  - - 2008-05-04 06:10:24.642630 -07:00
     - John Beppu <john.beppu@gmail.com>
     - created
     - ""
