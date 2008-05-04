@@ -30,6 +30,7 @@ sub C {
 
 # ($controller, \@regex_captures) = D($path)  # Return controller and captures for a path
 sub D {
+  no warnings 'once';
   my $C = \@{$app.'::Controllers::C'};
   my ($controller, @regex_captures);
   foreach $controller (@$C) {
@@ -62,7 +63,7 @@ sub service {
   warn "EXCEPTION: $@" if ($@);
   my $status = $controller->status;
   my $cookies = $controller->{set_cookies};
-  warn sprintf('%5d ', $I++), "[$status] @{[$controller->name]}(@{[ join(', '=>@params) ]})->$method";
+  warn sprintf('%5d ', $I++), "[$status] $app->$method(@{[ join(', '=>map { \"'$_'\" } $controller->name, @params) ]})\n";
   $controller->headers('Set-Cookie' => join("; ", map {
     CGI::Cookie->new(-name => $_, %{$cookies->{$_}})
   } keys %$cookies)) if (%$cookies);
