@@ -6,7 +6,6 @@ use warnings;
 use base 'Exporter';
 use Continuity;
 use Squatting::Mapper;
-use Data::Dump qw(dump);
 
 our $VERSION     = '0.01';
 our @EXPORT_OK   = qw($app C R V);
@@ -44,7 +43,7 @@ sub D {
   ($Squatting::Controller::r404, []);
 }
 
-# $url = R(Controller, params..., { cgi => vars }) TODO
+# $url = R(Controller, params..., { cgi => vars })  # Routing function - TODO
 sub R {
   '/'
 }
@@ -54,7 +53,7 @@ sub V {
   Squatting::View->new(@_);
 }
 
-# Override this method if you want to take actions before or after a request is handled.
+# App->service($controller, @params)  # Override this method if you want to take actions before or after a request is handled.
 sub service {
   my ($class, $controller, @params) = grep { defined } @_;
   my $method  = lc $controller->env->{REQUEST_METHOD};
@@ -76,7 +75,7 @@ sub service {
   return $content;
 }
 
-# Initialize $app
+# App->init  # Initialize $app
 sub init {
   $app = shift;
   %{$app."::Controllers::C"} = map { $_->name => $_ } 
@@ -85,7 +84,7 @@ sub init {
   @{$app."::Views::V"};
 }
 
-# Start the server.
+# App->go(%opts)  # Start the server.
 sub go {
   $app = shift;
   $app->init;
@@ -99,9 +98,9 @@ sub go {
         my $cc = $c->clone->init($cr);
         my $content = $app->service($cc, @$p);
         my $response = HTTP::Response->new(
-          $cc->status, 
-          HTTP::Status::status_message($cc->status), 
-          [%{$cc->{headers}}], 
+          $cc->status,
+          HTTP::Status::status_message($cc->status),
+          [%{$cc->{headers}}],
           $content
         );
         $cr->conn->send_response($response);

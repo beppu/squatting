@@ -5,7 +5,6 @@ no  strict 'refs';
 use warnings;
 
 use Squatting ':controllers';
-use Data::Dump 'dump';
 
 our $AUTOLOAD;
 
