@@ -8,9 +8,10 @@ WriteMakefile (
     'EXE_FILES'     => [ 'bin/squatting' ],
     'PREREQ_PM'     => {
 	'HTTP::Daemon'     => 0,
-        'Continuity'       => 0,
+        'Continuity'       => 0.991,
         'Data::Dump'       => 0,
         'JSON::XS'         => 0,
+        'Shell::Perl'      => 0,
     },
 );
 
