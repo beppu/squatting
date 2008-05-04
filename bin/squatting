@@ -23,7 +23,7 @@ GetOptions(
 );
 
 sub help {
-  print "((( Start a Squatting Application )))
+  print "[(( Start a Squatting Application ))]
 
 Usage: squatting [OPTIONS]... App
 
