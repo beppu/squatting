@@ -187,6 +187,24 @@ issues:
     - John Beppu <john.beppu@gmail.com>
     - closed issue with disposition fixed
     - ""
+- !ditz.rubyforge.org,2008-03-06/issue 
+  title: Add edit and t/* to the MANIFEST.
+  desc: Otherwise, they won't be included in the tar.gz.
+  type: :bugfix
+  component: Squatting
+  release: "0.12"
+  reporter: John Beppu <john.beppu@gmail.com>
+  status: :unstarted
+  disposition: 
+  creation_time: 2008-05-04 11:26:30.602928 -07:00
+  references: []
+
+  id: 5ac4537fc058017b18a08751af3612ecdf6d34f2
+  log_events: 
+  - - 2008-05-04 11:26:31.493328 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - created
+    - ""
 components: 
 - !ditz.rubyforge.org,2008-03-06/component 
   name: Squatting
@@ -217,6 +235,15 @@ releases:
     - John Beppu <john.beppu@gmail.com>
     - released
     - ""
+- !ditz.rubyforge.org,2008-03-06/release 
+  name: "0.12"
+  status: :unreleased
+  release_time: 
+  log_events: 
+  - - 2008-05-04 11:24:54.754065 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - created
+    - missed a spot
 - !ditz.rubyforge.org,2008-03-06/release 
   name: "0.20"
   status: :unreleased
