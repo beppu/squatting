@@ -6,7 +6,6 @@ use warnings;
 use base 'Exporter';
 use Continuity;
 use Squatting::Mapper;
-use HTTP::Status;
 use Data::Dump qw(dump);
 
 our $VERSION     = '0.01';
@@ -100,7 +99,7 @@ sub go {
         my $content = $app->service($cc, @$p);
         my $response = HTTP::Response->new(
           $cc->status, 
-          status_message($cc->status), 
+          HTTP::Status::status_message($cc->status), 
           [%{$cc->{headers}}], 
           $content
         );
