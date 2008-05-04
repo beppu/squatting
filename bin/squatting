@@ -10,7 +10,7 @@ use File::Basename;
 
 # defaults
 $_{port}  = 4234;
-$_{debug} = 0;
+$_{debug} = 1;
 
 # command line options
 GetOptions(
@@ -24,18 +24,18 @@ GetOptions(
 );
 
 sub help {
-  print qq{Start a Squatting application.
+  print "((( Start a Squatting Application )))
 
 Usage: squatting [OPTIONS]... App
 
 Options:
-    -p, --port NUM                   Port for web server (defaults to 4234)
+    -p, --port NUM                   Port for web server (defaults to $_{port})
     -l, --log FILE                   Log file
     -C, --console                    Run in console mode with Shell::Perl
     -v, --version                    Display Squatting version
-    --debug NUM                      Continuity debug_level (defaults to 0)
+    --debug NUM                      Continuity debug_level (defaults to $_{debug})
     --help                           Display this help message
-};
+";
 }
 
 if ($_{version}) {
