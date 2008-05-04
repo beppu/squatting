@@ -46,6 +46,7 @@ sub D {
 
 # $url = R(Controller, params..., { cgi => vars }) TODO
 sub R {
+  '/'
 }
 
 # $view = V($name, %subs)  # Construct a Squatting::View
