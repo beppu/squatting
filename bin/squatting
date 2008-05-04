@@ -18,8 +18,9 @@ GetOptions(
   'log|l=s',
   'console|C',
   'debug=i',
-  'help',
   'version|v',
+  'logo',
+  'help',
 );
 
 sub help {
@@ -33,6 +34,7 @@ Options:
     -C, --console                    Run in console mode with Shell::Perl
     -v, --version                    Display Squatting version
     --debug NUM                      Continuity debug_level (defaults to $_{debug})
+    --logo                           The International Squatting Symbol
     --help                           Display this help message
 ";
 }
@@ -45,6 +47,9 @@ if ($_{version}) {
   exit 0;
 } elsif ($_{log}) {
 
+} elsif ($_{logo}) {
+  print <DATA>;
+  exit 0;
 } else {
 
 }
@@ -73,7 +78,7 @@ if ($module) {
       $self;
     };
     foreach my $method qw(get post) {
-      *{$app."::$method" } = sub { 
+      *{$app."::$method" } = sub {
         my $cc = ${$app."::Controllers::C"}{$_[1]}->clone->mock_init(@_[2..$#_]);
         my $content = $cc->$method(@_[2..$#_]);
         ($cc, $content);
@@ -95,8 +100,6 @@ if ($module) {
 }
 
 exit 0;
-
-__END__
 
 =head1 NAME
 
@@ -148,13 +151,55 @@ TODO - Show version
 
 =cut
 
-# Local Variables: ***
-# mode: cperl ***
-# indent-tabs-mode: t ***
-# cperl-close-paren-offset: -2 ***
-# cperl-continued-statement-offset: 2 ***
-# cperl-indent-level: 2 ***
-# cperl-indent-parens-as-block: t ***
-# cperl-tab-always-indent: f ***
-# End: ***
-# vim:tabstop=2 softtabstop=2 shiftwidth=2 shiftround expandtab
+
+__DATA__
+
+								  -+m
+								 .%- ..
+         						       . m*#-+
+							       m+*##+m.
+							  ...- m#*#%-..
+							--.. +mm###-+-.
+						      ..- m..*#####*m++
+						   .--+.-m#m+.%+-m###+
+         					  .-m..###+...%	m#m-##%	.
+						     +%+.. -++.+  m--#-+
+						  .. --..%*-%-	  --+#.m
+						   -  -	-.--+# ..   +#m+
+							..#-+%.	   +.#..
+					   .	. .    .%#-...	   .-+.-
+				   .   -.+m+-. .. .-.++#.*-...	     . .
+			   ..- .+. ..+..+---+%---.--.--#m#+..	     +
+			.-. m .. -.m++m####%###-##%.++*%++ m .
+		      .	+. m-- *##*#+###..-m+m.++.#-####-%-m.  ..
+		      -m#--%###-m+- --+%m..--. -  .-*%####% ..-. -.
+		   -...-*##%m+.+-+.++-m#+-. .. . +.+%%-#m..m#%m+..-.
+		   -..*#**m.-.+..-.m+-##+.-       +m-+*%- %-- %##-
+		 ...++*++.. . .     +m##*-.       -.%m+ +  -.-++%+-
+		. ++###.%.--   . . *m+##%%.	.-%-#-    .  ...#...
+	         ..%*+m       . + m+####%..     .-+%#+-       .-#--
+	       	 -.#mm..    --.- +%#-m#%%     ...%+##%+        .+..\-
+	       	.+mm%+ .. ..m-m.+%%+m**+..    --.##%m--.        + #-.
+	        .--%%.   . m .#++ %-- +mm-.  ...m##m-.+	        -+*--
+	         +-#+-   . .##+..   +..m     .m-#%#%-- 	        -.##-.
+	       .%.**+. ...m#%..- .. ...# m . +-%#.%+   	       . %#%..+
+	       -+##%.+..  #-. -.       .m+..m -#%mm            .--**++
+	       .-%.*m+-...mm+        . .+ +-  -m-+.            ..*#.. .
+	       .-+*m#%m**++-+        ..  -##.%%.-            - ..##+-.
+	       - +-*%##%+mm--+         	. .#m-m-           - -+.m.##-+.
+		.. m*##*#*%-m+-  - .    . .m.+.m      ..     m%+.*-% -
+	       	...+##m%####m-+m- -.   .. ..- ++..  .  +.. +%-###m-%.
+		 ..%#-%#++%####.+.m-+.     . +m#+#+%.. . -#*###m.--
+		 . %-mm	++-mm+**##%mm.	 - .+mm#+*.+--.#/##-+-+m    .
+		..+.#	 - +-. m%m#m#*+.-..+##*###%m#%#% .--- -	. .
+		.-m#m. .  .  ..m+...#%m--+-*#+######.%+..  .+
+	      ..m-#%. .	     ..- .+--  -   .---.-**-+--...
+	     .+.#m#m-		 ..   .	. - -..- ..*
+	    . +-##-+. .			    --	. ..
+	     .+##m%+
+	      .%.---
+	     ..	 .
+	      ...
+
+  http://en.wikipedia.org/wiki/Squatting
+
