@@ -19,6 +19,7 @@ our %EXPORT_TAGS = (
 # Kill the following package vars,
 # and we might have a chance of working under mod_perl.
 our $app;
+our $I = 1;
 our %Q;
 
 require Squatting::Controller;
@@ -62,7 +63,7 @@ sub service {
   warn "EXCEPTION: $@" if ($@);
   my $status = $controller->status;
   my $cookies = $controller->{set_cookies};
-  warn "[$status] @{[$controller->name]}(@{[ join(', '=>@params) ]})->$method";
+  warn sprintf('%5d ', $I++), "[$status] @{[$controller->name]}(@{[ join(', '=>@params) ]})->$method";
   $controller->headers('Set-Cookie' => join("; ", map { 
     CGI::Cookie->new(-name => $_, %{$cookies->{$_}}) 
   } keys %$cookies)) if (%$cookies);
