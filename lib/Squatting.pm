@@ -119,77 +119,74 @@ __END__
 
 =head1 NAME
 
-Squatting - a web microframework for Perl that was inspired by Camping
+Squatting - a Camping-inspired Web Microframework for Perl
 
 =head1 SYNOPSIS
 
   {
     package Bavl;
     use base 'Squatting';
-    sub authenticate { 1 }
-    Bavl->go();
   }
 
   {
     package Bavl::Controllers;
     use Squatting ':controllers';
 
-    C(
-      Home => [ '/' ],
-      get  => sub {
-        $s->{title} = loc('Hello, World!');
-        render 'home'
-      },
-    );
-
-    C(
-      Login => [ '/log/(in|out)' ],
-      get   => sub {
-        my $in_or_out = shift;
-        render 'login'
-      },
-      post  => sub {
-        my $in_or_out = shift;
-        my $username = $input->{username};
-        my $password = $input->{password};
-        if (Bavl->authenticate($username, $password)) {
-          $s->{logged_in} = 1;
-          redirect R('Home');
-        } else {
-          redirect R('Login');
-        }
-      }
+    our @C = (
+      C(
+        Home => [ '/' ],
+        get  => sub {
+          my $self = shift;
+          my $v = $self->v;
+          $v->{title} = loc('Hello, World!');
+          $self->render('home');
+          # $self->render('home', 'json');
+        },
+      ),
     );
   }
 
   {
     package Bavl::Views;
-    use Squatting ':view';
+    use Squatting ':views';
+    use JSON::XS;
 
-    V(
-      'html',
-      home   => sub { "<h1>" . $s->{title} . "</h1>" },
-      login  => sub { },
-      search => sub { }
+    our @V = (
+      V(
+        'html',
+        layout => sub { my $v = shift; "<html><body>@_</body></html>" },
+        home   => sub { my $v = shift; "<h1>$v->{title}</h1>" },
+        login  => sub { },
+        search => sub { }
+      ),
+      V(
+        'json',
+        _ => sub { encode_json($_[0]) },
+      ),
     );
-
-    V(
-      'json',
-      search => sub { to_json($s) },
-    )
   }
-
 
 =head1 DESCRIPTION
 
 This is beppu's attempt to bring the conciseness of Camping to Perl.
 
-This is also my attempt to show that you don't need to have a huge proliferation
-of classes to keep code well-organized.  (JavaScript and prototype-based OO has taught
-me this.)
+This is also my attempt to show that you don't need to have a huge
+proliferation of classes to keep code well-organized.  (JavaScript and
+prototype-based OO has taught me this.)
 
 =head1 AUTHOR
 
 John BEPPU (beppu at cpan.org)
 
 =cut
+
+# Local Variables: ***
+# mode: cperl ***
+# indent-tabs-mode: t ***
+# cperl-close-paren-offset: -2 ***
+# cperl-continued-statement-offset: 2 ***
+# cperl-indent-level: 2 ***
+# cperl-indent-parens-as-block: t ***
+# cperl-tab-always-indent: f ***
+# End: ***
+# vim:tabstop=2 softtabstop=2 shiftwidth=2 shiftround expandtab
