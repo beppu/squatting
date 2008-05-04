@@ -33,8 +33,9 @@ Options:
     -p, --port NUM                   Port for web server (defaults to $_{port})
     -l, --log FILE                   Log file  # TODO
     -C, --console                    Run in console mode with Shell::Perl
-    -v, --version                    Display Squatting version
     --debug NUM                      Continuity debug_level (defaults to $_{debug})
+
+    -v, --version                    Display Squatting version
     --logo                           Display the International Squatting Symbol
     --help                           Display this help message
 
