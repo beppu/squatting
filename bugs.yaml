@@ -161,6 +161,32 @@ issues:
     - John Beppu <john.beppu@gmail.com>
     - created
     - ""
+- !ditz.rubyforge.org,2008-03-06/issue 
+  title: Put t/ under version control.
+  desc: whoops.
+  type: :bugfix
+  component: Squatting
+  release: "0.11"
+  reporter: John Beppu <john.beppu@gmail.com>
+  status: :closed
+  disposition: :fixed
+  creation_time: 2008-05-04 06:30:08.353480 -07:00
+  references: []
+
+  id: 17adc91877c78afc2be32b4e77ea94bd4b373951
+  log_events: 
+  - - 2008-05-04 06:30:10.102694 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - created
+    - ""
+  - - 2008-05-04 06:31:00.932247 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - assigned to release 0.11 from unassigned
+    - ""
+  - - 2008-05-04 06:32:08.942620 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - closed issue with disposition fixed
+    - ""
 components: 
 - !ditz.rubyforge.org,2008-03-06/component 
   name: Squatting
@@ -187,3 +213,12 @@ releases:
     - John Beppu <john.beppu@gmail.com>
     - created
     - The purpose of this release is to implement the View system.
+- !ditz.rubyforge.org,2008-03-06/release 
+  name: "0.11"
+  status: :unreleased
+  release_time: 
+  log_events: 
+  - - 2008-05-04 06:30:42.717239 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - created
+    - ""
