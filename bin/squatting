@@ -4,7 +4,6 @@ use strict;
 no  strict 'refs';
 use warnings;
 
-use Squatting;
 use Getopt::Long;
 use File::Basename;
 
