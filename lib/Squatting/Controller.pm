@@ -16,7 +16,7 @@ sub new {
   bless { name => $name, urls => $urls, @_ } => $class;
 }
 
-# init w/ Continuity 
+# init w/ Continuity
 sub init {
   my $self = shift;
   my $cr   = shift;
@@ -120,7 +120,7 @@ sub post {
 }
 
 # $content = $self->render($template, $vars)
-sub render { 
+sub render {
   my ($self, $template, $vn) = @_;
   my $view;
   if (defined($vn)) {
@@ -161,7 +161,7 @@ sub e {
 sub i {
   my $q = CGI->new($_[0]);
   my %i = $q->Vars;
-  my %input = map { 
+  my %input = map {
     if ($i{$_} =~ /\0/) {
       $_ => split("\0", $i{$_});
     } else {

@@ -63,13 +63,13 @@ sub service {
   my $status = $controller->status;
   my $cookies = $controller->{set_cookies};
   warn sprintf('%5d ', $I++), "[$status] @{[$controller->name]}(@{[ join(', '=>@params) ]})->$method";
-  $controller->headers('Set-Cookie' => join("; ", map { 
-    CGI::Cookie->new(-name => $_, %{$cookies->{$_}}) 
+  $controller->headers('Set-Cookie' => join("; ", map {
+    CGI::Cookie->new(-name => $_, %{$cookies->{$_}})
   } keys %$cookies)) if (%$cookies);
   if (my $cr_cookies = $controller->cr->cookies) {
     $cr_cookies =~ s/^Set-Cookie: //;
     $controller->headers('Set-Cookie' =>
-      join("; ", grep { defined } 
+      join("; ", grep { defined }
         ($controller->headers('Set-Cookie'), $cr_cookies)));
   }
   return $content;
@@ -78,7 +78,7 @@ sub service {
 # App->init  # Initialize $app
 sub init {
   $app = shift;
-  %{$app."::Controllers::C"} = map { $_->name => $_ } 
+  %{$app."::Controllers::C"} = map { $_->name => $_ }
   @{$app."::Controllers::C"};
   %{$app."::Views::V"} = map { $_->name => $_ }
   @{$app."::Views::V"};
