@@ -96,7 +96,7 @@ sub headers {
 }
 
 # outgoing cookies
-sub set_cookie {
+sub set_cookies {
   my ($self, $name, $value) = @_;
   if (defined($name)) {
     if (defined($value)) {
