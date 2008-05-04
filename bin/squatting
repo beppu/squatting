@@ -57,7 +57,7 @@ if ($module) {
   if ($_{console}) {
     eval { require Shell::Perl };
     if ($@) {
-      print "Please install Shell::Perl if you'd like to use the squatting console.\n";
+      print "Please install Shell::Perl if you'd like to use the Squatting console.\n";
       exit 1;
     }
     $app->init;
