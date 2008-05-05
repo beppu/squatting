@@ -45,7 +45,7 @@ sub D {
   ($Squatting::Controller::r404, []);
 }
 
-# $url = R(Controller, params..., { cgi => vars })  # Routing function - TODO
+# $url = R('Controller', @params, { cgi => vars })  # Routing function - TODO
 sub R {
   '/'
 }
@@ -97,9 +97,9 @@ sub go {
     mapper   => Squatting::Mapper->new(
       callback => sub {
         my $cr = shift;
-        my ($c, $p) = D($cr->uri->path);
-        my $cc = $c->clone->init($cr);
-        my $content = $app->service($cc, @$p);
+        my ($c, $p)  = D($cr->uri->path);
+        my $cc       = $c->clone->init($cr);
+        my $content  = $app->service($cc, @$p);
         my $response = HTTP::Response->new(
           $cc->status,
           HTTP::Status::status_message($cc->status),
