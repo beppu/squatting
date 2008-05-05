@@ -4,6 +4,7 @@ use strict;
 no  strict 'refs';
 use warnings;
 use base 'Exporter';
+
 use Continuity;
 use Squatting::Mapper;
 
