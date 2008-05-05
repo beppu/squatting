@@ -3,6 +3,7 @@ package Squatting::Controller;
 use strict;
 no  strict 'refs';
 use warnings;
+no  warnings 'redefine';
 
 use Squatting ':controllers';
 

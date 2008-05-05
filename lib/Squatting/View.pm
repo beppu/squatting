@@ -2,6 +2,7 @@ package Squatting::View;
 
 use strict;
 use warnings;
+no  warnings 'redefine';
 
 use Squatting ':views';
 

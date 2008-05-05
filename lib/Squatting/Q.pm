@@ -4,6 +4,7 @@ use strict;
 no  strict 'refs';
 use warnings;
 no  warnings 'redefine';
+no  warnings 'once';
 
 use Attribute::Handlers;
 
