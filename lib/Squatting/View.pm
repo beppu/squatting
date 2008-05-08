@@ -26,10 +26,10 @@ sub _render {
   my ($self, $template, $vars, $alt) = @_;
   if (exists $self->{layout} && ($template !~ /^_/)) {
     $template = $alt if defined $alt;
-    join "", $self->{layout}($vars, $self->{$template}($vars));
+    join "", $self->{layout}($self, $vars, $self->{$template}($self, $vars));
   } else {
     $template = $alt if defined $alt;
-    join "", $self->{$template}($vars);
+    join "", $self->{$template}($self, $vars);
   }
 }
 

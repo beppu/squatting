@@ -14,7 +14,7 @@ our @V = (
   V(
     'html',
     layout => sub {
-      my $v = shift;
+      my ($self, $v, @body) = @_;
       start_html('Example'),
         div({-id => 'header'},
           h1('Example'), 
@@ -30,11 +30,11 @@ our @V = (
             li(a({-href => '/droids-you-are-looking-for'}, "404")),
           ),
         ),
-        div({-id => 'content'}, @_),
+        div({-id => 'content'}, @body),
       end_html;
     },
     home => sub {
-      my $v = shift;
+      my ($self, $v) = @_;
       h2("Home"),
       h3('$v -- Template Variables'),
       pre(encode_json($v)),
@@ -43,14 +43,14 @@ our @V = (
       p('This is an example Squatting application.')
     },
     profile => sub {
-      my $v = shift;
+      my ($self, $v) = @_;
       h2("Profile of $v->{name}"),
       p("$v->{name} is a fascinating person."),
       h2("Special Hack"),
       p({-id => 'secret'}, $v->{_secret_from_json});
     },
     env => sub {
-      my $v = shift;
+      my ($self, $v) = @_;
       h2("env"),
       pre(dump($v));
     },
@@ -59,12 +59,12 @@ our @V = (
   V(
     'json',
     profile => sub {
-      my $v = shift;
+      my ($self, $v) = @_;
       delete $v->{_secret_from_json};
       encode_json($v);
     },
     _ => sub {
-      my $v = shift;
+      my ($self, $v) = @_;
       encode_json($v);
     }
   )
