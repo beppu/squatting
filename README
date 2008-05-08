@@ -13,12 +13,15 @@
                                   RANDOM NOTES
                                   ============
 
-                 Let's say you have an application called Bavl.
+              There is an example application in the eg/ directory
+                               called "Example".
+
            This is how you currently run this squatting application:
 
-                                 squatting Bavl
+                                     cd eg/
+                               squatting Example
 
-                 Bavl.pm needs to be discoverable through @INC.
+              (Example.pm needs to be discoverable through @INC.)
 
                                     - -*- -
 
@@ -27,7 +30,7 @@
 
                                     - -*- -
 
-      Bavl::Controllers is the package that contains all the controllers.
+     Example::Controllers is the package that contains all the controllers.
 
                                     - -*- -
 
@@ -48,7 +51,7 @@
 
                                     - -*- -
 
-            Bavl::Views is the package that contains all the views.
+           Example::Views is the package that contains all the views.
 
                                     - -*- -
 
