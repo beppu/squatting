@@ -40,7 +40,7 @@ our @V = (
       pre(encode_json($v)),
       h3('\%input -- CGI Variables'),
       pre(encode_json($v->{input})),
-      p('Currently, this app is just a sample Squatting application.')
+      p('This is an example Squatting application.')
     },
     profile => sub {
       my $v = shift;
