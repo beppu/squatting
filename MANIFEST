@@ -1,6 +1,10 @@
 bin/squatting
 bugs.yaml
 edit
+eg/Example.pm
+eg/Example/Controllers.pm
+eg/Example/Views.pm
+eg/README
 lib/Squatting.pm
 lib/Squatting/Controller.pm
 lib/Squatting/Mapper.pm
