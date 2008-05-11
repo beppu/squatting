@@ -24,7 +24,7 @@ sub init {
   $self->{cr}          = $cr;
   $self->{env}         = e($cr->http_request);
   $self->{cookies}     = c($self->env->{HTTP_COOKIE});
-  $self->{input}       = i($self->env->{QUERY_STRING});
+  $self->{input}       = i(join('&', grep { defined } ($self->env->{QUERY_STRING}, $cr->request->content)));
   $self->{set_cookies} = {};
   $self->{headers}     = {};
   $self->{v}           = {};

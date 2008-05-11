@@ -17,6 +17,9 @@ our %EXPORT_TAGS = (
 
 # Kill the following package vars,
 # and we might have a chance of working under mod_perl.
+# However, I don't recommend exploring that path.
+# Reverse proxies (like nginx, perlbal, apache 2's mod_proxy_balancer, etc.)
+# are the way to go.
 our $app;
 our $I = 0;
 our %Q;
