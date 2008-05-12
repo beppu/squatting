@@ -103,8 +103,8 @@ issues:
   component: Squatting
   release: "0.20"
   reporter: John Beppu <john.beppu@gmail.com>
-  status: :unstarted
-  disposition: 
+  status: :closed
+  disposition: :fixed
   creation_time: 2008-04-28 19:03:12.484780 -07:00
   references: []
 
@@ -121,6 +121,10 @@ issues:
   - - 2008-05-04 06:16:41.396271 -07:00
     - John Beppu <john.beppu@gmail.com>
     - changed title
+    - ""
+  - - 2008-05-11 23:10:25.069983 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - closed issue with disposition fixed
     - ""
 - !ditz.rubyforge.org,2008-03-06/issue 
   title: Turn controller/view package vars into lexical vars.

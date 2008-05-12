@@ -5,6 +5,8 @@ no  strict 'refs';
 use warnings;
 no  warnings 'redefine';
 
+use CGI::Cookie;
+
 use Squatting ':controllers';
 
 our $AUTOLOAD;
@@ -174,6 +176,7 @@ sub i {
 
 # \%cookies = c($cookie_header)  # Parse Cookie header(s). TODO
 sub c {
+  { CGI::Cookie->parse($_[0]) };
 }
 
 # default 404 controller
