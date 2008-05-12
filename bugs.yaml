@@ -31,8 +31,8 @@ issues:
   component: Squatting
   release: "0.20"
   reporter: John Beppu <john.beppu@gmail.com>
-  status: :unstarted
-  disposition: 
+  status: :closed
+  disposition: :fixed
   creation_time: 2008-04-26 17:37:36.882709 -07:00
   references: []
 
@@ -46,6 +46,10 @@ issues:
     - John Beppu <john.beppu@gmail.com>
     - assigned to release 0.20 from 0.10
     - ""
+  - - 2008-05-12 02:28:53.590346 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - closed issue with disposition fixed
+    - wow, i did it.
 - !ditz.rubyforge.org,2008-03-06/issue 
   title: Implement Squatting::View.
   desc: ""

@@ -5,6 +5,8 @@ no  strict 'refs';
 use warnings;
 use base 'Exporter';
 
+use List::Util qw(first);
+
 use Continuity;
 use Squatting::Mapper;
 
@@ -50,7 +52,20 @@ sub D {
 
 # $url = R('Controller', @params, { cgi => vars })  # Routing function - TODO
 sub R {
-  '/'
+  my ($controller, @params) = @_;
+  my $input;
+  if (@params && ref($params[-1]) eq 'HASH') {
+    $input = pop(@params);
+  }
+  my $c = ${$app."::Controllers::C"}{$controller};
+  die "$controller controller not found" unless $c;
+  my $arity = @params;
+  my $pattern = first { my @m = /\(.*?\)/g; $arity == @m } $c->urls->[0];
+  die "couldn't find a matching URL pattern" unless $pattern;
+  while ($pattern =~ /\(.*?\)/) {
+    $pattern =~ s/\(.*?\)/+shift(@params)/e;
+  }
+  $pattern;
 }
 
 # $view = V($name, %subs)  # Construct a Squatting::View
