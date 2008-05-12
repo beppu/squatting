@@ -174,7 +174,7 @@ sub i {
   \%input;
 }
 
-# \%cookies = c($cookie_header)  # Parse Cookie header(s). TODO
+# \%cookies = c($cookie_header)  # Parse Cookie header(s).
 sub c {
   { CGI::Cookie->parse($_[0]) };
 }
