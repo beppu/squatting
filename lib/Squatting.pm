@@ -143,7 +143,11 @@ Squatting - a Camping-inspired Web Microframework for Perl
 
 =head1 SYNOPSIS
 
-A Basic Application
+Running Your App (where App.pm can be discovered through @INC)
+
+  squatting App
+
+Writing A Basic Application
 
   {
     package App;
@@ -156,26 +160,15 @@ A Basic Application
     package App::Controllers;
     use Squatting ':controllers';
 
-    # setup a list of controller objects using the C() function
+    # Setup a list of controller objects using the C() function.
     our @C = (
       C(
         Home => [ '/' ],
         get  => sub {
-          my $self = shift;
+          my ($self) = @_;
           my $v = $self->v;
           $v->{title} = 'Hello, World!';
           $self->render('home');
-          # $self->render('home', 'json');
-        },
-        post => sub { }
-      ),
-      C(
-        Profile => [ '/~(\w+)/', '/~(\w+)\.(\w+)' ],
-        get => sub {
-          my ($self, $name, $format) = @_;
-          $format ||= 'html';
-          $self->v->{name} = $name;
-          $self->render('profile', $format);
         },
         post => sub { }
       ),
@@ -185,34 +178,125 @@ A Basic Application
   {
     package App::Views;
     use Squatting ':views';
-    use JSON::XS;
 
-    # setup a list of view objects using the V() function
+    # Setup a list of view objects using the V() function.
     our @V = (
       V(
         'html',
-        layout  => sub { my $v = shift; "<html><body>@_</body></html>" },
-        home    => sub { my $v = shift; "<h1>$v->{title}</h1>" },
-        profile => sub { my $v = shift; "<h1>I am $v->{name}.</h1>" },
-      ),
-      V(
-        'json',
-        _ => sub { encode_json($_[0]) },
+        layout  => sub { 
+          my ($self, $v, $content) = @_; 
+          "<html><body>$content</body></html>" 
+        },
+        home    => sub { 
+          my ($self, $v) = @_;
+          "<h1>$v->{title}</h1>"
+        },
       ),
     );
   }
 
-Running Your App
-
-  squatting App
-
 =head1 DESCRIPTION
 
-This is my attempt to bring the conciseness of Camping to Perl.
+Squatting is a web microframework like Camping.
+However, it's written in Perl, and it uses L<Continuity> as its foundation.
 
-This is also my attempt to show that you don't need to have a huge
-proliferation of classes to keep code well-organized.  (Prototype-based OO has
-taught me this.)
+=head2 What does that mean?
+
+=over 4
+
+=item B<Concise> API
+
+_why did a really good job in designing Camping's API, so I copied quite a bit
+of the "feel" of the Camping for Squatting.
+
+=item B<Tiny> Codebase
+
+Right now, it's around 8K of actual code, but it hasn't been golfed, yet,
+so it can definitely get smaller.  We also made an effort to keep the number
+of perl module dependencies down to a minimum.
+
+=item B<RESTful> Controllers Are The Default
+
+Controllers are objects (not classes) that are made to look like HTTP
+resources.  Thus, they respond to methods like get(), post(), put(), and
+delete().
+      
+=item B<RESTless> Controllers Are Possible (thanks to Continuity)
+
+Continuation-based code can be surprisingly useful (especially for COMET), so
+we try to make RESTless controllers easy to express as well.
+
+=item B<Views> Are ...Different
+
+The View API feels like Camping, but Squatting allows multiple views to coexist
+similar to what Catalyst lets you do.
+
+=item B<Minimal> Policy
+
+You may use any templating system you want, and you may use any ORM* you want.
+We only have a few rules on how the controller code and the view code should be
+organized, but beyond that, you are free.
+
+=back
+
+* Regarding ORMs, the nature of Continuity makes it somewhat DBI-unfriendly, so
+this may be a deal-breaker for many of you.  However, I look at it as an opportunity
+to try novel storage systems like CouchDB, instead.  With the high level of concurrency
+that Squatting can support (thanks to Continuity) we are probably better off this way,
+anyway.
+
+=head2 Tell me more.
+
+The next release will contain a L<Squatting::Tutorial>.  It will teach you how to
+build a web site using Squatting, and it will provide many examples.  Until then...
+
+=head1 SEE ALSO
+
+=head2 Bavl
+
+We're going to throw Squatting into the metaphorical deep end by using it to
+implement the towr.of.bavl.org.  If you're looking for an example of how to use
+Squatting for an ambitious project, look at the Bavl codebase.
+
+  http://github.com/beppu/bavl/tree/master
+
+  http://towr.of.bavl.org/
+
+=head2 Perl Modules
+
+When you want to start dabbling with RESTless controllers, it would serve
+you well to understand how Continuity and Coro work.  I recommend reading the
+POD for the following Perl modules:
+
+L<Continuity>,
+L<Coro>,
+L<Coro::Event>,
+L<Event>.
+
+=head2 Camping
+
+Squatting is the spiritual descendant of Camping, so studying the Camping API
+will indirectly teach you much of the Squatting API.
+
+=head2 Prototype-based OO
+
+With that said, there were a lot of obscure Ruby idioms in Camping that were
+damn near impossible to directly translate into Perl.  I got around this by
+resorting to techniques that are reminiscent of prototype-based OO.  (That's
+why controllers and views are objects instead of classes.)
+
+----
+
+I've been coding a lot of JavaScript these days, and it has definitely warped
+my mind.  I've come to love the simplicity of Prototype-based OO, and I think
+it's a damned shame that they're introducing concepts like 'class' in the next
+version of JavaScript.  It's like they missed the point of Prototype-based OO.
+
+If you're going to add anything to JavaScript, make the prototype side of it
+stronger.  Look to languages like Io, and make it easier to clone objects and
+manipulate an object's prototype chain.  The beauty of prototypes is that this
+one concept can be used to unify objects, classes, and namespaces.  Look at Io
+if you don't believe me.  
 
 =head1 AUTHOR
 
