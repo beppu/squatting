@@ -208,34 +208,34 @@ However, it's written in Perl, and it uses L<Continuity> as its foundation.
 
 =over 4
 
-=item B<Concise> API
+=item B<Concise API>
 
 _why did a really good job in designing Camping's API, so I copied quite a bit
 of the feel of Camping for Squatting.
 
-=item B<Tiny> Codebase
+=item B<Tiny Codebase>
 
 Right now, it's around 7K of actual code, but it hasn't been golfed, yet,
 so it can definitely get smaller.  We also made an effort to keep the number
 of perl module dependencies down to a minimum.
 
-=item B<RESTful> Controllers By Default
+=item B<RESTful Controllers By Default>
 
 Controllers are objects (not classes) that are made to look like HTTP
 resources.  Thus, they respond to methods like get(), post(), put(), and
 delete().
 
-=item B<RESTless> Controllers Are Possible (thanks to Continuity)
+=item B<RESTless Controllers Are Possible (thanks to Continuity)>
 
 Continuation-based code can be surprisingly useful (especially for COMET), so
 we try to make RESTless controllers easy to express as well.
 
-=item B<Views> Are ...Different
+=item B<Views Are ...Different>
 
 The View API feels like Camping, but Squatting allows multiple views to coexist
 (kinda like Catalyst (but not quite)).
 
-=item B<Minimal> Policy
+=item B<Minimal Policy>
 
 You may use any templating system you want, and you may use any ORM* you want.
 We only have a few rules on how the controller code and the view code should be
