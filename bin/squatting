@@ -21,7 +21,7 @@ GetOptions(
   'debug=i',
   'version|v',
   'logo',
-  'help',
+  'h|help',
 );
 
 sub help {
@@ -106,7 +106,7 @@ exit 0;
 
 =head1 NAME
 
-squatting -- start up a Squatting server
+squatting -- Squatting server start-up script
 
 =head1 SYNOPSIS
 
@@ -114,41 +114,58 @@ Usage
 
   squatting [OPTION]... APPLICATION
 
-Example:  Starting Bavl on port 4234
+Starting an App in web server mode on port 4234:
 
-  squatting -p 4234 Bavl
+  squatting -p 4234 App
+
+Start an App in interactive console mode:
+
+  squatting -C App
+  Welcome to the Perl shell. Type ':help' for more information
+
+  App @> \@App::Controllers::C
+  App @> \%App::Controllers::C
+  App @> \@App::Views::V
+  App @> \%App::Views::V
+  App @> App->get('Home')
+  App @> App->post('Comment', { name => 'beppu', body => 'Why?' })
 
 =head1 DESCRIPTION
 
-We're here to stay.
+Start a Squatting application.
 
 =head1 OPTIONS
 
 =over 2
 
-=item -h, --host HOSTNAME
-
-TODO - Host for web server to bind to (default is all IPs)
-
 =item -p, --port NUM
 
-TODO - Port for web server (defaults to 4234)
+Port for web server (defaults to 4234)
 
 =item -l, --log FILE
 
-TODO - Start a log file ('-' for STDOUT)
+(TODO) Start a log file ('-' for STDOUT)
 
 =item -C, --console
 
-TODO - Run in console mode with pirl
+Run in console mode with Shell::Perl.
 
-=item -?, --help
+=item --debug NUM
 
-TODO - Show the help message
+Set Continuity's debug level.  0 is the least verbose setting, and higher
+numbers get progressively more verbose.
 
 =item -v, --version
 
-TODO - Show version
+Show version
+
+=item --logo
+
+Display the B<International Squatting Symbol>.
+
+=item -h, --help
+
+Show the help message
 
 =back
 
