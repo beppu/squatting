@@ -6,6 +6,8 @@ use Squatting ':controllers';
 use Module::ScanDeps 'add_deps';
 
 our @C = (
+
+  # The job of this controller is to display the home page.
   C(
     Home => [ '/' ],
     get  => sub {
@@ -13,10 +15,12 @@ our @C = (
       $self->render('home');
     }
   ),
+
+  # The job of this controller is to take $module
+  # and find the file that contains the POD for it.
+  # Then it has to display the POD as HTML.
   C(
     POD => [ '/pod/(.*)' ],
-    # The job of this controller is to take $module
-    # and find the file that contains the POD for it.
     get => sub {
       my ($self, $module) = @_;
       my $v   = $self->v;
