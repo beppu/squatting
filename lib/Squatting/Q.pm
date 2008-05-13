@@ -19,7 +19,7 @@ __END__
 
 =head1 NAME
 
-Squatting::Q - setup a separate queue for a controller
+Squatting::Q - define a separate session queue for a controller
 
 =cut
 

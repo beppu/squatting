@@ -26,7 +26,7 @@ __END__
 
 =head1 NAME
 
-Squatting::Mapper - map requests to coroutines
+Squatting::Mapper - map requests to session queues
 
 =cut
 
