@@ -83,14 +83,17 @@ sub service {
   warn "EXCEPTION: $@" if ($@);
   my $status = $controller->status;
   my $cookies = $controller->{set_cookies};
+  #
   warn sprintf('%5d ', $I), "[$status] $app->$method(@{[ join(', '=>map { \"'$_'\" } $controller->name, @params) ]})\n";
-  $controller->headers('Set-Cookie' => join("; ", map {
-    CGI::Cookie->new(-name => $_, %{$cookies->{$_}})
-  } keys %$cookies)) if (%$cookies);
+  #
+  $controller->headers('Set-Cookie' => join("; ", 
+    map { CGI::Cookie->new( -name => $_, %{$cookies->{$_}} ) }
+      keys %$cookies))
+        if (%$cookies);
   if (my $cr_cookies = $controller->cr->cookies) {
     $cr_cookies =~ s/^Set-Cookie: //;
-    $controller->headers('Set-Cookie' =>
-      join("; ", grep { defined }
+    $controller->headers('Set-Cookie' => join("; ",
+      grep { defined }
         ($controller->headers('Set-Cookie'), $cr_cookies)));
   }
   return $content;
