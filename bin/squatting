@@ -6,7 +6,6 @@ use warnings;
 
 use Squatting;
 use Getopt::Long;
-use File::Basename;
 
 # defaults
 $_{port}  = 4234;
@@ -57,11 +56,13 @@ if ($_{version}) {
 
 }
 
-my $module = shift;
-$module =~ s/\.pmc?$//;
-if ($module) {
-  require "$module.pm";
-  my $app = basename $module;
+my $app = shift;
+$app =~ s/\.pmc?$//;
+if ($app) {
+  my $path = $app;
+  $path =~ s{::}{/}g;
+  $path .= ".pm";
+  require "$path";
   if ($_{console}) {
     eval { require Shell::Perl };
     if ($@) {
@@ -88,9 +89,9 @@ if ($module) {
         ($cc, $content);
       };
     }
-    $0 = $module;
+    $0 = $app;
     my $pirl = Shell::Perl->new;
-    $pirl->set_package($module."::Controllers");
+    $pirl->set_package($app."::Controllers");
     $pirl->run;
   } else {
     $app->go(
