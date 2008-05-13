@@ -1,8 +1,8 @@
-Example is an example of a Squatting Application.
+This directory is full of examples.
 
-Feel free to look around.
+squatting Example
+  This is the first example app I made.
 
-Run this app by running:
-
-  squatting Example
+squatting PODServer
+  pod2html
 
