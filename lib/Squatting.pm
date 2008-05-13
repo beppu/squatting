@@ -312,6 +312,8 @@ John BEPPU E<lt>beppu@cpan.orgE<gt>
 
 Copyright (c) 2008 John BEPPU E<lt>beppu@cpan.orgE<gt>.
 
+=head2 The "MIT" License
+
 Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation
 files (the "Software"), to deal in the Software without
