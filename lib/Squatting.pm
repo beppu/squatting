@@ -10,7 +10,7 @@ use List::Util qw(first);
 use Continuity;
 use Squatting::Mapper;
 
-our $VERSION     = '0.12';
+our $VERSION     = '0.20';
 our @EXPORT_OK   = qw($app C R V);
 our %EXPORT_TAGS = (
   controllers => [qw($app C R)],
