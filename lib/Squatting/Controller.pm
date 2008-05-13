@@ -28,7 +28,7 @@ sub init {
   $self->{cookies}     = c($self->env->{HTTP_COOKIE});
   $self->{input}       = i(join('&', grep { defined } ($self->env->{QUERY_STRING}, $cr->request->content)));
   $self->{set_cookies} = {};
-  $self->{headers}     = {};
+  $self->{headers}     = { 'Content-Type' => 'text/html' };
   $self->{v}           = {};
   $self->{status}      = 200;
   $self;

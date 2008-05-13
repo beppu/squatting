@@ -37,11 +37,12 @@ sub C {
 # ($controller, \@regex_captures) = D($path)  # Return controller and captures for a path
 sub D {
   no warnings 'once';
+  my $url = URI::Escape::uri_unescape($_[0]);
   my $C = \@{$app.'::Controllers::C'};
   my ($controller, @regex_captures);
   foreach $controller (@$C) {
     foreach (@{$controller->urls}) {
-      if (@regex_captures = ($_[0] =~ qr{^$_$})) {
+      if (@regex_captures = ($url =~ qr{^$_$})) {
         pop @regex_captures if ($#+ == 0);
         return ($controller, \@regex_captures);
       }
