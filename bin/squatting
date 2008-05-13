@@ -58,6 +58,7 @@ if ($_{version}) {
 }
 
 my $module = shift;
+$module =~ s/\.pmc?$//;
 if ($module) {
   require "$module.pm";
   my $app = basename $module;
