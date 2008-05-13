@@ -60,7 +60,7 @@ sub R {
   my $c = ${$app."::Controllers::C"}{$controller};
   die "$controller controller not found" unless $c;
   my $arity = @params;
-  my $pattern = first { my @m = /\(.*?\)/g; $arity == @m } @{$c->urls}
+  my $pattern = first { my @m = /\(.*?\)/g; $arity == @m } @{$c->urls};
   die "couldn't find a matching URL pattern" unless $pattern;
   while ($pattern =~ /\(.*?\)/) {
     $pattern =~ s/\(.*?\)/+shift(@params)/e;
