@@ -110,7 +110,7 @@ squatting -- Squatting server start-up script
 
 =head1 SYNOPSIS
 
-Usage
+Usage:
 
   squatting [OPTION]... APPLICATION
 
