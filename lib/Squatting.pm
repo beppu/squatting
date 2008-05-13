@@ -250,8 +250,8 @@ anyway.
 
 =head2 Tell me more.
 
-The next release will contain a L<Squatting::Tutorial>.  It'll provide many examples
-on how to use Squatting, and it will give you a feel for what Squatting is capable of.
+The next release will contain a L<Squatting::Tutorial>.  It'll provide many
+examples, and it will give you a feel for what Squatting is capable of.  
 Until then...
 
 =head1 SEE ALSO
