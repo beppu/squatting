@@ -258,8 +258,8 @@ issues:
   component: Squatting
   release: "0.20"
   reporter: John Beppu <john.beppu@gmail.com>
-  status: :unstarted
-  disposition: 
+  status: :closed
+  disposition: :fixed
   creation_time: 2008-05-12 19:25:59.517965 -07:00
   references: []
 
@@ -268,6 +268,10 @@ issues:
   - - 2008-05-12 19:26:00.470959 -07:00
     - John Beppu <john.beppu@gmail.com>
     - created
+    - ""
+  - - 2008-05-13 13:21:04.774906 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - closed issue with disposition fixed
     - ""
 components: 
 - !ditz.rubyforge.org,2008-03-06/component 
