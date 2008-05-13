@@ -51,6 +51,14 @@ sub DESTROY { }
 
 1;
 
+__END__
+
+=head1 NAME
+
+Squatting::View - default view class for Squatting
+
+=cut
+
 # Local Variables: ***
 # mode: cperl ***
 # indent-tabs-mode: t ***

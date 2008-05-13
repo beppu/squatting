@@ -15,6 +15,14 @@ sub Q : ATTR(CODE) {
 
 1;
 
+__END__
+
+=head1 NAME
+
+Squatting::Q - setup a separate queue for a controller
+
+=cut
+
 # Local Variables: ***
 # mode: cperl ***
 # indent-tabs-mode: t ***
