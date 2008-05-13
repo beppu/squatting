@@ -244,12 +244,12 @@ organized, but beyond that, you are free.
 =back
 
 * Regarding ORMs, the nature of Continuity makes it somewhat DBI-unfriendly, so
-this may be a deal-breaker for many of you.  However, I look at this as an opportunity
-to try novel storage systems like CouchDB, instead.  With the high level of concurrency
-that Squatting can support (thanks to Continuity) we are probably better off this way,
-anyway.
+this may be a deal-breaker for many of you.  However, I look at this as an
+opportunity to try novel storage systems like CouchDB, instead.  With the high
+level of concurrency that Squatting can support (thanks to Continuity) we are
+probably better off this way, anyway.
 
-=head2 Tell me more.
+=head2 Where can I learn more?
 
 The next release should contain a L<Squatting::Tutorial>.  It'll provide many
 examples and give you a feel for what Squatting is capable of.
@@ -257,15 +257,20 @@ Until then...
 
 =head1 SEE ALSO
 
-=head2 Bavl
+=head2 Squatting Source Code
+
+The source code is short and it has some useful comments in it, so this might
+be all you need to get going:
+
+  http://github.com/beppu/squatting/tree/master
+
+=head2 Bavl Source Code
 
 We're going to throw Squatting into the metaphorical deep end by using it to
 implement the towr.of.bavl.org.  If you're looking for an example of how to use
-Squatting for an ambitious project, look at the Bavl codebase.
+Squatting for an ambitious project, look at the Bavl code.
 
   http://github.com/beppu/bavl/tree/master
-
-  http://towr.of.bavl.org/
 
 =head2 Continuity and Coro
 
@@ -278,10 +283,16 @@ L<Coro>,
 L<Coro::Event>,
 L<Event>.
 
+Also, check out the Continuity web site.
+
+  http://continuity.tlt42.org/
+
 =head2 Camping
 
 Squatting is the spiritual descendant of Camping, so studying the Camping API
 will indirectly teach you much of the Squatting API.
+
+  http://code.whytheluckystiff.net/camping/
 
 =head2 Prototype-based OO
 
@@ -303,6 +314,8 @@ stronger.  Look to languages like Io, and make it easier to clone objects and
 manipulate an object's prototype chain.  The beauty of prototypes is that this
 one concept can be used to unify objects, classes, and namespaces.  Look at Io
 if you don't believe me.
+
+  http://io-language.org/
 
 =head1 AUTHOR
 
