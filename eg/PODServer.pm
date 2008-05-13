@@ -3,8 +3,6 @@ use base 'Squatting';
 
 package PODServer::Controllers;
 use Squatting ':controllers';
-use File::Find;
-use Data::Dump 'pp';
 use Module::ScanDeps 'add_deps';
 
 our @C = (
@@ -23,7 +21,6 @@ our @C = (
       my ($self, $module) = @_;
       my $v   = $self->v;
       my $key = $module;
-      $v->{module} = $module;
       $key =~ s{\.html$}{};
       $key =~ s{::}{/}g;
       $key =~ s/$/.pm/;
@@ -41,6 +38,7 @@ our @C = (
         $v->{pod_file} = $target;
         $self->render('pod');
       } else {
+        $v->{module} = $module;
         $self->render('pod_not_found');
       }
     }
