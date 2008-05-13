@@ -86,7 +86,7 @@ sub service {
   #
   warn sprintf('%5d ', $I), "[$status] $app->$method(@{[ join(', '=>map { \"'$_'\" } $controller->name, @params) ]})\n";
   #
-  $controller->headers('Set-Cookie' => join("; ", 
+  $controller->headers('Set-Cookie' => join("; ",
     map { CGI::Cookie->new( -name => $_, %{$cookies->{$_}} ) }
       keys %$cookies))
         if (%$cookies);
@@ -186,11 +186,11 @@ What a basic App looks like:
     our @V = (
       V(
         'html',
-        layout  => sub { 
-          my ($self, $v, $content) = @_; 
-          "<html><body>$content</body></html>" 
+        layout  => sub {
+          my ($self, $v, $content) = @_;
+          "<html><body>$content</body></html>"
         },
-        home    => sub { 
+        home    => sub {
           my ($self, $v) = @_;
           "<h1>$v->{title}</h1>"
         },
@@ -210,7 +210,7 @@ However, it's written in Perl, and it uses L<Continuity> as its foundation.
 =item B<Concise> API
 
 _why did a really good job in designing Camping's API, so I copied quite a bit
-of the "feel" of Camping for Squatting.
+of the feel of Camping for Squatting.
 
 =item B<Tiny> Codebase
 
@@ -223,7 +223,7 @@ of perl module dependencies down to a minimum.
 Controllers are objects (not classes) that are made to look like HTTP
 resources.  Thus, they respond to methods like get(), post(), put(), and
 delete().
-      
+
 =item B<RESTless> Controllers Are Possible (thanks to Continuity)
 
 Continuation-based code can be surprisingly useful (especially for COMET), so
@@ -251,7 +251,7 @@ anyway.
 =head2 Tell me more.
 
 The next release should contain a L<Squatting::Tutorial>.  It'll provide many
-examples and give you a feel for what Squatting is capable of.  
+examples and give you a feel for what Squatting is capable of.
 Until then...
 
 =head1 SEE ALSO
@@ -301,7 +301,7 @@ If you're going to add anything to JavaScript, make the prototype side of it
 stronger.  Look to languages like Io, and make it easier to clone objects and
 manipulate an object's prototype chain.  The beauty of prototypes is that this
 one concept can be used to unify objects, classes, and namespaces.  Look at Io
-if you don't believe me.  
+if you don't believe me.
 
 =head1 AUTHOR
 
