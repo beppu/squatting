@@ -7,6 +7,9 @@ eg/Example/Controllers.pm
 eg/Example/Views.pm
 eg/PODServer.pm
 eg/README
+etc/init.d/squatting-debian
+etc/init.d/squatting-gentoo
+etc/init.d/squatting-ubuntu
 lib/Squatting.pm
 lib/Squatting/Controller.pm
 lib/Squatting/Mapper.pm
