@@ -146,11 +146,11 @@ Squatting - a Camping-inspired Web Microframework for Perl
 
 =head1 SYNOPSIS
 
-Running Your App (where App.pm can be discovered through @INC)
+Running an App:
 
   squatting App
 
-Writing A Basic Application
+What a basic App looks like:
 
   {
     package App;
@@ -210,15 +210,15 @@ However, it's written in Perl, and it uses L<Continuity> as its foundation.
 =item B<Concise> API
 
 _why did a really good job in designing Camping's API, so I copied quite a bit
-of the "feel" of the Camping for Squatting.
+of the "feel" of Camping for Squatting.
 
 =item B<Tiny> Codebase
 
-Right now, it's around 8K of actual code, but it hasn't been golfed, yet,
+Right now, it's around 7K of actual code, but it hasn't been golfed, yet,
 so it can definitely get smaller.  We also made an effort to keep the number
 of perl module dependencies down to a minimum.
 
-=item B<RESTful> Controllers Are The Default
+=item B<RESTful> Controllers By Default
 
 Controllers are objects (not classes) that are made to look like HTTP
 resources.  Thus, they respond to methods like get(), post(), put(), and
@@ -232,7 +232,7 @@ we try to make RESTless controllers easy to express as well.
 =item B<Views> Are ...Different
 
 The View API feels like Camping, but Squatting allows multiple views to coexist
-similar to what Catalyst lets you do.
+(kinda like Catalyst (but not quite)).
 
 =item B<Minimal> Policy
 
@@ -243,15 +243,16 @@ organized, but beyond that, you are free.
 =back
 
 * Regarding ORMs, the nature of Continuity makes it somewhat DBI-unfriendly, so
-this may be a deal-breaker for many of you.  However, I look at it as an opportunity
+this may be a deal-breaker for many of you.  However, I look at this as an opportunity
 to try novel storage systems like CouchDB, instead.  With the high level of concurrency
 that Squatting can support (thanks to Continuity) we are probably better off this way,
 anyway.
 
 =head2 Tell me more.
 
-The next release will contain a L<Squatting::Tutorial>.  It will teach you how to
-build a web site using Squatting, and it will provide many examples.  Until then...
+The next release will contain a L<Squatting::Tutorial>.  It'll provide many examples
+on how to use Squatting, and it will give you a feel for what Squatting is capable of.
+Until then...
 
 =head1 SEE ALSO
 
@@ -265,7 +266,7 @@ Squatting for an ambitious project, look at the Bavl codebase.
 
   http://towr.of.bavl.org/
 
-=head2 Perl Modules
+=head2 Continuity and Coro
 
 When you want to start dabbling with RESTless controllers, it would serve
 you well to understand how Continuity and Coro work.  I recommend reading the
@@ -283,17 +284,18 @@ will indirectly teach you much of the Squatting API.
 
 =head2 Prototype-based OO
 
-With that said, there were a lot of obscure Ruby idioms in Camping that were
-damn near impossible to directly translate into Perl.  I got around this by
-resorting to techniques that are reminiscent of prototype-based OO.  (That's
-why controllers and views are objects instead of classes.)
+There were a lot of obscure Ruby idioms in Camping that were damn near
+impossible to directly translate into Perl.  I got around this by resorting to
+techniques that are reminiscent of prototype-based OO.  (That's why controllers
+and views are objects instead of classes.)
 
-----
+=head3 Prototypes == Grand Unified Theory of Objects
 
-I've been coding a lot of JavaScript these days, and it has definitely warped
-my mind.  I've come to love the simplicity of Prototype-based OO, and I think
-it's a damned shame that they're introducing concepts like 'class' in the next
-version of JavaScript.  It's like they missed the point of Prototype-based OO.
+I've been coding a lot of JavaScript these days, and it has definitely
+influenced my programming style.  I've come to love the simplicity of
+prototype-based OO, and I think it's a damned shame that they're introducing
+concepts like 'class' in the next version of JavaScript.  It's like they missed
+the point of prototype-based OO.
 
 If you're going to add anything to JavaScript, make the prototype side of it
 stronger.  Look to languages like Io, and make it easier to clone objects and
