@@ -3,6 +3,7 @@ use ExtUtils::MakeMaker;
 WriteMakefile (
     'NAME'          => 'Squatting',
     'AUTHOR'        => 'John Beppu <beppu@cpan.org>',
+    'LICENSE'       => 'mit',
     'VERSION_FROM'  => 'lib/Squatting.pm',
     'ABSTRACT_FROM' => 'lib/Squatting.pm',
     'EXE_FILES'     => [ 'bin/squatting' ],
