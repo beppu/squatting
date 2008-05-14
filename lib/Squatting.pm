@@ -315,7 +315,7 @@ manipulate an object's prototype chain.  The beauty of prototypes is that this
 one concept can be used to unify objects, classes, and namespaces.  Look at Io
 if you don't believe me.
 
-  http://io-language.org/
+  http://iolanguage.com/
 
 =head1 AUTHOR
 
