@@ -318,10 +318,27 @@ releases:
     - ""
 - !ditz.rubyforge.org,2008-03-06/release 
   name: "0.20"
-  status: :unreleased
-  release_time: 
+  status: :released
+  release_time: 2008-05-13 23:01:23.792506 -07:00
   log_events: 
   - - 2008-04-27 19:57:01.568362 -07:00
     - John Beppu <john.beppu@gmail.com>
     - created
     - The purpose of this release is to implement the View system.
+  - - 2008-05-13 23:01:23.792549 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - released
+    - ""
+- !ditz.rubyforge.org,2008-03-06/release 
+  name: "0.21"
+  status: :released
+  release_time: 2008-05-13 23:02:13.810178 -07:00
+  log_events: 
+  - - 2008-05-13 23:01:54.070480 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - created
+    - minor typos
+  - - 2008-05-13 23:02:13.810223 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - released
+    - ""
