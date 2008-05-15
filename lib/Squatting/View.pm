@@ -24,6 +24,7 @@ sub name : lvalue {
 # $content = $view->render($template, '_')  # render the generic template
 sub _render {
   my ($self, $template, $vars, $alt) = @_;
+  $self->{template} = $template;
   if (exists $self->{layout} && ($template !~ /^_/)) {
     $template = $alt if defined $alt;
     join "", $self->{layout}($self, $vars, $self->{$template}($self, $vars));
