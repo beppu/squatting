@@ -143,7 +143,7 @@ __END__
 
 =head1 NAME
 
-Squatting - a Camping-inspired Web Microframework for Perl
+Squatting - A Camping-inspired Web Microframework for Perl
 
 =head1 SYNOPSIS
 
