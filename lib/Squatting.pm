@@ -5,13 +5,13 @@ no  strict 'refs';
 use warnings;
 use base 'Exporter';
 
+use Continuity;
+use Squatting::Mapper;
+
 use List::Util qw(first);
 use URI::Escape;
 use Carp;
 use Data::Dump 'pp';
-
-use Continuity;
-use Squatting::Mapper;
 
 our $VERSION     = '0.21';
 our @EXPORT_OK   = qw($app C R V);
