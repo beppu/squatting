@@ -6,6 +6,7 @@ use warnings;
 use base 'Exporter';
 
 use List::Util qw(first);
+use URI::Escape;
 
 use Continuity;
 use Squatting::Mapper;
@@ -37,7 +38,7 @@ sub C {
 # ($controller, \@regex_captures) = D($path)  # Return controller and captures for a path
 sub D {
   no warnings 'once';
-  my $url = URI::Escape::uri_unescape($_[0]);
+  my $url = uri_unescape($_[0]);
   my $C = \@{$app.'::Controllers::C'};
   my ($controller, @regex_captures);
   foreach $controller (@$C) {
@@ -51,7 +52,7 @@ sub D {
   ($Squatting::Controller::r404, []);
 }
 
-# $url = R('Controller', @params, { cgi => vars })  # Routing function - TODO
+# $url = R('Controller', @params, { cgi => vars })  # Generate URLs with the routing function
 sub R {
   my ($controller, @params) = @_;
   my $input;
@@ -64,7 +65,16 @@ sub R {
   my $pattern = first { my @m = /\(.*?\)/g; $arity == @m } @{$c->urls};
   die "couldn't find a matching URL pattern" unless $pattern;
   while ($pattern =~ /\(.*?\)/) {
-    $pattern =~ s/\(.*?\)/+shift(@params)/e;
+    $pattern =~ s/\(.*?\)/uri_escape(+shift(@params))/e;
+  }
+  if ($input) {
+    $pattern .= "?".  join('&' => 
+      map { 
+        my $k = $_;
+        ref($input->{$_}) eq 'ARRAY'
+          ? map { "$k=".uri_escape($_) } @{$input->{$_}}
+          : "$_=".uri_escape($input->{$_})
+      } keys %$input);
   }
   $pattern;
 }
