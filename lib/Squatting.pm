@@ -7,6 +7,7 @@ use base 'Exporter';
 
 use List::Util qw(first);
 use URI::Escape;
+use Carp;
 
 use Continuity;
 use Squatting::Mapper;
@@ -60,10 +61,10 @@ sub R {
     $input = pop(@params);
   }
   my $c = ${$app."::Controllers::C"}{$controller};
-  die "$controller controller not found" unless $c;
+  croak "$controller controller not found" unless $c;
   my $arity = @params;
   my $pattern = first { my @m = /\(.*?\)/g; $arity == @m } @{$c->urls};
-  die "couldn't find a matching URL pattern" unless $pattern;
+  croak "couldn't find a matching URL pattern" unless $pattern;
   while ($pattern =~ /\(.*?\)/) {
     $pattern =~ s/\(.*?\)/uri_escape(+shift(@params))/e;
   }
