@@ -166,7 +166,7 @@ sub i {
   my %i = $q->Vars;
   my %input = map {
     if ($i{$_} =~ /\0/) {
-      $_ => split("\0", $i{$_});
+      $_ => [ split("\0", $i{$_}) ];
     } else {
       $_ => $i{$_};
     }
