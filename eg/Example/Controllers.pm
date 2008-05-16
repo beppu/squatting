@@ -7,7 +7,7 @@ use base 'Squatting::Q';
 use Squatting ':controllers';
 use Data::Dump qw(dump);
 
-sub add { my $sum = 0; $sum += $_ foreach(@_); $sum }
+sub add { my $sum = 0; $sum += $_ for(@_); $sum }
 
 our @C = (
 
