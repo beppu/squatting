@@ -57,8 +57,8 @@ if ($_{version}) {
 }
 
 my $app = shift;
-$app =~ s/\.pmc?$//;
 if ($app) {
+  $app =~ s/\.pmc?$//;
   my $path = $app;
   $path =~ s{::}{/}g;
   $path .= ".pm";
