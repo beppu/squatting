@@ -33,4 +33,5 @@ sub MY::postamble {q{
 metamunge:
 	$(NOECHO) $(ECHO) 'no_index:' >> $(DISTVNAME)/META.yml
 	$(NOECHO) $(ECHO) '    - eg'  >> $(DISTVNAME)/META.yml
+	$(NOECHO) $(ECHO) '    - t'   >> $(DISTVNAME)/META.yml
 }}
