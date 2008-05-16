@@ -1,19 +1,20 @@
 use ExtUtils::MakeMaker;
 
 WriteMakefile (
-    'NAME'          => 'Squatting',
-    'AUTHOR'        => 'John BEPPU <beppu@cpan.org>',
-    'LICENSE'       => 'mit',
-    'VERSION_FROM'  => 'lib/Squatting.pm',
-    'ABSTRACT_FROM' => 'lib/Squatting.pm',
-    'EXE_FILES'     => [ 'bin/squatting' ],
-    'PREREQ_PM'     => {
-	'HTTP::Daemon'     => 0,
-        'Continuity'       => 0.991,
-        'Data::Dump'       => 0,
-        'JSON::XS'         => 0,
-        'Shell::Perl'      => 0,
-    },
+  NAME          => 'Squatting',
+  AUTHOR        => 'John BEPPU <beppu@cpan.org>',
+  LICENSE       => 'mit',
+  VERSION_FROM  => 'lib/Squatting.pm',
+  ABSTRACT_FROM => 'lib/Squatting.pm',
+  EXE_FILES     => [ 'bin/squatting' ],
+  PREREQ_PM     => {
+    'HTTP::Daemon'     => 0,
+    'Continuity'       => 0.991,
+    'Data::Dump'       => 0,
+    'JSON::XS'         => 0,
+    'Shell::Perl'      => 0,
+  },
+  depend => { distmeta => 'metamunge' }
 );
 
 sub MY::libscan {
@@ -27,3 +28,9 @@ sub MY::libscan {
     return 0 if /\.sw.$/ || /~$/;
     return $_;
 }
+
+sub MY::postamble {q{
+metamunge:
+	$(NOECHO) $(ECHO) 'no_index:' >> $(DISTVNAME)/META.yml
+	$(NOECHO) $(ECHO) '    - eg'  >> $(DISTVNAME)/META.yml
+}}
