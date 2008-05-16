@@ -342,3 +342,12 @@ releases:
     - John Beppu <john.beppu@gmail.com>
     - released
     - ""
+- !ditz.rubyforge.org,2008-03-06/release 
+  name: "0.30"
+  status: :unreleased
+  release_time: 
+  log_events: 
+  - - 2008-05-16 03:10:29.397517 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - created
+    - ""
