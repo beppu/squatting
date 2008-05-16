@@ -8,6 +8,7 @@ use base 'Exporter';
 use List::Util qw(first);
 use URI::Escape;
 use Carp;
+use Data::Dump 'pp';
 
 use Continuity;
 use Squatting::Mapper;
@@ -95,8 +96,11 @@ sub service {
   warn "EXCEPTION: $@" if ($@);
   my $status = $controller->status;
   my $cookies = $controller->{set_cookies};
+  my $ppi = (%{$controller->input}) 
+    ? ', ' . pp($controller->input) 
+    : '';
   #
-  warn sprintf('%5d ', $I), "[$status] $app->$method(@{[ join(', '=>map { \"'$_'\" } $controller->name, @params) ]})\n";
+  warn sprintf('%5d ', $I), "[$status] $app->$method(@{[ join(', '=>map { \"'$_'\" } $controller->name, @params) ]}$ppi)\n";
   #
   $controller->headers('Set-Cookie' => join("; ",
     map { CGI::Cookie->new( -name => $_, %{$cookies->{$_}} ) }
