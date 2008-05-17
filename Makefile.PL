@@ -6,7 +6,7 @@ WriteMakefile (
   LICENSE       => 'mit',
   VERSION_FROM  => 'lib/Squatting.pm',
   ABSTRACT_FROM => 'lib/Squatting.pm',
-  EXE_FILES     => [ 'bin/squatting' ],
+  EXE_FILES     => [ 'bin/squatting', 'bin/vw' ],
   PREREQ_PM     => {
     'HTTP::Daemon'     => 0,
     'Continuity'       => 0.991,
@@ -18,15 +18,13 @@ WriteMakefile (
 );
 
 sub MY::libscan {
-    my $self = shift;
-    $_       = shift;
-
-    # $self appears to be a blessed hashref that contains
-    # all the attributes/value pairs passed to WriteMakeFile()
-    # plus some other MakeMaker-related info.
-
-    return 0 if /\.sw.$/ || /~$/;
-    return $_;
+  my $self = shift;
+  $_       = shift;
+  # $self appears to be a blessed hashref that contains
+  # all the attributes/value pairs passed to WriteMakeFile()
+  # plus some other MakeMaker-related info.
+  return 0 if /\.sw.$/ || /~$/;
+  return $_;
 }
 
 sub MY::postamble {q{
