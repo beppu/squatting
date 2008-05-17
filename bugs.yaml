@@ -273,6 +273,96 @@ issues:
     - John Beppu <john.beppu@gmail.com>
     - closed issue with disposition fixed
     - ""
+- !ditz.rubyforge.org,2008-03-06/issue 
+  title: Write docs for Squatting
+  desc: ""
+  type: :feature
+  component: Squatting
+  release: "0.30"
+  reporter: John Beppu <john.beppu@gmail.com>
+  status: :unstarted
+  disposition: 
+  creation_time: 2008-05-16 18:13:37.897790 -07:00
+  references: []
+
+  id: 3dd3aeccdaeda9c7e49c143d3ea741aab3faf1df
+  log_events: 
+  - - 2008-05-16 18:13:38.798582 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - created
+    - ""
+- !ditz.rubyforge.org,2008-03-06/issue 
+  title: Write docs for Squatting::Controller.
+  desc: ""
+  type: :feature
+  component: Squatting
+  release: "0.30"
+  reporter: John Beppu <john.beppu@gmail.com>
+  status: :unstarted
+  disposition: 
+  creation_time: 2008-05-16 18:13:54.938326 -07:00
+  references: []
+
+  id: 76af441fa0c8608eac6608f41422c0f3c992ac4b
+  log_events: 
+  - - 2008-05-16 18:13:55.819654 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - created
+    - ""
+- !ditz.rubyforge.org,2008-03-06/issue 
+  title: Write docs for Squatting::View
+  desc: ""
+  type: :feature
+  component: Squatting
+  release: "0.30"
+  reporter: John Beppu <john.beppu@gmail.com>
+  status: :unstarted
+  disposition: 
+  creation_time: 2008-05-16 18:14:12.872057 -07:00
+  references: []
+
+  id: d19cee4a6c715165b7edb28341a206bc0cb0af4e
+  log_events: 
+  - - 2008-05-16 18:14:13.754225 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - created
+    - ""
+- !ditz.rubyforge.org,2008-03-06/issue 
+  title: Write docs for Squatting::Q.
+  desc: ""
+  type: :feature
+  component: Squatting
+  release: "0.30"
+  reporter: John Beppu <john.beppu@gmail.com>
+  status: :unstarted
+  disposition: 
+  creation_time: 2008-05-16 18:14:27.984590 -07:00
+  references: []
+
+  id: 1025194694222afa15eb565ed273162c735eb383
+  log_events: 
+  - - 2008-05-16 18:14:28.749883 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - created
+    - ""
+- !ditz.rubyforge.org,2008-03-06/issue 
+  title: Write docs for Squatting::Mapper.
+  desc: ""
+  type: :feature
+  component: Squatting
+  release: "0.30"
+  reporter: John Beppu <john.beppu@gmail.com>
+  status: :unstarted
+  disposition: 
+  creation_time: 2008-05-16 18:14:44.674177 -07:00
+  references: []
+
+  id: 029fcc11ef5f2de683a69f0477fc80e9d858a566
+  log_events: 
+  - - 2008-05-16 18:14:45.478837 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - created
+    - ""
 components: 
 - !ditz.rubyforge.org,2008-03-06/component 
   name: Squatting
