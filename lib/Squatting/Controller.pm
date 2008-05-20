@@ -27,7 +27,7 @@ sub init {
   $self->{env}         = e($cr->http_request);
   $self->{cookies}     = c($self->env->{HTTP_COOKIE});
   $self->{input}       = i(join('&', grep { defined } ($self->env->{QUERY_STRING}, $cr->request->content)));
-  $self->{set_cookies} = {};
+  $self->{cgi_cookies} = {};
   $self->{headers}     = { 'Content-Type' => 'text/html' };
   $self->{v}           = {};
   $self->{status}      = 200;
@@ -85,30 +85,22 @@ sub status : lvalue {
 }
 
 # outgoing HTTP headers
-sub headers {
-  my ($self, $name, $value) = @_;
+sub headers : lvalue {
+  my ($self, $name) = @_;
   if (defined($name)) {
-    if (defined($value)) {
-      $self->{headers}->{$name} = $value;
-    } else {
-      $self->{headers}->{$name};
-    }
+    $self->{headers}->{$name};
   } else {
     $self->{headers};
   }
 }
 
 # outgoing cookies
-sub set_cookies {
-  my ($self, $name, $value) = @_;
+sub cgi_cookies : lvalue {
+  my ($self, $name) = @_;
   if (defined($name)) {
-    if (defined($value)) {
-      $self->{set_cookies}->{$name} = $value;
-    } else {
-      $self->{set_cookies}->{$name};
-    }
+    $self->{cgi_cookies}->{$name};
   } else {
-    $self->{set_cookies};
+    $self->{cgi_cookies};
   }
 }
 
@@ -137,7 +129,7 @@ sub render {
 # $self->redirect($url, $status_code)
 sub redirect {
   my ($self, $l, $s) = @_;
-  $self->headers(Location => $l || '/');
+  $self->headers('Location') = $l || '/';
   $self->status = $s || 302;
 }
 
