@@ -22,14 +22,14 @@ sub new {
 # init w/ Continuity
 sub init {
   my ($self, $cr) = @_;
-  $self->{cr}          = $cr;
-  $self->{env}         = e($cr->http_request);
-  $self->{cookies}     = c($self->env->{HTTP_COOKIE});
-  $self->{input}       = i(join('&', grep { defined } ($self->env->{QUERY_STRING}, $cr->request->content)));
-  $self->{cgi_cookies} = {};
-  $self->{headers}     = { 'Content-Type' => 'text/html' };
-  $self->{v}           = {};
-  $self->{status}      = 200;
+  $self->cr          = $cr;
+  $self->env         = e($cr->http_request);
+  $self->cookies     = c($self->env->{HTTP_COOKIE});
+  $self->input       = i(join('&', grep { defined } ($self->env->{QUERY_STRING}, $cr->request->content)));
+  $self->cgi_cookies = {};
+  $self->headers     = { 'Content-Type' => 'text/html' };
+  $self->v           = {};
+  $self->status      = 200;
   $self;
 }
 
