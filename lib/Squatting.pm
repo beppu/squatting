@@ -42,12 +42,12 @@ sub D {
   no warnings 'once';
   my $url = uri_unescape($_[0]);
   my $C = \@{$app.'::Controllers::C'};
-  my ($controller, @regex_captures);
-  foreach $controller (@$C) {
-    foreach (@{$controller->urls}) {
+  my ($c, @regex_captures);
+  foreach $c (@$C) {
+    foreach (@{$c->urls}) {
       if (@regex_captures = ($url =~ qr{^$_$})) {
         pop @regex_captures if ($#+ == 0);
-        return ($controller, \@regex_captures);
+        return ($c, \@regex_captures);
       }
     }
   }
@@ -88,27 +88,28 @@ sub V {
 
 # App->service($controller, @params)  # Override this method if you want to take actions before or after a request is handled.
 sub service {
-  my ($class, $controller, @params) = grep { defined } @_;
-  my $method  = lc $controller->env->{REQUEST_METHOD};
+  my ($class, $c, @params) = grep { defined } @_;
+  my $method  = lc $c->env->{REQUEST_METHOD};
   my $content;
   $I++;
-  eval { $content = $controller->$method(@params) };
+  eval { $content = $c->$method(@params) };
   warn "EXCEPTION: $@" if ($@);
-  my $status = $controller->status;
-  my $cookies = $controller->cgi_cookies;
-  my $ppi = (%{$controller->input}) 
-    ? ', ' . pp($controller->input) 
+  my $s = $c->status;
+  my $cookies = $c->cookies;
+  my $ppi = (%{$c->input}) 
+    ? ', ' . pp($c->input) 
     : '';
   #
-  warn sprintf('%5d ', $I), "[$status] $app->$method(@{[ join(', '=>map { \"'$_'\" } $controller->name, @params) ]}$ppi)\n";
+  warn sprintf('%5d ', $I), "[$s] $app->$method(@{[ join(', '=>map { \"'$_'\" } $c->name, @params) ]}$ppi)\n";
   #
-  $controller->headers->{'Set-Cookie'} = join("; ",
+  $c->headers->{'Set-Cookie'} = join("; ",
     map { CGI::Cookie->new( -name => $_, %{$cookies->{$_}} ) }
-      keys %$cookies) if (%$cookies);
-  if (my $cr_cookies = $controller->cr->cookies) {
+      grep { ref $cookies->{$_} eq 'HASH' }
+        keys %$cookies) if (%$cookies);
+  if (my $cr_cookies = $c->cr->cookies) {
     $cr_cookies =~ s/^Set-Cookie: //;
-    $controller->headers->{'Set-Cookie'} = join("; ",
-      grep { defined } ($controller->headers->{'Set-Cookie'}, $cr_cookies));
+    $c->headers->{'Set-Cookie'} = join("; ",
+      grep { defined } ($c->headers->{'Set-Cookie'}, $cr_cookies));
   }
   return $content;
 }

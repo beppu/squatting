@@ -26,7 +26,6 @@ sub init {
   $self->env         = e($cr->http_request);
   $self->cookies     = c($self->env->{HTTP_COOKIE});
   $self->input       = i(join('&', grep { defined } ($self->env->{QUERY_STRING}, $cr->request->content)));
-  $self->cgi_cookies = {};
   $self->headers     = { 'Content-Type' => 'text/html' };
   $self->v           = {};
   $self->status      = 200;
@@ -42,13 +41,12 @@ sub clone {
 # urls        - arrayref of URL patterns that this controller responds to
 # cr          - Continuity::Request object
 # env         - incoming request headers and misc info like %ENV in the CGI days
-# cookies     - incoming cookies
+# cookies     - incoming *AND* outgoing cookies
 # input       - incoming CGI variables
 # v           - outgoing vars
 # status      - outgoing HTTP Response status
 # headers     - outgoing HTTP headers
-# cgi_cookies - outgoing cookies
-for my $m qw(name urls cr env cookies input v status headers cgi_cookies) {
+for my $m qw(name urls cr env cookies input v status headers) {
   *{$m} = sub : lvalue { $_[0]->{$m} };
 }
 

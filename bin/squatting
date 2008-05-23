@@ -76,7 +76,6 @@ if ($app) {
       $self->{env}         = { %ENV, REQUEST_PATH => Squatting::R($self->name, @_) };
       $self->{cookies}     = {};
       $self->{input}       = {};
-      $self->{cgi_cookies} = {};
       $self->{headers}     = {};
       $self->{v}           = {};
       $self->{status}      = 200;
