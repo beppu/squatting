@@ -38,12 +38,12 @@ sub clone {
 # urls    - arrayref of URL patterns that this controller responds to
 # cr      - Continuity::Request object
 # env     - incoming request headers and misc info like %ENV in the CGI days
-# cookies - incoming *AND* outgoing cookies
 # input   - incoming CGI variables
+# cookies - incoming *AND* outgoing cookies
 # v       - outgoing vars
 # status  - outgoing HTTP Response status
 # headers - outgoing HTTP headers
-for my $m qw(name urls cr env cookies input v status headers) {
+for my $m qw(name urls cr env input cookies v status headers) {
   *{$m} = sub : lvalue { $_[0]->{$m} }
 }
 
