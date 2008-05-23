@@ -19,13 +19,13 @@ sub new {
 # init w/ Continuity::Request
 sub init {
   my ($self, $cr) = @_;
-  $self->cr      = $cr;
-  $self->env     = e($cr->http_request);
-  $self->cookies = c($self->env->{HTTP_COOKIE});
-  $self->input   = i(join('&', grep { defined } ($self->env->{QUERY_STRING}, $cr->request->content)));
-  $self->headers = { 'Content-Type' => 'text/html' };
-  $self->v       = {};
-  $self->status  = 200;
+  $self->cr       = $cr;
+  $self->env      = e($cr->http_request);
+  $self->cookies  = c($self->env->{HTTP_COOKIE});
+  $self->input    = i(join('&', grep { defined } ($self->env->{QUERY_STRING}, $cr->request->content)));
+  $self->headers  = { 'Content-Type' => 'text/html' };
+  $self->v        = {};
+  $self->status   = 200;
   $self;
 }
 
@@ -47,14 +47,9 @@ for my $m qw(name urls cr env cookies input v status headers) {
   *{$m} = sub : lvalue { $_[0]->{$m} }
 }
 
-# method for handling HTTP GET requests
-sub get {
-  $_[0]->{get}->(@_);
-}
-
-# method for handling HTTP POST requests
-sub post {
-  $_[0]->{post}->(@_);
+# HTTP (get post)
+for my $m qw(get post) {
+  *{$m} = sub { $_[0]->{get}->(@_) }
 }
 
 # $content = $self->render($template, $vars)
