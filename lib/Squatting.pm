@@ -43,8 +43,8 @@ sub D {
   my $url = uri_unescape($_[0]);
   my $C = \@{$app.'::Controllers::C'};
   my ($c, @regex_captures);
-  foreach $c (@$C) {
-    foreach (@{$c->urls}) {
+  for $c (@$C) {
+    for (@{$c->urls}) {
       if (@regex_captures = ($url =~ qr{^$_$})) {
         pop @regex_captures if ($#+ == 0);
         return ($c, \@regex_captures);
