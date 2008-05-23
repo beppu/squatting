@@ -95,20 +95,20 @@ sub service {
   eval { $content = $controller->$method(@params) };
   warn "EXCEPTION: $@" if ($@);
   my $status = $controller->status;
-  my $cookies = $controller->{cgi_cookies};
+  my $cookies = $controller->cgi_cookies;
   my $ppi = (%{$controller->input}) 
     ? ', ' . pp($controller->input) 
     : '';
   #
   warn sprintf('%5d ', $I), "[$status] $app->$method(@{[ join(', '=>map { \"'$_'\" } $controller->name, @params) ]}$ppi)\n";
   #
-  $controller->headers('Set-Cookie') = join("; ",
+  $controller->headers->{'Set-Cookie'} = join("; ",
     map { CGI::Cookie->new( -name => $_, %{$cookies->{$_}} ) }
       keys %$cookies) if (%$cookies);
   if (my $cr_cookies = $controller->cr->cookies) {
     $cr_cookies =~ s/^Set-Cookie: //;
-    $controller->headers('Set-Cookie') = join("; ",
-      grep { defined } ($controller->headers('Set-Cookie'), $cr_cookies));
+    $controller->headers->{'Set-Cookie'} = join("; ",
+      grep { defined } ($controller->headers->{'Set-Cookie'}, $cr_cookies));
   }
   return $content;
 }

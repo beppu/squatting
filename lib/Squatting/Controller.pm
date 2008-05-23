@@ -38,36 +38,18 @@ sub clone {
   bless { %{$_[0]} } => ref($_[0]);
 }
 
-# name    - name of controller
-# urls    - arrayref of URL patterns that this controller responds to
-# cr      - Continuity::Request object
-# env     - incoming request headers and misc info like %ENV in the CGI days
-# cookies - incoming cookies
-# input   - incoming CGI variables
-# v       - outgoing vars
-# status  - outgoing HTTP Response status
-for my $m qw(name urls cr env cookies input v status) {
+# name        - name of controller
+# urls        - arrayref of URL patterns that this controller responds to
+# cr          - Continuity::Request object
+# env         - incoming request headers and misc info like %ENV in the CGI days
+# cookies     - incoming cookies
+# input       - incoming CGI variables
+# v           - outgoing vars
+# status      - outgoing HTTP Response status
+# headers     - outgoing HTTP headers
+# cgi_cookies - outgoing cookies
+for my $m qw(name urls cr env cookies input v status headers cgi_cookies) {
   *{$m} = sub : lvalue { $_[0]->{$m} };
-}
-
-# outgoing HTTP headers
-sub headers : lvalue {
-  my ($self, $name) = @_;
-  if (defined($name)) {
-    $self->{headers}->{$name};
-  } else {
-    $self->{headers};
-  }
-}
-
-# outgoing cookies
-sub cgi_cookies : lvalue {
-  my ($self, $name) = @_;
-  if (defined($name)) {
-    $self->{cgi_cookies}->{$name};
-  } else {
-    $self->{cgi_cookies};
-  }
 }
 
 # method for handling HTTP GET requests
@@ -95,7 +77,7 @@ sub render {
 # $self->redirect($url, $status_code)
 sub redirect {
   my ($self, $l, $s) = @_;
-  $self->headers('Location') = $l || '/';
+  $self->headers->{Location} = $l || '/';
   $self->status = $s || 302;
 }
 
