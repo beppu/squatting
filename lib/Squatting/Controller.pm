@@ -13,22 +13,19 @@ our $AUTOLOAD;
 
 # constructor
 sub new {
-  my $class = shift;
-  my $name  = shift;
-  my $urls  = shift;
-  bless { name => $name, urls => $urls, @_ } => $class;
+  bless { name => $_[1], urls => $_[2], @_[3..$#_] } => $_[0];
 }
 
-# init w/ Continuity
+# init w/ Continuity::Request
 sub init {
   my ($self, $cr) = @_;
-  $self->cr          = $cr;
-  $self->env         = e($cr->http_request);
-  $self->cookies     = c($self->env->{HTTP_COOKIE});
-  $self->input       = i(join('&', grep { defined } ($self->env->{QUERY_STRING}, $cr->request->content)));
-  $self->headers     = { 'Content-Type' => 'text/html' };
-  $self->v           = {};
-  $self->status      = 200;
+  $self->cr      = $cr;
+  $self->env     = e($cr->http_request);
+  $self->cookies = c($self->env->{HTTP_COOKIE});
+  $self->input   = i(join('&', grep { defined } ($self->env->{QUERY_STRING}, $cr->request->content)));
+  $self->headers = { 'Content-Type' => 'text/html' };
+  $self->v       = {};
+  $self->status  = 200;
   $self;
 }
 
@@ -37,17 +34,17 @@ sub clone {
   bless { %{$_[0]}, @_[1..$#_] } => ref($_[0]);
 }
 
-# name        - name of controller
-# urls        - arrayref of URL patterns that this controller responds to
-# cr          - Continuity::Request object
-# env         - incoming request headers and misc info like %ENV in the CGI days
-# cookies     - incoming *AND* outgoing cookies
-# input       - incoming CGI variables
-# v           - outgoing vars
-# status      - outgoing HTTP Response status
-# headers     - outgoing HTTP headers
+# name    - name of controller
+# urls    - arrayref of URL patterns that this controller responds to
+# cr      - Continuity::Request object
+# env     - incoming request headers and misc info like %ENV in the CGI days
+# cookies - incoming *AND* outgoing cookies
+# input   - incoming CGI variables
+# v       - outgoing vars
+# status  - outgoing HTTP Response status
+# headers - outgoing HTTP headers
 for my $m qw(name urls cr env cookies input v status headers) {
-  *{$m} = sub : lvalue { $_[0]->{$m} };
+  *{$m} = sub : lvalue { $_[0]->{$m} }
 }
 
 # method for handling HTTP GET requests

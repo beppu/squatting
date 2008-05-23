@@ -227,9 +227,9 @@ of the feel of Camping for Squatting.
 
 =item B<Tiny Codebase>
 
-Right now, it's around 7K of actual code, but it hasn't been golfed, yet,
-so it can definitely get smaller.  We also made an effort to keep the number
-of perl module dependencies down to a minimum.
+Right now, it's around 6.6K of actual code, but it hasn't been significantly
+golfed, yet, so it can definitely get smaller.  We also made an effort to keep
+the number of perl module dependencies down to a minimum.
 
 =item B<RESTful Controllers By Default>
 
