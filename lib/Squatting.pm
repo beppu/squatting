@@ -13,7 +13,7 @@ use URI::Escape;
 use Carp;
 use Data::Dump 'pp';
 
-our $VERSION     = '0.21';
+our $VERSION     = '0.22';
 our @EXPORT_OK   = qw($app C R V);
 our %EXPORT_TAGS = (
   controllers => [qw($app C R)],

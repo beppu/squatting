@@ -38,44 +38,16 @@ sub clone {
   bless { %{$_[0]} } => ref($_[0]);
 }
 
-# name of controller
-sub name : lvalue {
-  $_[0]->{name}
-}
-
-# arrayref of URL patterns that this controller responds to
-sub urls : lvalue {
-  $_[0]->{urls}
-}
-
-# Continuity::Request object
-sub cr : lvalue {
-  $_[0]->{cr}
-}
-
-# incoming request headers and misc info like %ENV in the CGI days
-sub env : lvalue {
-  $_[0]->{env}
-}
-
-# incoming cookies
-sub cookies : lvalue {
-  $_[0]->{cookies}
-}
-
-# incoming CGI variables
-sub input : lvalue {
-  $_[0]->{input}
-}
-
-# outgoing vars
-sub v : lvalue {
-  $_[0]->{v}
-}
-
-# outgoing HTTP Response status
-sub status : lvalue {
-  $_[0]->{status}
+# name    - name of controller
+# urls    - arrayref of URL patterns that this controller responds to
+# cr      - Continuity::Request object
+# env     - incoming request headers and misc info like %ENV in the CGI days
+# cookies - incoming cookies
+# input   - incoming CGI variables
+# v       - outgoing vars
+# status  - outgoing HTTP Response status
+for my $m qw(name urls cr env cookies input v status) {
+  *{$m} = sub : lvalue { $_[0]->{$m} };
 }
 
 # outgoing HTTP headers
