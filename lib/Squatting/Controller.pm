@@ -87,7 +87,7 @@ sub render {
   if (defined($vn)) {
     $view = ${$app."::Views::V"}{$vn}; #  hash
   } else {                             #    vs
-    $view = ${$app."::Views::V"}[000]; # array -- Perl provides a lot of 'namespaces' so why not use them?
+    $view = ${$app."::Views::V"}[0];   # array -- Perl provides a lot of 'namespaces' so why not use them?
   }
   $view->$template($self->v);
 }
@@ -146,8 +146,6 @@ our $r404 = Squatting::Controller->new(
 );
 
 1;
-
-__END__
 
 =head1 NAME
 

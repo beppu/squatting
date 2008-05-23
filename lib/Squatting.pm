@@ -150,9 +150,7 @@ sub go {
   )->loop;
 }
 
-1
-
-__END__
+1;
 
 =head1 NAME
 
@@ -223,7 +221,7 @@ However, it's written in Perl, and it uses L<Continuity> as its foundation.
 
 =item B<Concise API>
 
-_why did a really good job in designing Camping's API, so I copied quite a bit
+_why did a really good job designing Camping's API, so I copied quite a bit
 of the feel of Camping for Squatting.
 
 =item B<Tiny Codebase>

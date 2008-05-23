@@ -15,8 +15,6 @@ sub Q : ATTR(CODE) {
 
 1;
 
-__END__
-
 =head1 NAME
 
 Squatting::Q - define a separate session queue for a controller

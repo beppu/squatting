@@ -22,8 +22,6 @@ sub get_session_id_from_hit {
 
 1;
 
-__END__
-
 =head1 NAME
 
 Squatting::Mapper - map requests to session queues
