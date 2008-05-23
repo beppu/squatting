@@ -34,7 +34,7 @@ sub init {
 
 # (shallow) copy constructor
 sub clone {
-  bless { %{$_[0]} } => ref($_[0]);
+  bless { %{$_[0]}, @_[1..$#_] } => ref($_[0]);
 }
 
 # name        - name of controller
