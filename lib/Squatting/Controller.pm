@@ -21,8 +21,7 @@ sub new {
 
 # init w/ Continuity
 sub init {
-  my $self = shift;
-  my $cr   = shift;
+  my ($self, $cr) = @_;
   $self->{cr}          = $cr;
   $self->{env}         = e($cr->http_request);
   $self->{cookies}     = c($self->env->{HTTP_COOKIE});
@@ -47,11 +46,6 @@ sub name : lvalue {
 # arrayref of URL patterns that this controller responds to
 sub urls : lvalue {
   $_[0]->{urls}
-}
-
-# name of the app this controller belongs to
-sub app : lvalue {
-  $_[0]->{app}
 }
 
 # Continuity::Request object
