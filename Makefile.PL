@@ -33,5 +33,6 @@ metamunge:
 	$(NOECHO) $(ECHO) '    - eg'  >> $(DISTVNAME)/META.yml
 	$(NOECHO) $(ECHO) '    - t'   >> $(DISTVNAME)/META.yml
 nd:
-	nd -i lib -o HTML doc -p /tmp/sqautting-doc
+	mkdir -p doc
+	nd -r -i lib -o HTML doc -p /tmp/sqautting-doc
 }}

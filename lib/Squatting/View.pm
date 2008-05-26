@@ -56,6 +56,25 @@ sub DESTROY { }
 
 Squatting::View - default view class for Squatting
 
+=head1 SYNOPSIS
+
+=head1 DESCRIPTION
+
+=head1 API
+
+=head2 Methods
+
+=head3 Squatting::View->new($name, %methods)
+
+=head3 $v->name
+
+=head3 $v->$template
+
+=head1 SEE ALSO
+
+L<Squatting>,
+L<Squatting::Controller>
+
 =cut
 
 # Local Variables: ***

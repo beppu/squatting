@@ -40,10 +40,12 @@ sub clone {
 # env     - incoming request headers and misc info like %ENV in the CGI days
 # input   - incoming CGI variables
 # cookies - incoming *AND* outgoing cookies
+# state   - your session data
 # v       - outgoing vars
 # status  - outgoing HTTP Response status
 # headers - outgoing HTTP headers
-for my $m qw(name urls cr env input cookies v status headers) {
+# view    - name of default view
+for my $m qw(name urls cr env input cookies state v status headers view) {
   *{$m} = sub : lvalue { $_[0]->{$m} }
 }
 
@@ -56,6 +58,7 @@ for my $m qw(get post) {
 sub render {
   my ($self, $template, $vn) = @_;
   my $view;
+  $vn ||= $self->view;
   if (defined($vn)) {
     $view = ${$app."::Views::V"}{$vn}; #  hash
   } else {                             #    vs
@@ -122,6 +125,73 @@ our $r404 = Squatting::Controller->new(
 =head1 NAME
 
 Squatting::Controller - default controller class for Squatting
+
+=head1 SYNOPSIS
+
+  package App::Controllers;
+  use Squatting ':controllers';
+  our @C = (
+    C(...),
+    Squatting::Controller->new(...),
+  );
+
+=head1 DESCRIPTION
+
+Squatting::Controller is the default controller class for Squatting
+applications.  Its job is to take HTTP requests and construct an appropriate
+response by setting up output headers and returning content.
+
+=head1 API
+
+=head2 Object Construction
+
+=head3 Squatting::Controller->new($name => \@urls, %methods)
+
+=head3 $c->clone(%opts)
+
+=head3 $c->init($cr)
+
+=head2 HTTP Request Handlers
+
+=head3 $c->get(@args)
+
+=head3 $c->post(@args)
+
+=head2 Attribute Accessors
+
+=head3 $c->name
+
+=head3 $c->urls
+
+=head3 $c->cr
+
+=head3 $c->env
+
+=head3 $c->input
+
+=head3 $c->cookies
+
+=head3 $c->state
+
+=head3 $c->v
+
+=head3 $c->status
+
+=head3 $c->headers
+
+=head3 $c->view
+
+=head2 Output
+
+=head3 $c->render($template, $view)
+
+=head3 $c->redirect($path, $status)
+
+=head1 SEE ALSO
+
+L<Squatting>,
+L<Squatting::View>,
+L<Squatting::Q>
 
 =cut
 

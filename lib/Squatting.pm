@@ -168,8 +168,8 @@ What a basic App looks like:
   {
     package App;
     use base 'Squatting';
-    use App::Controllers;
-    use App::Views;
+    #use App::Controllers;
+    #use App::Views;
   }
 
   {
@@ -213,8 +213,8 @@ What a basic App looks like:
 
 =head1 DESCRIPTION
 
-Squatting is a web microframework like Camping.
-However, it's written in Perl, and it uses L<Continuity> as its foundation.
+Squatting is a web microframework like Camping
+for Perl that uses L<Continuity> as its foundation.
 
 =head2 What does that mean?
 
@@ -227,9 +227,8 @@ of the feel of Camping for Squatting.
 
 =item B<Tiny Codebase>
 
-Right now, it's around 6.6K of actual code, but it hasn't been significantly
-golfed, yet, so it can definitely get smaller.  We also made an effort to keep
-the number of perl module dependencies down to a minimum.
+Right now, it's around 6.6K of actual code, but it can definitely get smaller.
+Also, the number of Perl module dependencies has been kept down to a minimum.
 
 =item B<RESTful Controllers By Default>
 
@@ -249,7 +248,7 @@ The View API feels like Camping, but Squatting allows multiple views to coexist
 
 =item B<Minimal Policy>
 
-You may use any templating system you want, and you may use any ORM* you want.
+You may use any templating system you want, and you may use any ORM(*) you want.
 We only have a few rules on how the controller code and the view code should be
 organized, but beyond that, you are free.
 
@@ -259,15 +258,45 @@ organized, but beyond that, you are free.
 this may be a deal-breaker for many of you.  However, I look at this as an
 opportunity to try novel storage systems like CouchDB, instead.  With the high
 level of concurrency that Squatting can support (thanks to Continuity) we are
-probably better off this way, anyway.
+probably better off this way.
 
-=head2 Where can I learn more?
+=head1 API
+
+=head2 Use as a Base Class for Squatting Applications
+
+  package App;
+  use base 'Squatting';
+  1;
+
+=head3 App->service
+
+=head3 App->init
+
+=head3 App->go
+
+=head2 Use as a Helper for Controllers
+
+  package App::Controllers;
+  use Squatting ':controllers';
+
+=head3 C($name => \@urls, %methods)
+
+=head3 R($name, @args, \%params)
+
+=head2 Use as a Helper for Views
+
+  package App::Controllers;
+  use Squatting ':views';
+
+=head3 V($name, %methods)
+
+=head3 R($name, @args, \%params)
+
+=head1 SEE ALSO
 
 The next release should contain a L<Squatting::Tutorial>.  It'll provide many
 examples and give you a feel for what Squatting is capable of.
-Until then...
-
-=head1 SEE ALSO
+Until then, check out the following:
 
 =head2 Squatting Source Code
 
