@@ -47,6 +47,8 @@ it is also aware of the global scope of the program as well.  This makes it
 possible (and even easy) to coordinate between multiple sessions in a multiuser
 web app.
 
+(to be continued)
+
 =head1 SEE ALSO
 
 L<Attribute::Handlers>,
