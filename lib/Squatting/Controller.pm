@@ -49,9 +49,9 @@ for my $m qw(name urls cr env input cookies state v status headers view) {
   *{$m} = sub : lvalue { $_[0]->{$m} }
 }
 
-# HTTP (get post)
+# HTTP (get post)    ## TODO (put delete head options etc...) ##
 for my $m qw(get post) {
-  *{$m} = sub { $_[0]->{get}->(@_) }
+  *{$m} = sub { $_[0]->{$m}->(@_) }
 }
 
 # $content = $self->render($template, $vars)
