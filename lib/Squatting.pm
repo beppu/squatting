@@ -151,6 +151,8 @@ sub go {
   )->loop;
 }
 
+$SIG{PIPE} = sub { Coro::terminate(0) };
+
 1;
 
 =head1 NAME
