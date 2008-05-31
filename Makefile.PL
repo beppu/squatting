@@ -32,6 +32,7 @@ metamunge:
 	$(NOECHO) $(ECHO) 'no_index:' >> $(DISTVNAME)/META.yml
 	$(NOECHO) $(ECHO) '    - eg'  >> $(DISTVNAME)/META.yml
 	$(NOECHO) $(ECHO) '    - t'   >> $(DISTVNAME)/META.yml
+
 nd:
 	$(MKPATH) doc
 	$(MKPATH) /tmp/squatting-doc
