@@ -3,46 +3,69 @@ use base 'Squatting';
 
 package PODServer::Controllers;
 use Squatting ':controllers';
-use Module::ScanDeps 'add_deps';
+use File::Basename;
+use File::Find;
+use Config;
+
+# figure out where all(?) our pod is located
+# (loosely based on zsh's _perl_basepods and _perl_modules)
+our %perl_basepods = map {
+  my ($file, $path, $suffix) = fileparse($_, ".pod");
+  ($file => $_);
+} glob "$Config{installprivlib}/pod/*.pod";
+
+our %perl_modules;
+our @perl_modules;
+sub scan {
+  for (@INC) {
+    my $inc = $_;
+    my $wanted = sub {
+      my $m = $File::Find::name;
+      next if -d $m;
+      next unless /\.(pm|pod)$/;
+      $m =~ s/$inc//;
+      $m =~ s/\.\w*$//;
+      $m =~ s{^/}{};
+      $perl_modules{$m} = $File::Find::name;
+    };
+    find($wanted, $_);
+  }
+  my %h = map { $_ => 1 } ( keys %perl_modules, keys %perl_basepods );
+  @perl_modules = sort keys %h;
+}
+scan;
 
 our @C = (
 
-  # The job of this controller is to display the home page.
   C(
     Home => [ '/' ],
     get  => sub {
       my ($self) = @_;
+      $self->v->{title} = 'POD Server';
       $self->render('home');
     }
   ),
 
   # The job of this controller is to take $module
   # and find the file that contains the POD for it.
-  # Then it has to display the POD as HTML.
+  # Then it asks the view to turn the POD into HTML.
   C(
-    POD => [ '/pod/(.*)' ],
+    Pod => [ '/pod/(.*)' ],
     get => sub {
       my ($self, $module) = @_;
-      my $v   = $self->v;
-      my $key = $module;
-      $key =~ s{\.html$}{};
-      $key =~ s{::}{/}g;
-      $key =~ s/$/.pm/;
-      my $rv = add_deps($key);
-      if ($rv->{$key}) {
-        my $pm_file  = $rv->{$key}->{file};
-        my $pod_file = $pm_file;
-        $pod_file    =~ s/\.pm$/\.pod/;
-        my $target;
-        if (-e $pod_file) {
-          $target = $pod_file;
-        } else {
-          $target = $rv->{$key}->{file};
-        }
-        $v->{pod_file} = $target;
+      my $v        = $self->v;
+      $v->{path}   = [ split('/', $module) ];
+      $v->{module} = $module;
+      if (exists $perl_modules{$module}) {
+        $v->{pod_file} = $perl_modules{$module};
+        $v->{title} = "POD Server - $module";
+        $self->render('pod');
+      } elsif (exists $perl_basepods{$module}) {
+        $v->{pod_file} = $perl_basepods{$module};
+        $v->{title} = "POD Server - $module";
         $self->render('pod');
       } else {
-        $v->{module} = $module;
+        $v->{title} = "POD Server - $v->{module}";
         $self->render('pod_not_found');
       }
     }
@@ -51,17 +74,106 @@ our @C = (
 
 package PODServer::Views;
 use Squatting ':views';
+use Data::Dump 'pp';
+use HTML::AsSubs;
 use Pod::Simple;
 use Pod::Simple::HTML;
 $Pod::Simple::HTML::Perldoc_URL_Prefix = '/pod/';
 
+# the ~literal pseudo-element -- don't entity escape this content
+sub x {
+  HTML::Element->new('~literal', text => $_[0])
+}
+
+our $JS;
+our $HOME;
+
 our @V = (
   V(
     'html',
-    home => sub {
-      my $url = R('POD', 'Squatting');
-      qq{<a href="$url">Squatting</a>};
+
+    layout => sub {
+      my ($self, $v, @content) = @_;
+      html(
+        head(
+          title($v->{title}),
+          style(x($self->_css))
+        ),
+        body(
+          div({ id => 'menu' }, a({ href => R('Home')}, "Home"), ($self->_breadcrumbs($v)) ),
+          div({ id => 'pod' }, @content),
+        ),
+      )->as_HTML;
     },
+
+    _breadcrumbs => sub {
+      my ($self, $v) = @_;
+      my @breadcrumb;
+      my @path;
+      for (@{$v->{path}}) {
+        push @path, $_;
+        push @breadcrumb, a({ href => R('Pod', join('/', @path)) }, " > $_ ");
+      }
+      @breadcrumb;
+    },
+
+    _css => sub {
+      qq|
+        body {
+          background: #001;
+          color: wheat;
+          font-family: 'Trebuchet MS', sans-serif;
+          font-size: 10pt;
+        }
+        pre {
+          font-size: 9pt;
+        }
+        a {
+          color: #fc4;
+          text-decoration: none;
+        }
+        a:hover {
+          color: #fe8;
+        }
+        div#menu {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          background: #000;
+          color: #fff;
+          opacity: 0.75;
+        }
+        div#pod {
+          width: 500px;
+          margin: 2em 4em 2em 4em;
+        }
+        div#pod h1 {
+          font-size: 24pt;
+          border-bottom: 2px solid #fe2;
+        }
+        div#pod p {
+          line-height: 1.4em;
+        }
+      |;
+    },
+
+    _js => sub {
+      $JS ||= join('', <DATA>);
+    },
+
+    home => sub {
+      $HOME ||= ul(
+        map {
+          my $pm = $_;
+          $pm =~ s{/}{::}g;
+          li(
+            a({ href => R(Pod, $_) }, $pm )
+          )
+        } (sort @perl_modules)
+      );
+    },
+
     pod => sub {
       my ($self, $v) = @_;
       my $out;
@@ -70,12 +182,34 @@ our @V = (
       $pod->output_string($out);
       $pod->parse_file($v->{pod_file});
       $out =~ s{%3A%3A}{/}g;
-      $out;
+      $out =~ s/^.*<!-- start doc -->//s;
+      $out =~ s/<!-- end doc -->.*$//s;
+      return x($out), $self->_possibilities($v);
     },
+
     pod_not_found => sub {
       my ($self, $v) = @_;
-      qq{POD for $v->{module} not found.};
+      div(
+        p("POD for $v->{module} not found."),
+        $self->_possibilities($v)
+      )
+    },
+
+    _possibilities => sub {
+      my ($self, $v) = @_;
+      my @possibilities = grep { /^$v->{module}/ } @perl_modules;
+      my $colon = sub { my $x = shift; $x =~ s{/}{::}g; $x };
+      return 
+        hr,
+        ul(
+          map {
+            li(
+              a({ href => R(Pod, $_) }, $colon->($_))
+            )
+          } @possibilities
+        );
     }
+
   )
 );
 

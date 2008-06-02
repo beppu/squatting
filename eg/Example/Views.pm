@@ -15,7 +15,7 @@ our @V = (
     'html',
     layout => sub {
       my ($self, $v, @body) = @_;
-      start_html('Example'),
+      join "", start_html('Example'),
         div({-id => 'header'},
           h1('Example'), 
           ul({-id => 'menu'},
