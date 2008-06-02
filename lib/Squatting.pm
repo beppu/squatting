@@ -215,10 +215,10 @@ What a basic App looks like:
 
 =head1 DESCRIPTION
 
-Squatting is a web microframework like Camping
-for Perl that uses L<Continuity> as its foundation.
+Squatting is a web microframework based on Camping
+that uses L<Continuity> as its foundation.
 
-=head2 What does that mean?
+=head2 What does this mean?
 
 =over 4
 
@@ -229,8 +229,9 @@ of the feel of Camping for Squatting.
 
 =item B<Tiny Codebase>
 
-Right now, it's around 6.6K of actual code, but it can definitely get smaller.
-Also, the number of Perl module dependencies has been kept down to a minimum.
+Right now, it's around 6.6K of actual code (after minifying), but it can
+definitely get smaller.  Also, the number of Perl module dependencies has been
+kept down to a minimum.
 
 =item B<RESTful Controllers By Default>
 
@@ -240,8 +241,8 @@ delete().
 
 =item B<RESTless Controllers Are Possible (thanks to Continuity)>
 
-Continuation-based code can be surprisingly useful (especially for COMET), so
-we try to make RESTless controllers easy to express as well.
+Stateful continuation-based code can be surprisingly useful (especially for
+COMET), so we try to make RESTless controllers easy to express as well.
 
 =item B<Views Are ...Different>
 
@@ -295,6 +296,8 @@ probably better off this way.
 =head3 R($name, @args, \%params)
 
 =head1 SEE ALSO
+
+L<Squatting::Controller>, L<Squatting::View>, L<Squatting::Mapper>, L<Squatting::Q>
 
 =head2 Squatting Source Code
 
