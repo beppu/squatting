@@ -67,7 +67,7 @@ sub R {
   my $pattern = first { my @m = /\(.*?\)/g; $arity == @m } @{$c->urls};
   croak "couldn't find a matching URL pattern" unless $pattern;
   while ($pattern =~ /\(.*?\)/) {
-    $pattern =~ s/\(.*?\)/uri_escape(+shift(@params))/e;
+    $pattern =~ s{\(.*?\)}{uri_escape(+shift(@params), "^A-Za-z0-9\-_.!~*’()/")}e;
   }
   if ($input) {
     $pattern .= "?".  join('&' => 
@@ -296,16 +296,13 @@ probably better off this way.
 
 =head1 SEE ALSO
 
-The next release should contain a L<Squatting::Tutorial>.  It'll provide many
-examples and give you a feel for what Squatting is capable of.
-Until then, check out the following:
-
 =head2 Squatting Source Code
 
 The source code is short and it has some useful comments in it, so this might
-be all you need to get going:
+be all you need to get going.  There are also some examples in the F<eg/>
+directory.
 
-  http://github.com/beppu/squatting/tree/master
+L<http://github.com/beppu/squatting/tree/master>
 
 =head2 Bavl Source Code
 
@@ -313,7 +310,7 @@ We're going to throw Squatting into the metaphorical deep end by using it to
 implement the towr.of.bavl.org.  If you're looking for an example of how to use
 Squatting for an ambitious project, look at the Bavl code.
 
-  http://github.com/beppu/bavl/tree/master
+L<http://github.com/beppu/bavl/tree/master>
 
 =head2 Continuity and Coro
 
@@ -328,14 +325,14 @@ L<Event>.
 
 Also, check out the Continuity web site.
 
-  http://continuity.tlt42.org/
+L<http://continuity.tlt42.org/>
 
 =head2 Camping
 
 Squatting is the spiritual descendant of Camping, so studying the Camping API
 will indirectly teach you much of the Squatting API.
 
-  http://code.whytheluckystiff.net/camping/
+L<http://code.whytheluckystiff.net/camping/>
 
 =head2 Prototype-based OO
 
@@ -358,7 +355,7 @@ manipulate an object's prototype chain.  The beauty of prototypes is that this
 one concept can be used to unify objects, classes, and namespaces.  Look at Io
 if you don't believe me.
 
-  http://iolanguage.com/
+L<http://iolanguage.com/>
 
 =head1 AUTHOR
 

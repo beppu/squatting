@@ -27,10 +27,10 @@ sub _render {
   $self->{template} = $template;
   if (exists $self->{layout} && ($template !~ /^_/)) {
     $template = $alt if defined $alt;
-    join "", $self->{layout}($self, $vars, $self->{$template}($self, $vars));
+    $self->{layout}($self, $vars, $self->{$template}($self, $vars));
   } else {
     $template = $alt if defined $alt;
-    join "", $self->{$template}($self, $vars);
+    $self->{$template}($self, $vars);
   }
 }
 
