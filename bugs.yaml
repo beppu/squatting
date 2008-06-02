@@ -454,10 +454,14 @@ releases:
     - ""
 - !ditz.rubyforge.org,2008-03-06/release 
   name: "0.30"
-  status: :unreleased
-  release_time: 
+  status: :released
+  release_time: 2008-06-01 23:40:09.495286 -07:00
   log_events: 
   - - 2008-05-16 03:10:29.397517 -07:00
     - John Beppu <john.beppu@gmail.com>
     - created
+    - ""
+  - - 2008-06-01 23:40:09.495333 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - released
     - ""
