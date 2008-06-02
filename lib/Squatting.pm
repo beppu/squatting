@@ -271,11 +271,24 @@ probably better off this way.
   use base 'Squatting';
   1;
 
-=head3 App->service
+=head3 App->service($controller, @args)
+
+Every time an HTTP request comes in, this method is called with a controller
+object and a list of arguments.  The controller will then be invoked with the
+HTTP method that was requested (like GET or POST), and it will return the
+content of the response as a string.
+
+B<NOTE>:  If you want to do anything before, after, or around an HTTP request,
+this is the method you should override in your subclass.
 
 =head3 App->init
 
-=head3 App->go
+This method takes no parameters and initializes some internal variables.
+
+=head3 App->go(%options)
+
+This method calls init and then starts a Continuity-based web server.  The %options
+are passed straight through to Continuity.
 
 =head2 Use as a Helper for Controllers
 
@@ -284,7 +297,27 @@ probably better off this way.
 
 =head3 C($name => \@urls, %methods)
 
-=head3 R($name, @args, \%params)
+This is a shortcut for:
+
+  Squatting::Controller->new(@_);
+
+=head3 R($name, @args, [ \%params ])
+
+R() is a URL generation function that takes a controller name and a list of arguments.
+You may also pass in a hashref representing CGI variables as the very last parameter
+to this function.
+
+B<Example>:  Given the following controllers, R() would respond like this.
+
+  # Example Controllers
+  C(Home    => [ '/' ]);
+  C(Profile => [ '/~(\w+)', '/~(\w+)\.(\w+)' ]);
+
+  # Generated URLs
+  R('Home')                             # "/"
+  R('Home', { foo => 1, bar => 2})      # "/?foo=1&bar=2"
+  R('Profile', 'larry')                 # "/~larry"
+  R('Profile', 'larry', 'json')         # "/~larry.json"
 
 =head2 Use as a Helper for Views
 
@@ -293,7 +326,13 @@ probably better off this way.
 
 =head3 V($name, %methods)
 
-=head3 R($name, @args, \%params)
+This is a shortcut for:
+
+  Squatting::View->new(@_);
+
+=head3 R($name, @args, [ \%params ])
+
+This is the same R() function that the controllers get access to.
 
 =head1 SEE ALSO
 
