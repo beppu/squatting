@@ -120,10 +120,13 @@ our @V = (
     _css => sub {
       qq|
         body {
-          background: #001;
+          background: #112;
           color: wheat;
           font-family: 'Trebuchet MS', sans-serif;
           font-size: 10pt;
+        }
+        h1, h2, h3, h4 {
+          margin-left: -1em;
         }
         pre {
           font-size: 9pt;
@@ -145,8 +148,17 @@ our @V = (
           opacity: 0.75;
         }
         div#pod {
-          width: 500px;
+          width: 540px;
           margin: 2em 4em 2em 4em;
+        }
+        div#pod pre {
+          padding: 0.5em;
+          background: #000;
+          color: #ccd;
+          -moz-border-radius-bottomleft: 7px;
+          -moz-border-radius-bottomright: 7px;
+          -moz-border-radius-topleft: 7px;
+          -moz-border-radius-topright: 7px;
         }
         div#pod h1 {
           font-size: 24pt;
@@ -184,7 +196,7 @@ our @V = (
       $out =~ s{%3A%3A}{/}g;
       $out =~ s/^.*<!-- start doc -->//s;
       $out =~ s/<!-- end doc -->.*$//s;
-      return x($out), $self->_possibilities($v);
+      x($out), $self->_possibilities($v);
     },
 
     pod_not_found => sub {
@@ -199,15 +211,14 @@ our @V = (
       my ($self, $v) = @_;
       my @possibilities = grep { /^$v->{module}/ } @perl_modules;
       my $colon = sub { my $x = shift; $x =~ s{/}{::}g; $x };
-      return 
-        hr,
-        ul(
-          map {
-            li(
-              a({ href => R(Pod, $_) }, $colon->($_))
-            )
-          } @possibilities
-        );
+      hr,
+      ul(
+        map {
+          li(
+            a({ href => R(Pod, $_) }, $colon->($_))
+          )
+        } @possibilities
+      );
     }
 
   )
