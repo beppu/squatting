@@ -166,7 +166,7 @@ Running an App:
   $ squatting App
   Please contact me at: http://localhost:4234/
 
-Check out or ASCII art logo:
+Check out our ASCII art logo:
 
   $ squatting --logo
 
