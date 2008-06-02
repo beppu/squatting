@@ -172,6 +172,7 @@ Check out our ASCII art logo:
 
 What a basic App looks like:
 
+  # STEP 1 => Subclass Squatting
   {
     package App;
     use base 'Squatting';
@@ -179,6 +180,7 @@ What a basic App looks like:
     #use App::Views;
   }
 
+  # STEP 2 => Create a Controllers package
   {
     package App::Controllers;
     use Squatting ':controllers';
@@ -198,6 +200,7 @@ What a basic App looks like:
     );
   }
 
+  # STEP 3 => Create a Views package
   {
     package App::Views;
     use Squatting ':views';
@@ -217,6 +220,10 @@ What a basic App looks like:
       ),
     );
   }
+
+  # Models?  The whole world is your model.  ;-)
+  # - I've always been ambivalent about defining policy here.
+  # - Use whatever works for you.
 
 =head1 DESCRIPTION
 
