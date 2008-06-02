@@ -58,17 +58,70 @@ Squatting::View - default view class for Squatting
 
 =head1 SYNOPSIS
 
+  our @V = (
+    V(
+      'html',
+      layout => sub {
+        my ($self, $v, @content) = @_;
+        "(header @content footer)";
+      },
+      home => sub {
+        my ($self, $v) = @_;
+        "Hello, $v->{name}";
+      },
+      _ => sub {
+        my ($self, $v) = @_;
+        "You tried to render $self->{template} which was not defined.";
+      },
+      arbitrary_data => [ 'is', 'ok', 2 ],
+    )
+  );
+
 =head1 DESCRIPTION
+
+In Squatting, views are objects that contain many templates.  Templates
+are represented by subroutine references that will be installed as methods
+of a view object.  The job of a template is to take a hashref of variables
+and return a string.
+
+You may also define a special template named "layout" that's expected to
+also take the output of another template and wrap it.
 
 =head1 API
 
-=head2 Methods
+=head2 General Methods
 
 =head3 Squatting::View->new($name, %methods)
 
+The constructor takes a name and a hash of attributes and coderefs.
+
 =head3 $v->name
 
-=head3 $v->$template
+This returns the name of the view.
+
+=head2 Template Methods
+
+=head3 $v->$template($v)
+
+Any coderef that was given to the constructor may be called by name.
+Templates should be passed in a hashref ($v) with variables for it
+to use to generate the final output.
+
+=head3 $v->layout($v, @content)
+
+If you define a template named "layout", it'll be used to wrap the
+content of all templates whose name do not begin with "_".  You can
+use this feature to provide standard headers and footers for your
+pages.
+
+=head3 $v->_($v)
+
+If you define a template named "_", this will act as a catch-all
+that can be asked to render anything that wasn't explicitly defined.
+It's like our version of AUTOLOAD().
+
+B<NOTE>:  You can find out what they tried to render by inspecting
+$self->{template}.
 
 =head1 SEE ALSO
 
