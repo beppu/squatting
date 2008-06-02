@@ -154,6 +154,7 @@ our @V = (
         div#pod pre {
           padding: 0.5em;
           background: #000;
+          border: 1px solid #444;
           color: #ccd;
           -moz-border-radius-bottomleft: 7px;
           -moz-border-radius-bottomright: 7px;
