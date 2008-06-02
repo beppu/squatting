@@ -169,7 +169,7 @@ slightly less verbose.
 =head3 $c->clone([ %opts ])
 
 This will create a shallow copy of the controller.  You may optionally pass in
-a hash of options to override whichever of the controllers attributes you want.
+a hash of options that will be merged into the new clone.
 
 =head3 $c->init($cr)
 
