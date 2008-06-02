@@ -131,8 +131,23 @@ Squatting::Controller - default controller class for Squatting
   package App::Controllers;
   use Squatting ':controllers';
   our @C = (
-    C(...),
-    Squatting::Controller->new(...),
+    C(
+      Thread => [ '/forum/(\d+)/thread/(\d+)-(\w+)' ],
+      get => sub {
+        my ($self, $forum_id, $thread_id, $slug) = @_;
+        #
+        # get thread from database...
+        #
+        $self->render('thread');
+      },
+      post => sub {
+        my ($self, $forum_id, $thread_id, $slug) = @_;
+        # 
+        # add post to thread
+        #
+        $self->redirect(R('Thread', $forum_id, $thread_id, $slug));
+      }
+    )
   );
 
 =head1 DESCRIPTION
