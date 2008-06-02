@@ -280,8 +280,8 @@ issues:
   component: Squatting
   release: "0.30"
   reporter: John Beppu <john.beppu@gmail.com>
-  status: :unstarted
-  disposition: 
+  status: :closed
+  disposition: :fixed
   creation_time: 2008-05-16 18:13:37.897790 -07:00
   references: []
 
@@ -291,6 +291,10 @@ issues:
     - John Beppu <john.beppu@gmail.com>
     - created
     - ""
+  - - 2008-06-01 21:39:25.299210 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - closed issue with disposition fixed
+    - ""
 - !ditz.rubyforge.org,2008-03-06/issue 
   title: Write docs for Squatting::Controller.
   desc: ""
@@ -298,8 +302,8 @@ issues:
   component: Squatting
   release: "0.30"
   reporter: John Beppu <john.beppu@gmail.com>
-  status: :unstarted
-  disposition: 
+  status: :closed
+  disposition: :fixed
   creation_time: 2008-05-16 18:13:54.938326 -07:00
   references: []
 
@@ -309,6 +313,10 @@ issues:
     - John Beppu <john.beppu@gmail.com>
     - created
     - ""
+  - - 2008-06-01 21:39:27.710749 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - closed issue with disposition fixed
+    - ""
 - !ditz.rubyforge.org,2008-03-06/issue 
   title: Write docs for Squatting::View
   desc: ""
@@ -316,8 +324,8 @@ issues:
   component: Squatting
   release: "0.30"
   reporter: John Beppu <john.beppu@gmail.com>
-  status: :unstarted
-  disposition: 
+  status: :closed
+  disposition: :fixed
   creation_time: 2008-05-16 18:14:12.872057 -07:00
   references: []
 
@@ -327,6 +335,10 @@ issues:
     - John Beppu <john.beppu@gmail.com>
     - created
     - ""
+  - - 2008-06-01 21:39:30.061265 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - closed issue with disposition fixed
+    - ""
 - !ditz.rubyforge.org,2008-03-06/issue 
   title: Write docs for Squatting::Q.
   desc: ""
@@ -334,8 +346,8 @@ issues:
   component: Squatting
   release: "0.30"
   reporter: John Beppu <john.beppu@gmail.com>
-  status: :unstarted
-  disposition: 
+  status: :closed
+  disposition: :fixed
   creation_time: 2008-05-16 18:14:27.984590 -07:00
   references: []
 
@@ -345,6 +357,10 @@ issues:
     - John Beppu <john.beppu@gmail.com>
     - created
     - ""
+  - - 2008-06-01 21:39:32.873616 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - closed issue with disposition fixed
+    - ""
 - !ditz.rubyforge.org,2008-03-06/issue 
   title: Write docs for Squatting::Mapper.
   desc: ""
@@ -352,8 +368,8 @@ issues:
   component: Squatting
   release: "0.30"
   reporter: John Beppu <john.beppu@gmail.com>
-  status: :unstarted
-  disposition: 
+  status: :closed
+  disposition: :fixed
   creation_time: 2008-05-16 18:14:44.674177 -07:00
   references: []
 
@@ -362,6 +378,10 @@ issues:
   - - 2008-05-16 18:14:45.478837 -07:00
     - John Beppu <john.beppu@gmail.com>
     - created
+    - ""
+  - - 2008-06-01 21:39:35.074170 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - closed issue with disposition fixed
     - ""
 components: 
 - !ditz.rubyforge.org,2008-03-06/component 
