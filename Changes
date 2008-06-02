@@ -1,7 +1,9 @@
 0.30
   - In view objects, $self->{template} is the name of the current template.
-  - $controller->set_cookies renamed to $controller->cgi_cookies
+  - $controller->set_cookies renamed to $controller->cookies
+  - $controller->cookies now handles both incoming and outgoing cookies
   - made $controller->headers and $controller->cgi_cookies lvalue subs, too.
+  - lots of documentation added
 
 0.21
   - Fixed the URL to Io's web site
