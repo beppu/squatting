@@ -109,7 +109,8 @@ sub i {
 
 # \%cookies = c($cookie_header)  # Parse Cookie header(s).
 sub c {
-  { CGI::Cookie->parse($_[0]) };
+  # The + is a hint to perl to treat {} as a hashref and not a block.
+  +{ map { ref($_) ? $_->value : $_ } CGI::Cookie->parse($_[0]) };
 }
 
 # default 404 controller

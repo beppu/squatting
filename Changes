@@ -1,3 +1,7 @@
+0.40
+  - Fixed a bug in the cookie parsing code.
+  ? Thinking of porting Camping::H to Squatting::H.
+
 0.30
   - In view objects, $self->{template} is the name of the current template.
   - $controller->set_cookies renamed to $controller->cookies
