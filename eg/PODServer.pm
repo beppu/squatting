@@ -36,6 +36,19 @@ sub scan {
 }
 scan;
 
+# *.pod takes precedence over *.pm
+sub pod_for {
+  for ($_[0]) {
+    return $_ if /\.pod$/;
+    my $pod = $_;
+    $pod =~ s/\.pm$/\.pod/;
+    if (-e $pod) {
+      return $pod;
+    }
+    return $_;
+  }
+}
+
 our @C = (
 
   C(
@@ -59,11 +72,11 @@ our @C = (
       $v->{path}   = [ split('/', $module) ];
       $v->{module} = $module;
       if (exists $perl_modules{$module}) {
-        $v->{pod_file} = $perl_modules{$module};
+        $v->{pod_file} = pod_for $perl_modules{$module};
         $v->{title} = "POD Server - $pm";
         $self->render('pod');
       } elsif (exists $perl_basepods{$module}) {
-        $v->{pod_file} = $perl_basepods{$module};
+        $v->{pod_file} = pod_for $perl_basepods{$module};
         $v->{title} = "POD Server - $pm";
         $self->render('pod');
       } else {
