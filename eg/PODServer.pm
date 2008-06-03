@@ -18,8 +18,9 @@ our %perl_modules;
 our @perl_modules;
 sub scan {
   for (@INC) {
+    next if $_ eq ".";
     my $inc = $_;
-    my $wanted = sub {
+    my $pm_or_pod = sub {
       my $m = $File::Find::name;
       next if -d $m;
       next unless /\.(pm|pod)$/;
@@ -28,7 +29,7 @@ sub scan {
       $m =~ s{^/}{};
       $perl_modules{$m} = $File::Find::name;
     };
-    find($wanted, $_);
+    find({ wanted => $pm_or_pod, follow_fast => 1 }, $_);
   }
   my %h = map { $_ => 1 } ( keys %perl_modules, keys %perl_basepods );
   @perl_modules = sort keys %h;
@@ -54,15 +55,16 @@ our @C = (
     get => sub {
       my ($self, $module) = @_;
       my $v        = $self->v;
+      my $pm       = $module; $pm =~ s{/}{::}g;
       $v->{path}   = [ split('/', $module) ];
       $v->{module} = $module;
       if (exists $perl_modules{$module}) {
         $v->{pod_file} = $perl_modules{$module};
-        $v->{title} = "POD Server - $module";
+        $v->{title} = "POD Server - $pm";
         $self->render('pod');
       } elsif (exists $perl_basepods{$module}) {
         $v->{pod_file} = $perl_basepods{$module};
-        $v->{title} = "POD Server - $module";
+        $v->{title} = "POD Server - $pm";
         $self->render('pod');
       } else {
         $v->{title} = "POD Server - $v->{module}";
