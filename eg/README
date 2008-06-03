@@ -1,8 +1,19 @@
-This directory is full of examples.
+______________________________________________________________________________
+squatting Example -p 4235
 
-squatting Example
+  http://localhost:4236/
+
   This is the first example app I made.
+  I tried to show a little bit of everything here.
+  For sillyness points, I used CGI.pm's HTML generating functions
+  as my templating system.  ;-)
 
-squatting PODServer
-  pod2html
+______________________________________________________________________________
+squatting PODServer -p 4236
+
+  http://localhost:4236/
+
+  This will let you browse (almost) all the POD that's
+  installed on your system.  I wrote this before I was aware of
+  Pod::Webserver which basically does the same thing.
 
