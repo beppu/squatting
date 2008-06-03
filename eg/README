@@ -13,7 +13,13 @@ squatting PODServer -p 4236
 
   http://localhost:4236/
 
+  requires:
+    Pod::Simple
+    HTML::AsSubs
+
   This will let you browse (almost) all the POD that's
   installed on your system.  I wrote this before I was aware of
   Pod::Webserver which basically does the same thing.
+  However, I may still make a separate dist out of this
+  and put it on CPAN.
 
