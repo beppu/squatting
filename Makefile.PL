@@ -29,9 +29,10 @@ sub MY::libscan {
 
 sub MY::postamble {q{
 metamunge:
-	$(NOECHO) $(ECHO) 'no_index:' >> $(DISTVNAME)/META.yml
-	$(NOECHO) $(ECHO) '    - eg'  >> $(DISTVNAME)/META.yml
-	$(NOECHO) $(ECHO) '    - t'   >> $(DISTVNAME)/META.yml
+	$(NOECHO) $(ECHO) 'no_index:'        >> $(DISTVNAME)/META.yml
+	$(NOECHO) $(ECHO) '    directory:'   >> $(DISTVNAME)/META.yml
+	$(NOECHO) $(ECHO) '        - eg'     >> $(DISTVNAME)/META.yml
+	$(NOECHO) $(ECHO) '        - t'      >> $(DISTVNAME)/META.yml
 
 nd:
 	$(MKPATH) doc
