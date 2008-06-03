@@ -115,7 +115,9 @@ our @V = (
           style(x($self->_css))
         ),
         body(
-          div({ id => 'menu' }, a({ href => R('Home')}, "Home"), ($self->_breadcrumbs($v)) ),
+          div({ id => 'menu' },
+            a({ href => R('Home')}, "Home"), ($self->_breadcrumbs($v))
+          ),
           div({ id => 'pod' }, @content),
         ),
       )->as_HTML;
@@ -184,10 +186,6 @@ our @V = (
           line-height: 1.4em;
         }
       |;
-    },
-
-    _js => sub {
-      $JS ||= join('', <DATA>);
     },
 
     home => sub {
