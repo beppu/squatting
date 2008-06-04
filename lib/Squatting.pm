@@ -7,7 +7,6 @@ use base 'Exporter';
 
 use Continuity;
 use Squatting::Mapper;
-use Squatting::H;
 
 use List::Util qw(first);
 use URI::Escape;
@@ -15,9 +14,9 @@ use Carp;
 use Data::Dump 'pp';
 
 our $VERSION     = '0.30';
-our @EXPORT_OK   = qw($app C R V H);
+our @EXPORT_OK   = qw($app C R V);
 our %EXPORT_TAGS = (
-  controllers => [qw($app C R H)],
+  controllers => [qw($app C R)],
   views       => [qw($app R V)]
 );
 
@@ -85,11 +84,6 @@ sub R {
 # $view = V($name, %subs)  # shortcut for constructing a Squatting::View
 sub V {
   Squatting::View->new(@_);
-}
-
-# $hash = H(%opts)  # shortcut for constructing a Squatting::H
-sub H {
-  Squatting::H->new(@_);
 }
 
 # App->service($controller, @params)  # Override this method if you want to take actions before or after a request is handled.
