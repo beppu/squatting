@@ -1,27 +1,34 @@
 package Squatting::H;
 use strict;
+use selfvars;
+use base 'Exporter';
+
 our $AUTOLOAD;
+our @EXPORT = qw(H);
+
+sub H {
+  Squatting::H->new(@_)
+}
 
 sub new {
-  bless { @_[1..$#_] } => $_[0];
+  bless { %opts } => $_[0];
 }
 
 sub clone {
-  bless { %{$_[0]}, @_[1..$#_] } => ref($_[0]);
+  bless { %$self, %opts } => ref($self);
 }
 
 sub AUTOLOAD {
-  my $self = shift;
   my $attr = $AUTOLOAD;
   $attr =~ s/.*://;
-  if (exists $self->{$attr}) {
-    if (ref($self->{$attr}) eq 'CODE') {
-      return $self->{$attr}->($self, @_);
-    } else {
-      return $self->{$attr};
-    }
+  if (ref($self->{$attr}) eq 'CODE') {
+    $self->{$attr}->($self, @args)
   } else {
-    return undef;
+    if (@args) {
+      $self->{$attr} = $args[0];
+    } else {
+      $self->{$attr};
+    }
   }
 }
 
@@ -29,3 +36,14 @@ sub DESTROY {
 }
 
 1;
+__END__
+# Local Variables: ***
+# mode: cperl ***
+# indent-tabs-mode: f ***
+# cperl-close-paren-offset: -2 ***
+# cperl-continued-statement-offset: 2 ***
+# cperl-indent-level: 2 ***
+# cperl-indent-parens-as-block: t ***
+# cperl-tab-always-indent: f ***
+# End: ***
+# vim:tabstop=8 softtabstop=2 shiftwidth=2 shiftround expandtab
