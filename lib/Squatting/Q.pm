@@ -53,7 +53,7 @@ web app.
 
 L<Attribute::Handlers>,
 L<Coro>,
-L<Squatting::Tutorial>
+L<Squatting::Mapper>
 
 =cut
 
