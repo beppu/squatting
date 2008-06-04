@@ -23,7 +23,7 @@ sub init {
   $self->env      = e($cr->http_request);
   $self->cookies  = c($self->env->{HTTP_COOKIE});
   $self->input    = i(join('&', grep { defined } ($self->env->{QUERY_STRING}, $cr->request->content)));
-  $self->headers  = { 'Content-Type' => 'text/html' };
+  $self->headers  = H 'Content-Type' => 'text/html';
   $self->v        = {};
   $self->status   = 200;
   $self;
@@ -77,40 +77,38 @@ sub redirect {
 # \%env = e($http_request)  # Get request headers from HTTP::Request.
 sub e {
   my $r = shift;
-  my %env;
+  my $env = H;
   my $uri = $r->uri;
-  $env{QUERY_STRING}   = $uri->query || '';
-  $env{REQUEST_PATH}   = $uri->path;
-  $env{REQUEST_URI}    = $uri->path_query;
-  $env{REQUEST_METHOD} = $r->method;
+  $env->{QUERY_STRING}   = $uri->query || '';
+  $env->{REQUEST_PATH}   = $uri->path;
+  $env->{REQUEST_URI}    = $uri->path_query;
+  $env->{REQUEST_METHOD} = $r->method;
   $r->scan(sub{
     my ($header, $value) = @_;
     my $key = uc $header;
     $key =~ s/-/_/g;
     $key = "HTTP_$key";
-    $env{$key} = $value;
+    $env->{$key} = $value;
   });
-  \%env;
+  $env;
 }
 
 # \%input = i($query_string)  # Extract CGI parameters from QUERY_STRING
 sub i {
   my $q = CGI->new($_[0]);
   my %i = $q->Vars;
-  my %input = map {
+  H map {
     if ($i{$_} =~ /\0/) {
       $_ => [ split("\0", $i{$_}) ];
     } else {
       $_ => $i{$_};
     }
   } keys %i;
-  \%input;
 }
 
 # \%cookies = c($cookie_header)  # Parse Cookie header(s).
 sub c {
-  # The + is a hint to perl to treat {} as a hashref and not a block.
-  +{ map { ref($_) ? $_->value : $_ } CGI::Cookie->parse($_[0]) };
+  H map { ref($_) ? $_->value : $_ } CGI::Cookie->parse($_[0]);
 }
 
 # default 404 controller
