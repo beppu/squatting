@@ -134,11 +134,11 @@ L<Squatting::Controller>
 
 # Local Variables: ***
 # mode: cperl ***
-# indent-tabs-mode: t ***
+# indent-tabs-mode: f ***
 # cperl-close-paren-offset: -2 ***
 # cperl-continued-statement-offset: 2 ***
 # cperl-indent-level: 2 ***
 # cperl-indent-parens-as-block: t ***
 # cperl-tab-always-indent: f ***
 # End: ***
-# vim:tabstop=2 softtabstop=2 shiftwidth=2 shiftround expandtab
+# vim:tabstop=8 softtabstop=2 shiftwidth=2 shiftround expandtab
