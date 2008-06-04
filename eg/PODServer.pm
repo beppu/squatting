@@ -64,9 +64,9 @@ our @C = (
   # and find the file that contains the POD for it.
   # Then it asks the view to turn the POD into HTML.
   C(
-    Pod => [ '/pod/(.*)' ],
+    Pod => [ '/(_?pod)/(.*)' ],
     get => sub {
-      my ($self, $module) = @_;
+      my ($self, $template, $module) = @_;
       my $v        = $self->v;
       my $pm       = $module; $pm =~ s{/}{::}g;
       $v->{path}   = [ split('/', $module) ];
@@ -74,11 +74,11 @@ our @C = (
       if (exists $perl_modules{$module}) {
         $v->{pod_file} = pod_for $perl_modules{$module};
         $v->{title} = "POD Server - $pm";
-        $self->render('pod');
+        $self->render($template);
       } elsif (exists $perl_basepods{$module}) {
         $v->{pod_file} = pod_for $perl_basepods{$module};
         $v->{title} = "POD Server - $pm";
-        $self->render('pod');
+        $self->render($template);
       } else {
         $v->{title} = "POD Server - $v->{module}";
         $self->render('pod_not_found');
@@ -129,7 +129,7 @@ our @V = (
       my @path;
       for (@{$v->{path}}) {
         push @path, $_;
-        push @breadcrumb, a({ href => R('Pod', join('/', @path)) }, " > $_ ");
+        push @breadcrumb, a({ href => R('Pod', 'pod', join('/', @path)) }, " > $_ ");
       }
       @breadcrumb;
     },
@@ -194,7 +194,7 @@ our @V = (
           my $pm = $_;
           $pm =~ s{/}{::}g;
           li(
-            a({ href => R(Pod, $_) }, $pm )
+            a({ href => R('Pod', 'pod', $_) }, $pm )
           )
         } (sort @perl_modules)
       );
@@ -213,6 +213,11 @@ our @V = (
       x($out), $self->_possibilities($v);
     },
 
+    _pod => sub {
+      my ($self, $v) = @_;
+      div($self->{pod}->($self, $v))->as_HTML; # bypass layout
+    },
+
     pod_not_found => sub {
       my ($self, $v) = @_;
       div(
@@ -229,7 +234,7 @@ our @V = (
       ul(
         map {
           li(
-            a({ href => R(Pod, $_) }, $colon->($_))
+            a({ href => R('Pod', 'pod', $_) }, $colon->($_))
           )
         } @possibilities
       );
