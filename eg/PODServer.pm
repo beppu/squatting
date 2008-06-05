@@ -56,7 +56,19 @@ our @C = (
     get  => sub {
       my ($self) = @_;
       $self->v->{title} = 'POD Server';
+      if ($self->input->{base}) {
+        $self->v->{base} = 'pod';
+      }
       $self->render('home');
+    }
+  ),
+
+  C(
+    Frames => [ '/frames' ],
+    get    => sub {
+      my ($self) = @_;
+      $self->v->{title} = 'POD Server';
+      $self->render('_frames');
     }
   ),
 
@@ -64,9 +76,9 @@ our @C = (
   # and find the file that contains the POD for it.
   # Then it asks the view to turn the POD into HTML.
   C(
-    Pod => [ '/(_?pod)/(.*)' ],
+    Pod => [ '/pod/(.*)' ],
     get => sub {
-      my ($self, $template, $module) = @_;
+      my ($self, $module) = @_;
       my $v        = $self->v;
       my $pm       = $module; $pm =~ s{/}{::}g;
       $v->{path}   = [ split('/', $module) ];
@@ -74,11 +86,11 @@ our @C = (
       if (exists $perl_modules{$module}) {
         $v->{pod_file} = pod_for $perl_modules{$module};
         $v->{title} = "POD Server - $pm";
-        $self->render($template);
+        $self->render('pod');
       } elsif (exists $perl_basepods{$module}) {
         $v->{pod_file} = pod_for $perl_basepods{$module};
         $v->{title} = "POD Server - $pm";
-        $self->render($template);
+        $self->render('pod');
       } else {
         $v->{title} = "POD Server - $v->{module}";
         $self->render('pod_not_found');
@@ -112,7 +124,12 @@ our @V = (
       html(
         head(
           title($v->{title}),
-          style(x($self->_css))
+          style(x($self->_css)),
+          (
+            $v->{base} 
+              ? base({ target => $v->{base} })
+              : ()
+          ),
         ),
         body(
           div({ id => 'menu' },
@@ -129,7 +146,7 @@ our @V = (
       my @path;
       for (@{$v->{path}}) {
         push @path, $_;
-        push @breadcrumb, a({ href => R('Pod', 'pod', join('/', @path)) }, " > $_ ");
+        push @breadcrumb, a({ href => R('Pod', join('/', @path)) }, " > $_ ");
       }
       @breadcrumb;
     },
@@ -164,6 +181,10 @@ our @V = (
           color: #fff;
           opacity: 0.75;
         }
+        ul#list {
+          margin-left: -6em;
+          list-style: none;
+        }
         div#pod {
           width: 540px;
           margin: 2em 4em 2em 4em;
@@ -189,15 +210,33 @@ our @V = (
     },
 
     home => sub {
-      $HOME ||= ul(
-        map {
-          my $pm = $_;
-          $pm =~ s{/}{::}g;
-          li(
-            a({ href => R('Pod', 'pod', $_) }, $pm )
-          )
-        } (sort @perl_modules)
+      $HOME ||= div(
+        a({ href => R(Home),   target => '_top' }, "no frames"),
+        em(" | "),
+        a({ href => R(Frames), target => '_top' }, "frames"),
+        ul({ id => 'list' },
+          map {
+            my $pm = $_;
+            $pm =~ s{/}{::}g;
+            li(
+              a({ href => R('Pod', $_) }, $pm )
+            )
+          } (sort @perl_modules)
+        )
       );
+    },
+
+    _frames => sub {
+      my ($self, $v) = @_;
+      html(
+        head(
+          title($v->{title})
+        ),
+        frameset({ cols => '*,380' },
+          frame({ name => 'pod',  src => R('Pod', 'Squatting') }),
+          frame({ name => 'list', src => R('Home', { base => 'pod' }) }),
+        ),
+      )->as_HTML;
     },
 
     pod => sub {
@@ -211,11 +250,6 @@ our @V = (
       $out =~ s/^.*<!-- start doc -->//s;
       $out =~ s/<!-- end doc -->.*$//s;
       x($out), $self->_possibilities($v);
-    },
-
-    _pod => sub {
-      my ($self, $v) = @_;
-      div($self->{pod}->($self, $v))->as_HTML; # bypass layout
     },
 
     pod_not_found => sub {
@@ -234,7 +268,7 @@ our @V = (
       ul(
         map {
           li(
-            a({ href => R('Pod', 'pod', $_) }, $colon->($_))
+            a({ href => R('Pod', $_) }, $colon->($_))
           )
         } @possibilities
       );
