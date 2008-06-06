@@ -20,12 +20,9 @@ our %EXPORT_TAGS = (
   views       => [qw($app R V)]
 );
 
-# Kill the following package vars,
+# Kill the following package vars (especially $app),
 # and we might have a chance of working under mod_perl.
-# However, I think reverse proxies 
-# (like nginx, perlbal, apache 2's mod_proxy_balancer, etc.)
-# are the way to go.
-our $app;
+our $app; 
 our $I = 0;
 our %Q;
 
