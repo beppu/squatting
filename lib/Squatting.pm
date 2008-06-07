@@ -2,7 +2,8 @@ package Squatting;
 
 use strict;
 no  strict 'refs';
-use warnings;
+#use warnings;
+#no  warnings 'redefine';
 
 use Continuity;
 use Squatting::Mapper;
@@ -26,6 +27,7 @@ sub import {
   my $p = (caller)[0];
   my $app = $p;
   $app =~ s/::Controllers$//;
+  $app =~ s/::Views$//;
 
   # $url = R('Controller', @params, { cgi => vars })  # Generate URLs with the routing function
   *{$p."::R"} = sub {
