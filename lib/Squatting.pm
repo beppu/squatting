@@ -3,7 +3,6 @@ package Squatting;
 use strict;
 no  strict 'refs';
 use warnings;
-use base 'Exporter';
 
 use Continuity;
 use Squatting::Mapper;
@@ -13,79 +12,82 @@ use URI::Escape;
 use Carp;
 use Data::Dump 'pp';
 
-our $VERSION     = '0.31';
-our @EXPORT_OK   = qw($app C R V);
-our %EXPORT_TAGS = (
-  controllers => [qw($app C R)],
-  views       => [qw($app R V)]
-);
+our $VERSION = '0.40';
 
-# Kill the following package vars (especially $app),
-# and we might have a chance of working under mod_perl.
-our $app; 
+# TODO - Move $I and the code that uses it out to another (optional) module.
+# %Q can stay.
 our $I = 0;
-our %Q;
+our %Q; # map coderefs to session queues
 
 require Squatting::Controller;
 require Squatting::View;
 
-# $controller = C($name => \@urls, %subs)  # Construct a Squatting::Controller
-sub C {
-  Squatting::Controller->new(@_);
-}
+sub import {
+  my $p = (caller)[0];
+  my $app = $p;
+  $app =~ s/::Controllers$//;
 
-# ($controller, \@regex_captures) = D($path)  # Return controller and captures for a path
-sub D {
-  no warnings 'once';
-  my $url = uri_unescape($_[0]);
-  my $C = \@{$app.'::Controllers::C'};
-  my ($c, @regex_captures);
-  for $c (@$C) {
-    for (@{$c->urls}) {
-      if (@regex_captures = ($url =~ qr{^$_$})) {
-        pop @regex_captures if ($#+ == 0);
-        return ($c, \@regex_captures);
+  # $url = R('Controller', @params, { cgi => vars })  # Generate URLs with the routing function
+  *{$p."::R"} = sub {
+    my ($controller, @params) = @_;
+    my $input;
+    if (@params && ref($params[-1]) eq 'HASH') {
+      $input = pop(@params);
+    }
+    my $c = ${$app."::Controllers::C"}{$controller};
+    croak "$controller controller not found" unless $c;
+    my $arity = @params;
+    my $pattern = first { my @m = /\(.*?\)/g; $arity == @m } @{$c->urls};
+    croak "couldn't find a matching URL pattern" unless $pattern;
+    while ($pattern =~ /\(.*?\)/) {
+      $pattern =~ s{\(.*?\)}{uri_escape(+shift(@params), "^A-Za-z0-9\-_.!~*’()/")}e;
+    }
+    if ($input) {
+      $pattern .= "?".  join('&' => 
+        map { 
+          my $k = $_;
+          ref($input->{$_}) eq 'ARRAY'
+            ? map { "$k=".uri_escape($_) } @{$input->{$_}}
+            : "$_=".uri_escape($input->{$_})
+        } keys %$input);
+    }
+    $pattern;
+  };
+
+  # ($controller, \@regex_captures) = D($path)  # Return controller and captures for a path
+  *{$app."::D"} = sub {
+    no warnings 'once';
+    my $url = uri_unescape($_[0]);
+    my $C = \@{$app.'::Controllers::C'};
+    my ($c, @regex_captures);
+    for $c (@$C) {
+      for (@{$c->urls}) {
+        if (@regex_captures = ($url =~ qr{^$_$})) {
+          pop @regex_captures if ($#+ == 0);
+          return ($c, \@regex_captures);
+        }
       }
     }
-  }
-  ($Squatting::Controller::r404, []);
-}
+    ($Squatting::Controller::r404, []);
+  };
 
-# $url = R('Controller', @params, { cgi => vars })  # Generate URLs with the routing function
-sub R {
-  my ($controller, @params) = @_;
-  my $input;
-  if (@params && ref($params[-1]) eq 'HASH') {
-    $input = pop(@params);
+  return if @_ < 2;
+  if ($_[1] eq ':controllers') {
+    # $controller = C($name => \@urls, %subs)  # shortcut for constructing a Squatting::Controller
+    *{$p."::C"} = sub {
+      Squatting::Controller->new(@_, app => $app);
+    };
+  } elsif ($_[1] eq ':views') {
+    # $view = V($name, %subs)  # shortcut for constructing a Squatting::View
+    *{$p."::V"} = sub {
+      Squatting::View->new(@_);
+    };
   }
-  my $c = ${$app."::Controllers::C"}{$controller};
-  croak "$controller controller not found" unless $c;
-  my $arity = @params;
-  my $pattern = first { my @m = /\(.*?\)/g; $arity == @m } @{$c->urls};
-  croak "couldn't find a matching URL pattern" unless $pattern;
-  while ($pattern =~ /\(.*?\)/) {
-    $pattern =~ s{\(.*?\)}{uri_escape(+shift(@params), "^A-Za-z0-9\-_.!~*’()/")}e;
-  }
-  if ($input) {
-    $pattern .= "?".  join('&' => 
-      map { 
-        my $k = $_;
-        ref($input->{$_}) eq 'ARRAY'
-          ? map { "$k=".uri_escape($_) } @{$input->{$_}}
-          : "$_=".uri_escape($input->{$_})
-      } keys %$input);
-  }
-  $pattern;
-}
-
-# $view = V($name, %subs)  # shortcut for constructing a Squatting::View
-sub V {
-  Squatting::View->new(@_);
 }
 
 # App->service($controller, @params)  # Override this method if you want to take actions before or after a request is handled.
 sub service {
-  my ($class, $c, @params) = grep { defined } @_;
+  my ($app, $c, @params) = grep { defined } @_;
   my $method  = lc $c->env->{REQUEST_METHOD};
   my $content;
   $I++;
@@ -113,24 +115,25 @@ sub service {
 
 # App->init  # Initialize $app
 sub init {
-  $app = shift;
-  %{$app."::Controllers::C"} = map { $_->name => $_ }
-  @{$app."::Controllers::C"};
-  %{$app."::Views::V"} = map { $_->name => $_ }
-  @{$app."::Views::V"};
+  %{$_[0]."::Controllers::C"} = map { $_->name => $_ }
+  @{$_[0]."::Controllers::C"};
+  %{$_[0]."::Views::V"} = map { $_->name => $_ }
+  @{$_[0]."::Views::V"};
 }
 
 # App->go(%opts)  # Start the server.
 sub go {
-  $app = shift;
+  my $app = shift;
   $app->init;
+
   # Putting a RESTful face on Continuity since 2008.
   Continuity->new(
     port     => 4234,
     mapper   => Squatting::Mapper->new(
+      app      => $app,
       callback => sub {
         my $cr = shift;
-        my ($c, $p)  = D($cr->uri->path);
+        my ($c, $p)  = &{$app."::D"}($cr->uri->path);
         my $cc       = $c->clone->init($cr);
         my $content  = $app->service($cc, @$p);
         my $response = HTTP::Response->new(

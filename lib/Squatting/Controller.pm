@@ -45,7 +45,8 @@ sub clone {
 # status  - outgoing HTTP Response status
 # headers - outgoing HTTP headers
 # view    - name of default view
-for my $m qw(name urls cr env input cookies state v status headers view) {
+# app     - name of our app
+for my $m qw(name urls cr env input cookies state v status headers view app) {
   *{$m} = sub : lvalue { $_[0]->{$m} }
 }
 
@@ -59,6 +60,7 @@ sub render {
   my ($self, $template, $vn) = @_;
   my $view;
   $vn ||= $self->view;
+  my $app = $self->app;
   if (defined($vn)) {
     $view = ${$app."::Views::V"}{$vn}; #  hash
   } else {                             #    vs
