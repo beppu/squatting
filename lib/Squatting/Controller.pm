@@ -66,6 +66,7 @@ sub render {
   } else {                             #    vs
     $view = ${$app."::Views::V"}[0];   # array -- Perl provides a lot of 'namespaces' so why not use them?
   }
+  $view->headers = $self->headers;
   $view->$template($self->v);
 }
 

@@ -20,6 +20,11 @@ sub name : lvalue {
   $_[0]->{name};
 }
 
+# name of view
+sub headers : lvalue {
+  $_[0]->{headers};
+}
+
 # $content = $view->_render($template)       # render $template
 # $content = $view->_render($template, '_')  # render the generic template
 sub _render {
