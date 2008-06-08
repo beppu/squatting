@@ -1,6 +1,6 @@
 =head1 NAME
 
-Squatting::Cookbook - Techniques
+Squatting::Cookbook - Web Development Techniques for Squatting
 
 =head1 INTRODUCTION
 
