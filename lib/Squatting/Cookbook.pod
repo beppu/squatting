@@ -79,9 +79,9 @@ Here are some concrete examples to get you started.
 
 =head3 HTML::Mason
 
-=head3 Raw mod_perl2
-
 =head3 Raw mod_perl1
+
+=head3 Raw mod_perl2
 
 =head3 CGI
 
