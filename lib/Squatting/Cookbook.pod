@@ -20,6 +20,8 @@ Squatting::Cookbook - Web Development Techniques for Squatting
 The L<Continuity> backend is the only one that will currently allow you to use
 COMET-based techniques.
 
+=head3 RESTless Controllers
+
 
 =head2 How to Set Up Sessions
 
