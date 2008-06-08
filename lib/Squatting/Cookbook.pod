@@ -79,6 +79,10 @@ Here are some concrete examples to get you started.
 
 =head3 HTML::Mason
 
+=head3 Raw mod_perl2
+
+=head3 Raw mod_perl1
+
 =head3 CGI
 
 
@@ -93,10 +97,6 @@ limiting.
 
 =head2 Reverse Proxying to Squatting+Continuity w/ ngingx
 
-=head2 Raw mod_perl1
-
-=head2 Raw mod_perl2
-
 =head2 Piggy-Backing on Top of Other Frameworks
 
 If you've embedded a Squatting app into another application, the rules and
@@ -108,5 +108,9 @@ Follow their deployment guidelines, and you should be fine.
 
 If we're lucky enough to ever have this problem, we'll let you know how we
 solved it.
+
+=head2 DragonFlyBSD Single Image Cluster
+
+This is currently science fiction.
 
 =cut
