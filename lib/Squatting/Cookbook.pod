@@ -106,15 +106,21 @@ Follow their deployment guidelines, and you should be fine.
 
 =head1 SCALING TECHNIQUES
 
-If we're lucky enough to ever have this problem, we'll let you know how we
-solved it.
+This section is for those who wish to scale Squatting apps that are using a
+Continuity foundation.  If any part of your site is RESTless and stateful, and
+you've suddenly got a lot of traffic to your site, this section is for you.
+
+=head2 Multiple Squatting+Continuity Instances with Session Affinity
+
+TODO
+
+=head2 Linux OpenSSI
+
+TODO
 
 =head2 DragonFlyBSD Single Image Cluster
 
 This is currently science fiction.
 
-=head2 Linux OpenSSI
-
-...
 
 =cut
