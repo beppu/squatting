@@ -293,17 +293,17 @@ Squatting apps into apps written in anything from CGI on up to Catalyst.
 
 =item B<Minimal Policy>
 
-You may use any templating system you want, and you may use any ORM(*) you
+You may use any templating system you want, and you may use any ORM (B<*>) you
 want.  We only have a few rules on how the controller code and the view code
 should be organized, but beyond that, you are free.
 
-* Regarding ORMs, the nature of Continuity** makes it somewhat DBI-unfriendly, so
-this may be a deal-breaker for many of you.  However, I look at this as an
-opportunity to try novel storage systems like CouchDB, instead.  With the high
-level of concurrency that Squatting can support (thanks to Continuity) we are
-probably better off this way.
+B<*> Regarding ORMs, the nature of Continuity (B<**>) makes it somewhat
+DBI-unfriendly, so this may be a deal-breaker for many of you.  However, I look
+at this as an opportunity to try novel storage systems like CouchDB, instead.
+With the high level of concurrency that Squatting can support (when using
+Continuity) we are probably better off this way.
 
-** If you're not using Continuity, then really feel free to use any ORM.
+B<**> If you're not using Continuity, then really feel free to use any ORM.
 
 =back
 

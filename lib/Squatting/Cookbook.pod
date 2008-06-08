@@ -18,6 +18,13 @@ Squatting::Cookbook - Techniques
 The L<Continuity> backend is the only one that will allow you to do COMET.
 
 
+=head2 How to set up sessions
+
+=head3 Continuity and In-Memory Sessions
+
+=head3 Without Continuity
+
+
 =head2 How to use various templating systems with Squatting
 
 =head3 HTML::AsSubs
@@ -31,7 +38,7 @@ The L<Continuity> backend is the only one that will allow you to do COMET.
 =head3 HTML::Template
 
 
-=head2 How to internationalize and localize Squatting apps.
+=head2 How to internationalize and localize Squatting apps
 
 
 =head2 How to compose multiple Squatting apps into one app
