@@ -4,7 +4,11 @@ Squatting::Cookbook - Web Development Techniques for Squatting
 
 =head1 INTRODUCTION
 
-(This is a work in progress....)
+Squatting exists, because I fell in love with Camping's API, and I couldn't
+bear the thought of building another site using some other API.  It's a truly
+beautiful and concise API, and I hope that other Perl programmers may be able
+to appreciate it as well.
+
 
 =head2 Anatomy of a Squatting Application
 
