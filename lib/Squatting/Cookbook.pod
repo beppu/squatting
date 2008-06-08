@@ -9,7 +9,7 @@ bear the thought of building another site using some other API.  It's a truly
 beautiful and concise API, and I hope that other Perl programmers may be able
 to appreciate it as well.
 
-I hope you will be able to see how far a tiny bit of code can take you.
+I hope you will be able to see just how far a tiny bit of code can take you.
 
 =head2 Anatomy of a Squatting Application
 
