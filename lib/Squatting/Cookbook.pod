@@ -68,6 +68,6 @@ The L<Continuity> backend is the only one that will allow you to do COMET.
 
 =head2 Raw mod_perl2
 
-=head2 Piggy-backing on Other Frameworks
+=head2 Piggy-backing on Top of Other Frameworks
 
 =cut
