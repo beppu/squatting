@@ -31,8 +31,12 @@ The L<Continuity> backend is the only one that will allow you to do COMET.
 =head3 HTML::Template
 
 
+=head2 How to internationalize and localize Squatting apps.
+
+
 =head2 How to compose multiple Squatting apps into one app
 
+  App->mount('AnotherApp', '/prefix');
 
 =head2 How to embed a Squatting app into other frameworks
 
