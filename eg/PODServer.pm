@@ -162,8 +162,10 @@ our @V = (
         h1, h2, h3, h4 {
           margin-left: -1em;
         }
-        pre {
+        pre, code {
           font-size: 9pt;
+          background: #000;
+          color: #ccd;
         }
         a {
           color: #fc4;
@@ -191,9 +193,7 @@ our @V = (
         }
         div#pod pre {
           padding: 0.5em;
-          background: #000;
           border: 1px solid #444;
-          color: #ccd;
           -moz-border-radius-bottomleft: 7px;
           -moz-border-radius-bottomright: 7px;
           -moz-border-radius-topleft: 7px;

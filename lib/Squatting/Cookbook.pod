@@ -4,14 +4,88 @@ Squatting::Cookbook - Web Development Techniques for Squatting
 
 =head1 INTRODUCTION
 
-Squatting exists, because I fell in love with Camping's API, and I couldn't
-bear the thought of building another site using some other API.  It's a truly
-beautiful and concise API, and I hope that other Perl programmers may be able
-to appreciate it as well.
+Squatting exists because I fell in love with Camping's API, and I couldn't
+bear the thought of building another site using some other API.  When I decided
+that the next site I want to build would be implemented in Perl, I had no choice
+but to port Camping to Perl, and that's how Squatting was born.
 
-I hope you will be able to see just how far a tiny bit of code can take you.
+My hope is that other Perl programmers will be able to appreciate how concise
+this API is, and I hope they'll see just how far a little bit of code can go.
 
 =head2 Anatomy of a Squatting Application
+
+=head3 Pick a Name for Your App
+
+  package App;
+  use base 'Squatting';
+
+=head3 Make a Package for Your Controllers
+
+If your app is called C<App>, then:
+
+=over 4
+
+=item Your controllers must be defined in a package called C<App::Controllers>.
+
+=item You must say C<use Squatting ':controllers'>.
+
+=item You must put your controllers in a package variable named C<@C>.
+
+=back
+
+  package App::Controllers;
+  use Squatting ':controllers';
+  our @C = (
+    C(
+      Home => [ '/' ],
+      get  => sub {
+        my ($self) = @_;
+        $self->render('home');
+      }
+    ),
+    C(
+      Profile => [ '/~(\w+)' ],
+      get => sub {
+        my ($self, $name) = @_;
+        my $v = $self->v;
+        $v->{name} = $name;
+        $self->render('profile');
+      }
+    )
+  );
+
+=head4 Anatomy of a Controller
+
+=head3 Make a Package for Your Views
+
+If your app is called C<App>, then:
+
+=over 4
+
+=item Your views must be defined in a package called C<App::Views>.
+
+=item You must say C<use Squatting ':views'>.
+
+=item You must put your views in a package variable named C<@V>.
+
+=back
+
+  package App::Views;
+  use Squatting ':views';
+  our @V = (
+    V(
+      'html',
+      layout => sub {
+      },
+      home => sub {
+      },
+      profile => sub {
+      },
+    )
+  );
+
+=head4 Anatomy of a View
+
 
 =head2 Special Powers of Continuity
 
