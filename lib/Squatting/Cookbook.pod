@@ -8,8 +8,10 @@ Squatting::Cookbook - Techniques
 
 =head2 Anatomy of a Squatting Application
 
+=head2 Special Powers of Continuity
 
-=head1 TECHNIQUES
+
+=head1 PROGRAMMING TECHNIQUES
 
 =head2 COMET
 
@@ -54,14 +56,18 @@ The L<Continuity> backend is the only one that will allow you to do COMET.
 =head3 CGI
 
 
-=head1 DEPLOYMENT
+=head1 DEPLOYMENT TECHNIQUES
 
-=head3 Reverse Proxying w/ Perlbal
+=head2 Let Squatting+Continuity Own Port 80
 
-=head3 Reverse Proxying w/ ngingx
+=head2 Reverse Proxying Squatting+Continuity w/ Perlbal
 
-=head3 mod_perl1
+=head2 Reverse Proxying Squatting+Continuity w/ ngingx
 
-=head3 mod_perl2
+=head2 Raw mod_perl1
+
+=head2 Raw mod_perl2
+
+=head2 Piggy-backing on Other Frameworks
 
 =cut
