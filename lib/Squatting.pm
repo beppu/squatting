@@ -278,6 +278,19 @@ COMET), so we try to make RESTless controllers easy to express as well.
 The View API feels like Camping, but Squatting allows multiple views to coexist
 (kinda like Catalyst (but not quite)).
 
+=item B<Squatting Apps Are Composable>
+
+You can take multiple Squatting apps and compose them into a single app.  For
+example, suppose you built a site and decided that you'd like to add a forum.
+You could take a hypothetical forum app written in Squatting and just mount
+it at an arbitrary path like /forum.
+
+=item B<Squatting Apps Are Embeddable>
+
+Already using another framework?  No problem.  You should be able to embed
+Squatting apps into apps written in anything from CGI on up to Catalyst.
+(The documentation for this will be written soon.)
+
 =item B<Minimal Policy>
 
 You may use any templating system you want, and you may use any ORM(*) you
@@ -291,19 +304,6 @@ level of concurrency that Squatting can support (thanks to Continuity) we are
 probably better off this way.
 
 ** If you're not using Continuity, then really feel free to use any ORM.
-
-=item B<Squatting Apps Are Composable>
-
-You can take multiple Squatting apps and compose them into a single app.  For
-example, suppose you built a site and decided that you'd like to add a forum.
-You could take a hypothetical forum app written in Squatting and just mount
-it at an arbitrary path like /forum.
-
-=item B<Squatting Apps Are Embeddable>
-
-Already using another framework?  No problem.  You should be able to embed
-Squatting apps into apps written in anything from CGI on up to Catalyst.
-(The documentation for this will be written soon.)
 
 =back
 
@@ -337,6 +337,9 @@ This method will mount another Squatting app at the specified prefix.
   App->mount('My::Blog',   '/my/ridiculous/rantings');
   App->mount('Forum',      '/forum');
   App->mount('ChatterBox', '/chat');
+
+B<NOTE>:  You can only mount an app once.  Don't try to mount it again
+at some other prefix, because it won't work.
 
 =head3 App->go(%options)
 
