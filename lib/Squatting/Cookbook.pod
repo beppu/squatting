@@ -17,7 +17,8 @@ Squatting::Cookbook - Techniques
 
 =head3 Event Architecture
 
-The L<Continuity> backend is the only one that will allow you to do COMET.
+The L<Continuity> backend is the only one that will currently allow you to use
+COMET-based techniques.
 
 
 =head2 How to Set Up Sessions
@@ -95,5 +96,9 @@ limiting.
 =head2 Raw mod_perl2
 
 =head2 Piggy-Backing on Top of Other Frameworks
+
+If you've embedded a Squatting app into another application, the rules and
+conventions governing the other application's framework take precedence.
+Follow their deployment guidelines, and you should be fine.
 
 =cut
