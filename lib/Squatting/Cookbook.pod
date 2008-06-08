@@ -103,4 +103,10 @@ If you've embedded a Squatting app into another application, the rules and
 conventions governing the other application's framework take precedence.
 Follow their deployment guidelines, and you should be fine.
 
+
+=head1 SCALING TECHNIQUES
+
+If we're lucky enough to ever have this problem, we'll let you know how we
+solved it.
+
 =cut
