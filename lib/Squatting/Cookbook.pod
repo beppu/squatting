@@ -45,6 +45,10 @@ The L<Continuity> backend is the only one that will allow you to do COMET.
 
 =head1 DEPLOYMENT
 
+=head3 Reverse Proxying w/ Perlbal
+
+=head3 Reverse Proxying w/ ngingx
+
 =head3 mod_perl1
 
 =head3 mod_perl2
