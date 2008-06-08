@@ -110,7 +110,7 @@ This section is for those who wish to scale Squatting apps that are using a
 Continuity foundation.  If any part of your site is RESTless and stateful, and
 you've suddenly got a lot of traffic to your site, this section is for you.
 
-=head2 Multiple Squatting+Continuity Instances with Session Affinity
+=head2 Session Affinity with Multiple Instances
 
 TODO
 
