@@ -13,6 +13,7 @@ etc/init.d/squatting-gentoo
 etc/init.d/squatting-ubuntu
 lib/Squatting.pm
 lib/Squatting/Controller.pm
+lib/Squatting/Cookbook.pod
 lib/Squatting/Mapper.pm
 lib/Squatting/Q.pm
 lib/Squatting/View.pm
@@ -22,3 +23,5 @@ MANIFEST.SKIP
 MIT-LICENSE
 README
 t/00_basic.t
+t/01_controller.t
+t/02_view.t

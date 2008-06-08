@@ -91,8 +91,9 @@ our @C = (
       # The generic template, '_', is used 
       #   when no other template can be found.
     }
-  )
+  ),
 
 );
+
 
 1;

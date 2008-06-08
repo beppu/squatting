@@ -87,22 +87,45 @@ sub import {
   }
 }
 
+# App->mount($AnotherApp, $prefix)  # Map another app on to a URL $prefix.
+sub mount {
+  my ($app, $other, $prefix) = @_;
+  push @{$app."::O"}, $other;
+  push @{$app."::Controllers::C"}, map {
+    my $urls = $_->urls;
+    $_->urls = [ map { $prefix.$_ } @$urls ];
+    $_;
+  } @{$other."::Controllers::C"}
+}
+
+# App->init  # Initialize $app
+sub init {
+  $_->init for (@{$_[0]."::O"});
+  %{$_[0]."::Controllers::C"} = map { $_->name => $_ }
+  @{$_[0]."::Controllers::C"};
+  %{$_[0]."::Views::V"} = map { $_->name => $_ }
+  @{$_[0]."::Views::V"};
+}
+
 # App->service($controller, @params)  # Override this method if you want to take actions before or after a request is handled.
 sub service {
   my ($app, $c, @params) = grep { defined } @_;
   my $method  = lc $c->env->{REQUEST_METHOD};
   my $content;
-  $I++;
+
   eval { $content = $c->$method(@params) };
   warn "EXCEPTION: $@" if ($@);
+
+  # TODO - move this code into another (optional) module. {{{
+  $I++;
   my $s = $c->status;
-  my $cookies = $c->cookies;
   my $ppi = (%{$c->input}) 
     ? ', ' . pp($c->input) 
     : '';
-  #
   warn sprintf('%5d ', $I), "[$s] $app->$method(@{[ join(', '=>map { \"'$_'\" } $c->name, @params) ]}$ppi)\n";
-  #
+  # }}}
+
+  my $cookies = $c->cookies;
   $c->headers->{'Set-Cookie'} = join("; ",
     map { CGI::Cookie->new( -name => $_, %{$cookies->{$_}} ) }
       grep { ref $cookies->{$_} eq 'HASH' }
@@ -113,14 +136,6 @@ sub service {
       grep { defined } ($c->headers->{'Set-Cookie'}, $cr_cookies));
   }
   return $content;
-}
-
-# App->init  # Initialize $app
-sub init {
-  %{$_[0]."::Controllers::C"} = map { $_->name => $_ }
-  @{$_[0]."::Controllers::C"};
-  %{$_[0]."::Views::V"} = map { $_->name => $_ }
-  @{$_[0]."::Views::V"};
 }
 
 # App->go(%opts)  # Start the server.
@@ -265,17 +280,33 @@ The View API feels like Camping, but Squatting allows multiple views to coexist
 
 =item B<Minimal Policy>
 
-You may use any templating system you want, and you may use any ORM(*) you want.
-We only have a few rules on how the controller code and the view code should be
-organized, but beyond that, you are free.
+You may use any templating system you want, and you may use any ORM(*) you
+want.  We only have a few rules on how the controller code and the view code
+should be organized, but beyond that, you are free.
 
-=back
-
-* Regarding ORMs, the nature of Continuity makes it somewhat DBI-unfriendly, so
+* Regarding ORMs, the nature of Continuity** makes it somewhat DBI-unfriendly, so
 this may be a deal-breaker for many of you.  However, I look at this as an
 opportunity to try novel storage systems like CouchDB, instead.  With the high
 level of concurrency that Squatting can support (thanks to Continuity) we are
 probably better off this way.
+
+** If you're not using Continuity, then really feel free to use any ORM.
+
+=item B<Squatting Apps Are Composable>
+
+You can take multiple Squatting apps and compose them into a single app.  For
+example, suppose you built a site and decided that you'd like to add a forum.
+You could take a hypothetical forum app written in Squatting and just mount
+it at an arbitrary path like /forum.
+
+=item B<Squatting Apps Are Embeddable>
+
+Already using another framework?  No problem.  You should be able to embed
+Squatting apps into apps written in anything from CGI on up to Catalyst.
+(The documentation for this will be written soon.)
+
+=back
+
 
 =head1 API
 
@@ -298,6 +329,14 @@ this is the method you should override in your subclass.
 =head3 App->init
 
 This method takes no parameters and initializes some internal variables.
+
+=head3 App->mount($AnotherApp, $prefix)
+
+This method will mount another Squatting app at the specified prefix.
+
+  App->mount('My::Blog',   '/my/ridiculous/rantings');
+  App->mount('Forum',      '/forum');
+  App->mount('ChatterBox', '/chat');
 
 =head3 App->go(%options)
 

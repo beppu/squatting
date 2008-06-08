@@ -1,0 +1,52 @@
+=head1 NAME
+
+Squatting::Cookbook - Techniques
+
+=head1 INTRODUCTION
+
+(This is a work in progress....)
+
+=head2 Anatomy of a Squatting Application
+
+
+=head1 TECHNIQUES
+
+=head2 COMET
+
+=head3 Event Architecture
+
+The L<Continuity> backend is the only one that will allow you to do COMET.
+
+
+=head2 How to use various templating systems with Squatting
+
+=head3 HTML::AsSubs
+
+=head3 Tenjin
+
+=head3 Template::Toolkit
+
+=head3 HTML::Mason
+
+=head3 HTML::Template
+
+
+=head2 How to compose multiple Squatting apps into one app
+
+
+=head2 How to embed a Squatting app into other frameworks
+
+=head3 Catalyst
+
+=head3 HTML::Mason
+
+=head3 CGI
+
+
+=head1 DEPLOYMENT
+
+=head3 mod_perl1
+
+=head3 mod_perl2
+
+=cut
