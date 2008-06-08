@@ -64,7 +64,7 @@ our @C = (
   ),
 
   C(
-    Frames => [ '/frames' ],
+    Frames => [ '/@frames' ],
     get    => sub {
       my ($self) = @_;
       $self->v->{title} = 'POD Server';
@@ -76,7 +76,7 @@ our @C = (
   # and find the file that contains the POD for it.
   # Then it asks the view to turn the POD into HTML.
   C(
-    Pod => [ '/pod/(.*)' ],
+    Pod => [ '/(.*)' ],
     get => sub {
       my ($self, $module) = @_;
       my $v        = $self->v;
@@ -105,7 +105,7 @@ use Data::Dump 'pp';
 use HTML::AsSubs;
 use Pod::Simple;
 use Pod::Simple::HTML;
-$Pod::Simple::HTML::Perldoc_URL_Prefix = '/pod/';
+$Pod::Simple::HTML::Perldoc_URL_Prefix = '/';
 
 # the ~literal pseudo-element -- don't entity escape this content
 sub x {
