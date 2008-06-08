@@ -20,8 +20,8 @@ sub name : lvalue {
   $_[0]->{name};
 }
 
-# $content = $view->render($template)       # render $template
-# $content = $view->render($template, '_')  # render the generic template
+# $content = $view->_render($template)       # render $template
+# $content = $view->_render($template, '_')  # render the generic template
 sub _render {
   my ($self, $template, $vars, $alt) = @_;
   $self->{template} = $template;

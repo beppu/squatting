@@ -1,41 +1,51 @@
 use Test::More;
-use Squatting ':controllers';
+use strict;
+use warnings;
 
-sub simple_c {
-  C(
-    'Home' => ['/'],
-    get => sub {
-      "home";
-    }
-  );
-}
-
-our @tests = (
-  sub {
-    my $c = C(
+{
+  package Foo::Controllers;
+  use Squatting ':controllers';
+  our @C = (
+    C(
       'Home' => ['/'],
       get => sub {
         "home";
       }
-    );
+    )
+  );
+}
+
+sub c {
+  $Foo::Controllers::C[0]
+}
+
+our @tests = (
+
+  sub {
+    my $c = c;
     isa_ok($c, 'Squatting::Controller');
     return $c;
   },
+
   sub {
-    my $c = simple_c;
+    my $c = c;
     can_ok($c, qw(name urls cr env input cookies state v status headers view app));
   },
+
   sub {
-    my $c = simple_c;
+    my $c = c;
     $c->{headers} = { };
     $c->redirect('/foo');
-    ok($c->headers->{Location} eq '/foo' && $c->status == 302, 
-      '$c->redirect should set the Location header to /foo and the status to 302.')
+    ok($c->headers->{Location} eq '/foo' && $c->status == 302, '$c->redirect should set the Location header to /foo and the status to 302.')
   },
+
+  sub {
+    my $c = c;
+    ok($c->get eq "home", '$c->get should return the content for a GET request.');
+  }
+
 );
 
 plan tests => scalar(@tests);
 
-for (@tests) {
-  $_->()
-}
+for my $test (@tests) { $test->() }
