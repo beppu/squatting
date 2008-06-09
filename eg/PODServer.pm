@@ -162,10 +162,15 @@ our @V = (
         h1, h2, h3, h4 {
           margin-left: -1em;
         }
-        pre, code {
+        pre {
           font-size: 9pt;
           background: #000;
           color: #ccd;
+        }
+        code {
+          font-size: 9pt;
+          font-weight: bold;
+          color: #fff;
         }
         a {
           color: #fc4;
