@@ -104,9 +104,33 @@ COMET-based techniques.
 
 =head2 How to Set Up Sessions
 
-=head3 Continuity and In-Memory Sessions
+=head3 Continuity and Process Memory
+
+Pure Continuity apps typically don't use persistent session storage, because
+they can use lexically scoped variables instead.  However, Squatting apps are
+RESTful and stateless by default, so you can't count on the lexical scope of a
+controller to stick around between requests.  Luckily, package variables *will*
+stick around, so that's what we'll use to implement persistent sessions.
+
+  our %state;
+  sub service {
+    my ($app, $c, @args) = @_;
+    my $cr  = $c->cr;
+    my $sid = $cr->{session_id};
+    if (defined $sid) {
+      $c->state = $state{$sid} ||= {};
+    } 
+    $app->SUPER::service($c, @args);
+  }
+
+Here, we override service() in the main module of our app so that $c->state will
+provide a hashref whose values will persist between requests.
+
 
 =head3 Without Continuity
+
+The challenge is to find a way to assign unique session ids to each visitor, and
+use that session id as a key into a persistent store.
 
 
 =head2 How to Use Various Templating Systems With Squatting
@@ -193,7 +217,7 @@ you've suddenly got a lot of traffic to your site, this section is for you.
 
 TODO
 
-=head2 Linux OpenSSI
+=head2 Linux and OpenSSI
 
 TODO
 
