@@ -106,6 +106,10 @@ The constructor takes a name and a hash of attributes and coderefs.
 
 This returns the name of the view.
 
+=head3 $v->headers
+
+This returns a hashref of the outgoing HTTP headers.
+
 =head2 Template Methods
 
 =head3 $v->$template($v)

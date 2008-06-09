@@ -43,7 +43,7 @@ our @tests = (
 
   sub {
     my $v = v;
-    can_ok($v, qw(name _render));
+    can_ok($v, qw(name headers _render));
   },
 
   sub {
