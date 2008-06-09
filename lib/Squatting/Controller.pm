@@ -50,8 +50,8 @@ for my $m qw(name urls cr env input cookies state v status headers view app) {
   *{$m} = sub : lvalue { $_[0]->{$m} }
 }
 
-# HTTP (get post)    ## TODO (put delete head options etc...) ##
-for my $m qw(get post) {
+# HTTP (get post)
+for my $m qw(get post put delete head options trace connect) {
   *{$m} = sub { $_[0]->{$m}->(@_) }
 }
 
@@ -181,11 +181,23 @@ Given a L<Continuity::Request> object, this method will initialize the controlle
 
 =head3 $c->get(@args)
 
-This method is called when GET requests to the controller are made.
-
 =head3 $c->post(@args)
 
-This method is called when POST requests to the controller are made.
+=head3 $c->put(@args)
+
+=head3 $c->delete(@args)
+
+=head3 $c->head(@args)
+
+=head3 $c->options(@args)
+
+=head3 $c->trace(@args)
+
+=head3 $c->connect(@args)
+
+These methods are called when their respective HTTP requests are sent to the
+controller.  @args is the list of regex captures from the URL pattern in
+$c->urls that matched $c->env->{REQUEST_PATH}.
 
 =head2 Attribute Accessors
 
