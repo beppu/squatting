@@ -7,10 +7,14 @@ use File::Basename;
 use File::Find;
 use Config;
 
+# skip files we've already seen
+my %already_seen;
+
 # figure out where all(?) our pod is located
 # (loosely based on zsh's _perl_basepods and _perl_modules)
 our %perl_basepods = map {
   my ($file, $path, $suffix) = fileparse($_, ".pod");
+  $already_seen{$_} = 1;
   ($file => $_);
 } glob "$Config{installprivlib}/pod/*.pod";
 
@@ -24,6 +28,8 @@ sub scan {
       my $m = $File::Find::name;
       next if -d $m;
       next unless /\.(pm|pod)$/;
+      next if $already_seen{$m};
+      $already_seen{$m} = 1;
       $m =~ s/$inc//;
       $m =~ s/\.\w*$//;
       $m =~ s{^/}{};
@@ -35,6 +41,7 @@ sub scan {
   @perl_modules = sort keys %h;
 }
 scan;
+%already_seen = ();
 
 # *.pod takes precedence over *.pm
 sub pod_for {
@@ -193,7 +200,7 @@ our @V = (
           list-style: none;
         }
         div#pod {
-          width: 540px;
+          width: 580px;
           margin: 2em 4em 2em 4em;
         }
         div#pod pre {
@@ -237,7 +244,7 @@ our @V = (
         head(
           title($v->{title})
         ),
-        frameset({ cols => '*,380' },
+        frameset({ cols => '*,340' },
           frame({ name => 'pod',  src => R('Pod', 'Squatting') }),
           frame({ name => 'list', src => R('Home', { base => 'pod' }) }),
         ),
