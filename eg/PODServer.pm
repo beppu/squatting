@@ -200,12 +200,11 @@ our @V = (
           list-style: none;
         }
         div#pod {
-          width: 540px;
+          width: 580px;
           margin: 2em 4em 2em 4em;
         }
         div#pod pre {
           padding: 0.5em;
-          min-width: 580px;
           border: 1px solid #444;
           -moz-border-radius-bottomleft: 7px;
           -moz-border-radius-bottomright: 7px;
