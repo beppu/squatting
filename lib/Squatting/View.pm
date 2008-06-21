@@ -98,34 +98,34 @@ also take the output of another template and wrap it.
 
 =head2 General Methods
 
-=head3 Squatting::View->new($name, %methods)
+=head3 $view = Squatting::View->new($name, %methods)
 
 The constructor takes a name and a hash of attributes and coderefs.
 
-=head3 $v->name
+=head3 $view->name
 
 This returns the name of the view.
 
-=head3 $v->headers
+=head3 $view->headers
 
 This returns a hashref of the outgoing HTTP headers.
 
 =head2 Template Methods
 
-=head3 $v->$template($v)
+=head3 $view->$template($v)
 
 Any coderef that was given to the constructor may be called by name.
 Templates should be passed in a hashref ($v) with variables for it
 to use to generate the final output.
 
-=head3 $v->layout($v, @content)
+=head3 $view->layout($v, @content)
 
 If you define a template named "layout", it'll be used to wrap the
 content of all templates whose name do not begin with "_".  You can
 use this feature to provide standard headers and footers for your
 pages.
 
-=head3 $v->_($v)
+=head3 $view->_($v)
 
 If you define a template named "_", this will act as a catch-all
 that can be asked to render anything that wasn't explicitly defined.
