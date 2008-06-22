@@ -133,7 +133,7 @@ sub service {
   if (my $cr_cookies = $c->cr->cookies) {
     $cr_cookies =~ s/^Set-Cookie: //;
     $c->headers->{'Set-Cookie'} = join("; ",
-      grep { defined } ($c->headers->{'Set-Cookie'}, $cr_cookies));
+      grep { not /^\s*$/ } ($c->headers->{'Set-Cookie'}, $cr_cookies));
   }
   return $content;
 }
