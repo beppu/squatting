@@ -3,6 +3,7 @@ bin/vw
 bugs.yaml
 Changes
 edit
+eg/ChatterBox.pm
 eg/Example.pm
 eg/Example/Controllers.pm
 eg/Example/Views.pm
@@ -15,6 +16,8 @@ lib/Squatting.pm
 lib/Squatting/Controller.pm
 lib/Squatting/Cookbook.pod
 lib/Squatting/Mapper.pm
+lib/Squatting/On/Catalyst.pm
+lib/Squatting/On/Continuity.pm
 lib/Squatting/Q.pm
 lib/Squatting/View.pm
 Makefile.PL
