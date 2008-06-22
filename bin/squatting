@@ -73,7 +73,7 @@ if ($app) {
     sub Squatting::Controller::mock_init {
       my $self = shift;
       $self->{cr}          = {}; # TODO - provide a mock Continuity::Request
-      $self->{env}         = { %ENV, REQUEST_PATH => Squatting::R($self->name, @_) };
+      $self->{env}         = { %ENV, REQUEST_PATH => &{"$app"."::Controllers::R"}($self->name, @_) };
       $self->{cookies}     = {};
       $self->{input}       = {};
       $self->{headers}     = {};
