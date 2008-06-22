@@ -55,7 +55,7 @@ sub init_cc {
   $cc;
 }
 
-# App->continue -- Start Continuity's main loop.
+# App->continue(%opts) -- Start Continuity's main loop.
 sub continue {
   my $app = shift;
 

@@ -28,6 +28,7 @@ sub catalyze {
   $cat->response->status($cc->status);
   $cat->response->body($content);
   $cat->response->headers;
+  $cat;
 }
 
 1;
