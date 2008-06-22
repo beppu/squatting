@@ -2,6 +2,7 @@
   - Removed $Squatting::app and became both mod_perl compatible and embeddable.
   - Added unit tests for Squatting::Controller and Squatting::View
   - Allow views to have access to outgoing HTTP headers.
+  - Fixed yet another obscure cookie bug.
 
 0.31
   - Fixed a bug in the cookie parsing code.
