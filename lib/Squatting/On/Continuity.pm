@@ -2,9 +2,12 @@ package Squatting::On::Continuity;
 
 use strict;
 use warnings;
+use Coro;
+use Continuity;
 
 # XXX - WORK IN PROGRESS
 
+# \%env = e($http_request)
 sub e {
   my $r = shift;
   my %env;
@@ -83,5 +86,7 @@ sub continue {
     @_
   )->loop;
 }
+
+$SIG{PIPE} = sub { Coro::terminate(0) };
 
 1;
