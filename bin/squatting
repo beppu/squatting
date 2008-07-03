@@ -19,6 +19,7 @@ GetOptions(
   'console|C',
   'debug=i',
   'version|v',
+  'config|c=s%',
   'logo',
   'h|help',
 );
@@ -30,6 +31,7 @@ Usage: squatting [OPTIONS]... App
 
 Options:
     -p, --port NUM                   Port for web server (defaults to $_{port})
+    -c, --config attr=value          Set an app's %CONFIG variables
     -l, --log FILE                   Log file  # TODO
     -C, --console                    Run in console mode with Shell::Perl
     --debug NUM                      Continuity debug_level (defaults to $_{debug})
@@ -63,6 +65,10 @@ if ($app) {
   $path =~ s{::}{/}g;
   $path .= ".pm";
   require "$path";
+  my $C = \%{$app."::CONFIG"};
+  for (keys %{$_{config}}) {
+    $C->{$_} = $_{config}{$_}
+  }
   if ($_{console}) {
     eval { require Shell::Perl };
     if ($@) {
