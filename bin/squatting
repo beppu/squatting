@@ -31,7 +31,7 @@ Usage: squatting [OPTIONS]... App
 
 Options:
     -p, --port NUM                   Port for web server (defaults to $_{port})
-    -c, --config attr=value          Set an app's %CONFIG variables
+    -c, --config ATTR=VALUE          Set an app's %CONFIG variables
     -l, --log FILE                   Log file  # TODO
     -C, --console                    Run in console mode with Shell::Perl
     --debug NUM                      Continuity debug_level (defaults to $_{debug})
@@ -148,6 +148,16 @@ Start a Squatting application.
 =item -p, --port NUM
 
 Port for web server (defaults to 4234)
+
+=item -c, --config ATTR=VALUE
+
+The standard way to configure a Squatting App is to manipulate its
+%App::CONFIG hash.  The --config option lets you set values in this
+hash, and you may use --config multiple times in a single command line.
+
+B<Example>:
+
+  squatting App --config doc_root=/www/app.com --config hostname=app.com
 
 =item -l, --log FILE
 
