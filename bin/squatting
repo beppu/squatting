@@ -6,6 +6,7 @@ use warnings;
 
 use Squatting;
 use Getopt::Long;
+use Data::Dump 'pp';
 
 # defaults
 $_{port}  = 4234;
@@ -20,6 +21,7 @@ GetOptions(
   'debug=i',
   'version|v',
   'config|c=s%',
+  'show-config|s',
   'logo',
   'h|help',
 );
@@ -32,6 +34,7 @@ Usage: squatting [OPTIONS]... App
 Options:
     -p, --port NUM                   Port for web server (defaults to $_{port})
     -c, --config ATTR=VALUE          Set an app's %CONFIG variables
+    -s, --show-config                Display an app's %CONFIG and exit
     -l, --log FILE                   Log file  # TODO
     -C, --console                    Run in console mode with Shell::Perl
     --debug NUM                      Continuity debug_level (defaults to $_{debug})
@@ -68,6 +71,10 @@ if ($app) {
   my $C = \%{$app."::CONFIG"};
   for (keys %{$_{config}}) {
     $C->{$_} = $_{config}{$_}
+  }
+  if ($_{'show-config'}) {
+    print pp($C), "\n";
+    exit 0;
   }
   if ($_{console}) {
     eval { require Shell::Perl };
@@ -151,13 +158,17 @@ Port for web server (defaults to 4234)
 
 =item -c, --config ATTR=VALUE
 
-The standard way to configure a Squatting App is to manipulate its
+The standard way to configure a Squatting application is to manipulate its
 %App::CONFIG hash.  The --config option lets you set values in this
 hash, and you may use --config multiple times in a single command line.
 
 B<Example>:
 
   squatting App --config doc_root=/www/app.com --config hostname=app.com
+
+=item -s, --show-config
+
+Display an App's %CONFIG hash and exit.
 
 =item -l, --log FILE
 
