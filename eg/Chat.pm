@@ -1,7 +1,7 @@
-package ChatterBox;
+package Chat;
 use base 'Squatting';
 
-package ChatterBox::Controllers;
+package Chat::Controllers;
 use selfvars;
 use base 'Squatting::Q';
 use Squatting ':controllers';
@@ -42,12 +42,12 @@ our @C = (
         pop @messages if $#messages > 15;
       }
       $got_message = 1;
-      $cr->print("Got it!");
+      "Got it!";
     },
   )
 );
 
-package ChatterBox::Views;
+package Chat::Views;
 use selfvars;
 use Squatting ':views';
 use HTML::AsSubs;
@@ -69,7 +69,7 @@ our @V = (
       my ($v) = @args;
       html(
         head(
-          title('ChatterBox'),
+          title('Chat'),
           script({ src => 'jquery.js' }),
           script({ src => 'chat-ajax-push.js' }),
         ),
