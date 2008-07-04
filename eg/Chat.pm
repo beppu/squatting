@@ -84,6 +84,7 @@ our @V = (
                 name  => 'sendbutton',
                 value => 'Send',
               }),
+              b({ id => 'status' }, "?")
             ),
             div({ id => 'log' }, '-- no messages yet --')
           )

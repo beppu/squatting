@@ -21,7 +21,11 @@ squatting PODServer -p 4236
   installed on your system.  I wrote this before I was aware of
   Pod::Webserver which basically does the same thing.
   However, I may still make a separate dist out of this
-  and put it on CPAN.
+  and put it on CPAN, because its output is pretty, and
+  it has some nice little usability features.
+
+  Be on the lookout for Pod::Server
+  ...coming to a CPAN mirror near you.
 
 ______________________________________________________________________________
 squatting UniCodePoints -p 4237 --config count=1024
@@ -32,4 +36,19 @@ squatting UniCodePoints -p 4237 --config count=1024
     HTML::AsSubs
 
   This is a simple utility for displaying unicode code points.
+  You can configure the default number of codepoints to display per page
+  by passing in --config count=XXX where XXX is a positive integer.
+
+______________________________________________________________________________
+squatting Chat -p 4238
+
+  http://localhost:4238/
+
+  requires
+    HTML::AsSubs
+    Coro::Event
+
+  This is a port of chat-ajax-push.pl from the Continuity examples.
+  Open this page up in 2 or more different browsers and chat.
+
 
