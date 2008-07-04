@@ -2,7 +2,6 @@ package Example::Controllers;
 
 use strict;
 use warnings;
-use base 'Squatting::Q';
 
 use Squatting ':controllers';
 use Data::Dump qw(dump);
