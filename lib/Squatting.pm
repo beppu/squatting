@@ -16,9 +16,7 @@ use Data::Dump 'pp';
 our $VERSION = '0.40';
 
 # TODO - Move $I and the code that uses it out to another (optional) module.
-# %Q can stay.
 our $I = 0;
-our %Q; # map coderefs to session queues
 
 require Squatting::Controller;
 require Squatting::View;
@@ -110,7 +108,7 @@ sub init {
 # App->service($controller, @params)  # Override this method if you want to take actions before or after a request is handled.
 sub service {
   my ($app, $c, @params) = grep { defined } @_;
-  my $method  = lc $c->env->{REQUEST_METHOD};
+  my $method = lc $c->env->{REQUEST_METHOD};
   my $content;
 
   eval { $content = $c->$method(@params) };
@@ -130,7 +128,8 @@ sub service {
     map { CGI::Cookie->new( -name => $_, %{$cookies->{$_}} ) }
       grep { ref $cookies->{$_} eq 'HASH' }
         keys %$cookies) if (%$cookies);
-  if (my $cr_cookies = $c->cr->cookies) {
+  # XXX - move this if-block into Squatting::On::Continuity
+  if ($c->cr && (my $cr_cookies = $c->cr->cookies)) {
     $cr_cookies =~ s/^Set-Cookie: //;
     $c->headers->{'Set-Cookie'} = join("; ",
       grep { not /^\s*$/ } ($c->headers->{'Set-Cookie'}, $cr_cookies));
