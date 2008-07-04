@@ -35,9 +35,9 @@ our @C = (
     SendMessage => [ '/sendmessage/' ],
     post => sub {
       my $input = $self->input;
-      my $msg =  $input->{message};
-      my $name = $input->{username};
-      if($msg) {
+      my $msg   = $input->{message};
+      my $name  = $input->{username};
+      if ($msg) {
         unshift @messages, "$name: $msg";
         pop @messages if $#messages > 15;
       }
@@ -51,16 +51,6 @@ package Chat::Views;
 use selfvars;
 use Squatting ':views';
 use HTML::AsSubs;
-
-# the ~literal pseudo-element -- don't entity escape this content
-sub x {
-  HTML::Element->new('~literal', text => $_[0])
-}
-
-# HTML::AsSubs forgot to implement span.
-sub span {
-  HTML::AsSubs::_elem('span', \@_);
-}
 
 our @V = (
   V(
@@ -78,12 +68,7 @@ our @V = (
             div(
               input({ type => 'text', id => 'username', name => 'username', size => 10 }),
               input({ type => 'text', id => 'message',  name => 'message',  size => 50 }),
-              input({
-                type  => 'submit',
-                id    => 'sendbutton',
-                name  => 'sendbutton',
-                value => 'Send',
-              }),
+              input({ type => 'submit', id => 'sendbutton', name => 'sendbutton', value => 'Send', }),
               b({ id => 'status' }, "?")
             ),
             div({ id => 'log' }, '-- no messages yet --')
