@@ -3,6 +3,11 @@
   - Added unit tests for Squatting::Controller and Squatting::View
   - Allow views to have access to outgoing HTTP headers.
   - Fixed yet another obscure cookie bug.
+  - Learned that the attribute handler in Squatting::Q must be invoked
+    during the INIT phase rather than the earlier CHECK phase, because
+    the coderef's address during the CHECK phase may not be final.
+    (Trivia:  coderef's that close over variables outside their own
+    lexical scope get changed sometime after the CHECK phase.)
 
 0.31
   - Fixed a bug in the cookie parsing code.
