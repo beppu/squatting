@@ -8,7 +8,7 @@ warn 'export PERL_UNICODE=SD  # before running this app'
 
 # squatting UniCodePoints --config count=XXX
 our %CONFIG = (
-  count => 256
+  count => 1024
 );
 
 package UniCodePoints::Controllers;
