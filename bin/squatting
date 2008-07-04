@@ -13,6 +13,7 @@ $_{port}  = 4234;
 $_{debug} = 1;
 
 # command line options
+Getopt::Long::Configure('no_ignore_case');
 GetOptions(
   \%_,
   'port|p=i',
