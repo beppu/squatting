@@ -23,3 +23,13 @@ squatting PODServer -p 4236
   However, I may still make a separate dist out of this
   and put it on CPAN.
 
+______________________________________________________________________________
+squatting UniCodePoints -p 4237 --config count=1024
+
+  http://localhost:4237/
+
+  requires:
+    HTML::AsSubs
+
+  This is a simple utility for displaying unicode code points.
+

@@ -2,6 +2,9 @@ package UniCodePoints;
 use base 'Squatting';
 use strict;
 use warnings;
+our %CONFIG = (
+  count => 256
+);
 
 package UniCodePoints::Controllers;
 use Squatting ':controllers';
@@ -14,10 +17,10 @@ our @C = (
       my $v     = $self->v;
       my $start = $input->{start};
       $start ||= 0;
-      my $count = $input->{count} || 256;
+      my $count = $input->{count} || $CONFIG{count};
       $v->{chars} = [ map { chr($_) } ($start .. ($start + $count - 1)) ];
-      $v->{prev} = { start => (($start - $count) < 0) ? 0 : $start - $count };
-      $v->{next} = { start => $start + $count };
+      $v->{prev} = { count => $count, start => (($start - $count) < 0) ? 0 : $start - $count };
+      $v->{next} = { count => $count, start => $start + $count };
       $self->render('home');
     }
   )
