@@ -12,7 +12,7 @@ our $got_message;
 our @C = (
   C(
     Home => [ '/' ],
-    get  => sub : Q(home) {
+    get  => sub {
       $self->render('chat');
     },
   ),
