@@ -82,7 +82,7 @@ our @V = (
         table(
           map { 
             &tr(
-              td(sprintf('%x', ord($_))),
+              td(sprintf('%04x', ord($_))),
               td($_),
             ) 
           } @{$v->{chars}}
