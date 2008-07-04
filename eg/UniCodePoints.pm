@@ -2,6 +2,11 @@ package UniCodePoints;
 use base 'Squatting';
 use strict;
 use warnings;
+
+warn 'export PERL_UNICODE=SD  # before running this app' 
+  unless $ENV{PERL_UNICODE} =~ /S/ && $ENV{PERL_UNICODE} =~ /D/;
+
+# squatting UniCodePoints --config count=XXX
 our %CONFIG = (
   count => 256
 );
@@ -43,12 +48,32 @@ our @V = (
       html(
         head(
           title("unicode codepoints"),
+          style($self->{_css}),
         ),
         body(
           x(@content),
         ),
       )->as_HTML;
     },
+
+    _css => qq|
+      body {
+        font-size: 10pt;
+      }
+      a {
+        color: #44a;
+        text-decoration: none;
+      }
+      a:hover {
+        color: #ccf;
+      }
+      td {
+        padding: 8px;
+      }
+      tr td:first-child {
+        font-family: monospace;
+      }
+    |,
 
     home => sub {
       my ($self, $v) = @_;
