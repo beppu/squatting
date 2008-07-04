@@ -393,7 +393,7 @@ This is the same R() function that the controllers get access to.
 =head1 SEE ALSO
 
 L<Squatting::Controller>, L<Squatting::View>, L<Squatting::Mapper>,
-L<Squatting::Q>, L<Squatting::Cookbook>
+L<Squatting::Cookbook>
 
 =head2 Squatting Source Code
 

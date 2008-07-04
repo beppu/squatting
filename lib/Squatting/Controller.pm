@@ -274,8 +274,7 @@ second parameter.
 =head1 SEE ALSO
 
 L<Squatting>,
-L<Squatting::View>,
-L<Squatting::Q>
+L<Squatting::View>
 
 =cut
 
