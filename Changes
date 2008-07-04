@@ -8,6 +8,9 @@
     the coderef's address during the CHECK phase may not be final.
     (Trivia:  coderef's that close over variables outside their own
     lexical scope get changed sometime after the CHECK phase.)
+  - Unfortunately, even that's not good enough.
+    Squatting::Q has been removed, because Attribute::Handlers
+    can't be made to work for this purpose.  (RIP Squatting::Q July 4, 2008)
 
 0.31
   - Fixed a bug in the cookie parsing code.
