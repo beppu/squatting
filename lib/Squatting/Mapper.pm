@@ -5,16 +5,13 @@ package Squatting::Mapper;
 #use warnings;
 use base 'Continuity::Mapper';
 
-use Squatting::Q;
-
 sub get_session_id_from_hit {
   my ($self, $request) = @_;
   my $app = $self->{app};
   my $session_id = $self->SUPER::get_session_id_from_hit($request);
   my ($controller, $params) = &{$app."::D"}($request->uri->path);
-  my $method  = lc $request->method;
-  my $coderef = $controller->{$method};
-  my $queue   = $Squatting::Q{$coderef};
+  my $method = lc $request->method;
+  my $queue = $controller->{queue}->{$method};
   if (defined($queue)) {
     $session_id .= ".$queue";
     $self->Continuity::debug(2, "    Session: got queue '$session_id'");

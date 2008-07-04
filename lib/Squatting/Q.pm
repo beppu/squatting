@@ -7,8 +7,9 @@ package Squatting::Q;
 
 use Attribute::Handlers;
 
-sub Q : ATTR(CODE,INIT) {
+sub Q : ATTR(CODE,CHECK,INIT,END) {
   my ($package, $symbol, $coderef, $attr, $queue_suffix, $phase) = @_;
+  warn "$phase - $coderef";
   $Squatting::Q{$coderef} = $queue_suffix;
 }
 

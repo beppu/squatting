@@ -3,7 +3,6 @@ use base 'Squatting';
 
 package Chat::Controllers;
 use selfvars;
-use base 'Squatting::Q';
 use Squatting ':controllers';
 
 our @messages;
@@ -13,12 +12,12 @@ our @C = (
   C(
     Home => [ '/' ],
     get  => sub {
-      $self->render('chat');
+      $self->render('home');
     },
   ),
   C(
     PushStream => [ '/pushstream/' ],
-    get   => sub : Q(pushstream) {
+    get   => sub {
       my $cr = $self->cr;
       my $w  = Coro::Event->var(var => \$got_message, poll => 'w');
       while (1) {
@@ -30,13 +29,14 @@ our @C = (
         $w->next;
       }
     },
+    queue => { get => 'pushstream' },
   ),
   C(
     SendMessage => [ '/sendmessage/' ],
     post => sub {
-      my $cr = $self->cr;
-      my $msg = $cr->param('message');
-      my $name = $cr->param('username');
+      my $input = $self->input;
+      my $msg =  $input->{message};
+      my $name = $input->{username};
       if($msg) {
         unshift @messages, "$name: $msg";
         pop @messages if $#messages > 15;
@@ -44,7 +44,7 @@ our @C = (
       $got_message = 1;
       "Got it!";
     },
-  )
+  ),
 );
 
 package Chat::Views;
