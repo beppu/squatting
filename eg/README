@@ -45,6 +45,7 @@ squatting Chat -p 4238
   http://localhost:4238/
 
   requires
+    selfvars
     HTML::AsSubs
     Coro::Event
 

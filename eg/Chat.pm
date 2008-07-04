@@ -1,6 +1,8 @@
 package Chat;
 use base 'Squatting';
 
+# This is a port of eg/chat-ajax-push.pl from the Continuity distribution.
+
 package Chat::Controllers;
 use selfvars;
 use Squatting ':controllers';
