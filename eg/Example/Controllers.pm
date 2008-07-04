@@ -54,7 +54,7 @@ our @C = (
     # - It will run GET requests in their own coroutine separate from the 
     #   RESTful controllers.
     # - This coroutine may handle many more HTTP requests.
-    get => sub : Q(count) {
+    get => sub {
       my ($self) = @_;
       my $cr     = $self->cr;
       my $i      = 1;
