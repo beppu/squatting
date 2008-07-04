@@ -18,7 +18,6 @@ lib/Squatting/Cookbook.pod
 lib/Squatting/Mapper.pm
 lib/Squatting/On/Catalyst.pm
 lib/Squatting/On/Continuity.pm
-lib/Squatting/Q.pm
 lib/Squatting/View.pm
 Makefile.PL
 MANIFEST			This list of files
