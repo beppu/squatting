@@ -11,6 +11,12 @@
   - Unfortunately, even that's not good enough.
     Squatting::Q has been removed, because Attribute::Handlers
     can't be made to work for this purpose.  (RIP Squatting::Q July 4, 2008)
+  - Implemented Squatting::On::Catalyst.
+  - Implemented Squatting::On::Continuity.
+  - We're using Class::C3::Componentised to load extensions like
+    those found in Squatting::On::*.
+  - Added sample application, Chat.
+  - Added sample application, UniCodePoints.
 
 0.31
   - Fixed a bug in the cookie parsing code.
