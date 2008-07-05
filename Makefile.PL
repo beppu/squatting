@@ -8,11 +8,12 @@ WriteMakefile (
   ABSTRACT_FROM => 'lib/Squatting.pm',
   EXE_FILES     => [ 'bin/squatting', 'bin/vw' ],
   PREREQ_PM     => {
-    'HTTP::Daemon'     => 0,
-    'Continuity'       => 0.991,
-    'Data::Dump'       => 0,
-    'JSON::XS'         => 0,
-    'Shell::Perl'      => 0,
+    'Class::C3::Componentised' => 0,
+    'HTTP::Daemon'             => 0,
+    'Continuity'               => 0.991,
+    'Data::Dump'               => 0,
+    'JSON::XS'                 => 0,
+    'Shell::Perl'              => 0,
   },
   depend => { distmeta => 'metamunge' }
 );
