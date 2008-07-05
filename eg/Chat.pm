@@ -13,12 +13,14 @@ our @messages;
 our $got_message;
 
 our @C = (
+
   C(
     Home => [ '/' ],
     get  => sub {
       $self->render('home');
     },
   ),
+
   C(
     PushStream => [ '/pushstream/' ],
     get   => sub {
@@ -35,6 +37,7 @@ our @C = (
     },
     queue => { get => 'pushstream' },
   ),
+
   C(
     SendMessage => [ '/sendmessage/' ],
     post => sub {
@@ -49,6 +52,7 @@ our @C = (
       "Got it!";
     },
   ),
+
 );
 
 package Chat::Views;
