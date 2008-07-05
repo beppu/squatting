@@ -1,14 +1,20 @@
 package UniCodePoints;
-use base 'Squatting';
-use strict;
-use warnings;
 
 warn 'export PERL_UNICODE=SD  # before running this app' 
   unless $ENV{PERL_UNICODE} =~ /S/ && $ENV{PERL_UNICODE} =~ /D/;
 
-# squatting UniCodePoints --config count=XXX
+use base 'Squatting';
+use strict;
+use warnings;
+
+# squatting UniCodePoints --show-config
+# squatting UniCodePoints --config count=256 -c bg='#112' -c fg='#ccc'
 our %CONFIG = (
-  count => 1024
+  count => 1024,
+  bg    => '#ffffff',
+  fg    => '#000000',
+  a     => '#44a',
+  ah    => '#ccf',
 );
 
 package UniCodePoints::Controllers;
@@ -36,9 +42,10 @@ use Squatting ':views';
 use HTML::AsSubs;
 
 sub x {
-  HTML::Element->new('~literal', text => $_[0])
+  map { HTML::Element->new('~literal', text => $_) } @_;
 }
 
+my $C = \%UniCodePoints::CONFIG;
 our @V = (
   V(
     'html',
@@ -48,7 +55,7 @@ our @V = (
       html(
         head(
           title("unicode codepoints"),
-          style($self->{_css}),
+          style($self->_css),
         ),
         body(
           x(@content),
@@ -56,24 +63,28 @@ our @V = (
       )->as_HTML;
     },
 
-    _css => qq|
+    _css => sub {qq|
       body {
         font-size: 10pt;
+        background: $C->{bg};
+        color: $C->{fg};
       }
       a {
-        color: #44a;
+        color: $C->{a};
         text-decoration: none;
       }
       a:hover {
-        color: #ccf;
+        color: $C->{ah};
       }
       td {
         padding: 8px;
-      }
-      tr td:first-child {
+        width: 88px;
         font-family: monospace;
       }
-    |,
+      tr td:last-child {
+        font-family: sans-serif;
+      }
+    |},
 
     home => sub {
       my ($self, $v) = @_;
@@ -81,8 +92,10 @@ our @V = (
         x($self->_pager($v)),
         table(
           map { 
+            my $o = ord($_);
             &tr(
-              td(sprintf('%04x', ord($_))),
+              td(sprintf('0x%04X', $o)),
+              td(sprintf('&#x%04X;', $o)),
               td($_),
             ) 
           } @{$v->{chars}}
