@@ -1,11 +1,9 @@
 package Squatting::On::Continuity;
 
 use strict;
+no  strict 'refs';
 use warnings;
-use Coro;
 use Continuity;
-
-# XXX - WORK IN PROGRESS
 
 # \%env = e($http_request)
 sub e {
@@ -50,8 +48,8 @@ sub init_cc {
   my $cc = $c->clone;
   $cc->cr      = $cr;
   $cc->env     = e($cr->http_request);
-  $cc->cookies = c($self->env->{HTTP_COOKIE});
-  $cc->input   = i(join('&', grep { defined } ($self->env->{QUERY_STRING}, $cr->request->content)));
+  $cc->cookies = c($cc->env->{HTTP_COOKIE});
+  $cc->input   = i(join('&', grep { defined } ($cc->env->{QUERY_STRING}, $cr->request->content)));
   $cc->headers = { 'Content-Type' => 'text/html' };
   $cc->v       = {};
   $cc->status  = 200;

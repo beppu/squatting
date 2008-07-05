@@ -14,19 +14,6 @@ sub new {
   bless { name => $_[1], urls => $_[2], @_[3..$#_] } => $_[0];
 }
 
-# init w/ Continuity::Request
-sub init {
-  my ($self, $cr) = @_;
-  $self->cr       = $cr;
-  $self->env      = e($cr->http_request);
-  $self->cookies  = c($self->env->{HTTP_COOKIE});
-  $self->input    = i(join('&', grep { defined } ($self->env->{QUERY_STRING}, $cr->request->content)));
-  $self->headers  = { 'Content-Type' => 'text/html' };
-  $self->v        = {};
-  $self->status   = 200;
-  $self;
-}
-
 # (shallow) copy constructor
 sub clone {
   bless { %{$_[0]}, @_[1..$#_] } => ref($_[0]);
@@ -73,43 +60,6 @@ sub redirect {
   my ($self, $l, $s) = @_;
   $self->headers->{Location} = $l || '/';
   $self->status = $s || 302;
-}
-
-# \%env = e($http_request)  # Get request headers from HTTP::Request.
-sub e {
-  my $r = shift;
-  my %env;
-  my $uri = $r->uri;
-  $env{QUERY_STRING}   = $uri->query || '';
-  $env{REQUEST_PATH}   = $uri->path;
-  $env{REQUEST_URI}    = $uri->path_query;
-  $env{REQUEST_METHOD} = $r->method;
-  $r->scan(sub{
-    my ($header, $value) = @_;
-    my $key = uc $header;
-    $key =~ s/-/_/g;
-    $key = "HTTP_$key";
-    $env{$key} = $value;
-  });
-  \%env;
-}
-
-# \%input = i($query_string)  # Extract CGI parameters from QUERY_STRING
-sub i {
-  my $q = CGI->new($_[0]);
-  my %i = $q->Vars;
-  +{ map {
-    if ($i{$_} =~ /\0/) {
-      $_ => [ split("\0", $i{$_}) ];
-    } else {
-      $_ => $i{$_};
-    }
-  } keys %i }
-}
-
-# \%cookies = c($cookie_header)  # Parse Cookie header(s).
-sub c {
-  +{ map { ref($_) ? $_->value : $_ } CGI::Cookie->parse($_[0]) };
 }
 
 # default 404 controller

@@ -95,6 +95,8 @@ sub import {
 }
 
 # Squatting plugins may be anywhere in Squatting::* .
+# Squatting::On::Continuity
+# Squatting::On::Catalyst
 sub component_base_class { __PACKAGE__ }
 
 # App->mount($AnotherApp, $prefix)  # Map another app on to a URL $prefix.
@@ -158,37 +160,10 @@ sub service {
   return $content;
 }
 
-# App->go(%opts)  # Start the server.
-sub go {
-  my $app = shift;
-  $app->init;
-
-  # Putting a RESTful face on Continuity since 2008.
-  Continuity->new(
-    port     => 4234,
-    mapper   => Squatting::Mapper->new(
-      app      => $app,
-      callback => sub {
-        my $cr = shift;
-        my ($c, $p)  = &{$app."::D"}($cr->uri->path);
-        my $cc       = $c->clone->init($cr);
-        my $content  = $app->service($cc, @$p);
-        my $response = HTTP::Response->new(
-          $cc->status,
-          HTTP::Status::status_message($cc->status),
-          [%{$cc->{headers}}],
-          $content
-        );
-        $cr->conn->send_response($response);
-        $cr->end_request;
-      },
-      @_
-    ),
-    @_
-  )->loop;
+sub foo {
+  my $self = shift;
+  "Squatting => " . $self->maybe::next::method;
 }
-
-$SIG{PIPE} = sub { Coro::terminate(0) };
 
 1;
 
@@ -366,11 +341,6 @@ at some other prefix, because it won't work.
 
 This method will relocate a Squatting app to the specified prefix.  It's
 useful for embedding a Squatting app into app written using another framework.
-
-=head3 App->go(%options)
-
-This method calls init and then starts a Continuity-based web server.  The %options
-are passed straight through to Continuity.
 
 =head2 Use as a Helper for Controllers
 

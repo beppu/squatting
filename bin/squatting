@@ -107,7 +107,9 @@ if ($app) {
     $pirl->set_package($app."::Controllers");
     $pirl->run;
   } else {
-    $app->go(
+    $app->import("On::Continuity");
+    $app->init;
+    $app->continue(
       port        => $_{port},
       log         => $_{log},
       debug_level => $_{debug},
