@@ -194,6 +194,7 @@ What a basic App looks like:
     use base 'Squatting';
     #use App::Controllers;
     #use App::Views;
+    our %CONFIG;  # <-- standard app config goes here
   }
 
   # STEP 2 => Create a Controllers package
@@ -449,9 +450,10 @@ the point of prototype-based OO.
 
 If you're going to add anything to JavaScript, make the prototype side of it
 stronger.  Look to languages like Io, and make it easier to clone objects and
-manipulate an object's prototype chain.  The beauty of prototypes is that this
-one concept can be used to unify objects, classes, and namespaces.  Look at Io
-if you don't believe me.
+manipulate an object's prototype chain.  The beauty of prototypes is that you
+can combine it with slot-based objects to unify the functionality of objects,
+classes, and namespaces into a surprisingly simple and coherent system.  Look
+at Io if you don't believe me.
 
 L<http://iolanguage.com/>
 
