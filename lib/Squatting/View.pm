@@ -4,8 +4,6 @@ use strict;
 use warnings;
 no  warnings 'redefine';
 
-use Squatting ':views';
-
 our $AUTOLOAD;
 
 # constructor

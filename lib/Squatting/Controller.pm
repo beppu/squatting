@@ -7,8 +7,6 @@ no  warnings 'redefine';
 
 use CGI::Cookie;
 
-use Squatting ':controllers';
-
 our $AUTOLOAD;
 
 # constructor

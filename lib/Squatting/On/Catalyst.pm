@@ -3,6 +3,7 @@ package Squatting::On::Catalyst;
 use strict;
 no  strict 'refs';
 use warnings;
+use Class::C3;
 use Data::Dump 'pp';
 
 # XXX - WORK IN PROGRESS

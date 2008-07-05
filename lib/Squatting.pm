@@ -4,6 +4,7 @@ use strict;
 no  strict 'refs';
 #use warnings;
 #no  warnings 'redefine';
+use base 'Class::C3::Componentised';
 
 use Continuity;
 use Squatting::Mapper;
@@ -22,68 +23,79 @@ require Squatting::Controller;
 require Squatting::View;
 
 sub import {
-  my $p = (caller)[0];
+  my $m   = shift;
+  my $p   = (caller)[0];
   my $app = $p;
   $app =~ s/::Controllers$//;
   $app =~ s/::Views$//;
 
   # $url = R('Controller', @params, { cgi => vars })  # Generate URLs with the routing function
-  *{$p."::R"} = sub {
-    my ($controller, @params) = @_;
-    my $input;
-    if (@params && ref($params[-1]) eq 'HASH') {
-      $input = pop(@params);
-    }
-    my $c = ${$app."::Controllers::C"}{$controller};
-    croak "$controller controller not found" unless $c;
-    my $arity = @params;
-    my $pattern = first { my @m = /\(.*?\)/g; $arity == @m } @{$c->urls};
-    croak "couldn't find a matching URL pattern" unless $pattern;
-    while ($pattern =~ /\(.*?\)/) {
-      $pattern =~ s{\(.*?\)}{uri_escape(+shift(@params), "^A-Za-z0-9\-_.!~*’()/")}e;
-    }
-    if ($input) {
-      $pattern .= "?".  join('&' => 
-        map { 
-          my $k = $_;
-          ref($input->{$_}) eq 'ARRAY'
-            ? map { "$k=".uri_escape($_) } @{$input->{$_}}
-            : "$_=".uri_escape($input->{$_})
-        } keys %$input);
-    }
-    $pattern;
-  };
+  if (UNIVERSAL::isa($app, 'Squatting')) {
+    *{$p."::R"} = sub {
+      my ($controller, @params) = @_;
+      my $input;
+      if (@params && ref($params[-1]) eq 'HASH') {
+        $input = pop(@params);
+      }
+      my $c = ${$app."::Controllers::C"}{$controller};
+      croak "$controller controller not found" unless $c;
+      my $arity = @params;
+      my $pattern = first { my @m = /\(.*?\)/g; $arity == @m } @{$c->urls};
+      croak "couldn't find a matching URL pattern" unless $pattern;
+      while ($pattern =~ /\(.*?\)/) {
+        $pattern =~ s{\(.*?\)}{uri_escape(+shift(@params), "^A-Za-z0-9\-_.!~*’()/")}e;
+      }
+      if ($input) {
+        $pattern .= "?".  join('&' => 
+          map { 
+            my $k = $_;
+            ref($input->{$_}) eq 'ARRAY'
+              ? map { "$k=".uri_escape($_) } @{$input->{$_}}
+              : "$_=".uri_escape($input->{$_})
+          } keys %$input);
+      }
+      $pattern;
+    };
 
-  # ($controller, \@regex_captures) = D($path)  # Return controller and captures for a path
-  *{$app."::D"} = sub {
-    no warnings 'once';
-    my $url = uri_unescape($_[0]);
-    my $C = \@{$app.'::Controllers::C'};
-    my ($c, @regex_captures);
-    for $c (@$C) {
-      for (@{$c->urls}) {
-        if (@regex_captures = ($url =~ qr{^$_$})) {
-          pop @regex_captures if ($#+ == 0);
-          return ($c, \@regex_captures);
+    # ($controller, \@regex_captures) = D($path)  # Return controller and captures for a path
+    *{$app."::D"} = sub {
+      no warnings 'once';
+      my $url = uri_unescape($_[0]);
+      my $C = \@{$app.'::Controllers::C'};
+      my ($c, @regex_captures);
+      for $c (@$C) {
+        for (@{$c->urls}) {
+          if (@regex_captures = ($url =~ qr{^$_$})) {
+            pop @regex_captures if ($#+ == 0);
+            return ($c, \@regex_captures);
+          }
         }
       }
-    }
-    ($Squatting::Controller::r404, []);
-  };
-
-  return if @_ < 2;
-  if ($_[1] eq ':controllers') {
-    # $controller = C($name => \@urls, %subs)  # shortcut for constructing a Squatting::Controller
-    *{$p."::C"} = sub {
-      Squatting::Controller->new(@_, app => $app);
-    };
-  } elsif ($_[1] eq ':views') {
-    # $view = V($name, %subs)  # shortcut for constructing a Squatting::View
-    *{$p."::V"} = sub {
-      Squatting::View->new(@_);
-    };
+      ($Squatting::Controller::r404, []);
+    } unless exists ${$app."::"}{D};
   }
+
+  my @c;
+  for (@_) {
+    if ($_ eq ':controllers') {
+      # $controller = C($name => \@urls, %subs)  # shortcut for constructing a Squatting::Controller
+      *{$p."::C"} = sub {
+        Squatting::Controller->new(@_, app => $app);
+      };
+    } elsif ($_ eq ':views') {
+      # $view = V($name, %subs)  # shortcut for constructing a Squatting::View
+      *{$p."::V"} = sub {
+        Squatting::View->new(@_);
+      };
+    } elsif (/::/) {
+      push @c, $_;
+    }
+  }
+  $m->load_components(@c) if @c;
 }
+
+# Squatting plugins may be anywhere in Squatting::* .
+sub component_base_class { __PACKAGE__ }
 
 # App->mount($AnotherApp, $prefix)  # Map another app on to a URL $prefix.
 sub mount {
@@ -94,6 +106,15 @@ sub mount {
     $_->urls = [ map { $prefix.$_ } @$urls ];
     $_;
   } @{$other."::Controllers::C"}
+}
+
+# App->relocate($prefix)  # Map main app to a URL $prefix
+sub relocate {
+  my ($app, $prefix) = @_;
+  for (@{$app."::Controllers::C"}) {
+    my $urls = $_->urls;
+    $_->urls = [ map { $prefix.$_ } @$urls ];
+  }
 }
 
 # App->init  # Initialize $app
@@ -340,6 +361,11 @@ This method will mount another Squatting app at the specified prefix.
 
 B<NOTE>:  You can only mount an app once.  Don't try to mount it again
 at some other prefix, because it won't work.
+
+=head3 App->relocate($prefix)
+
+This method will relocate a Squatting app to the specified prefix.  It's
+useful for embedding a Squatting app into app written using another framework.
 
 =head3 App->go(%options)
 
