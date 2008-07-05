@@ -383,6 +383,60 @@ issues:
     - John Beppu <john.beppu@gmail.com>
     - closed issue with disposition fixed
     - ""
+- !ditz.rubyforge.org,2008-03-06/issue 
+  title: Document Squatting::On::Continuity
+  desc: ""
+  type: :feature
+  component: Squatting
+  release: "0.40"
+  reporter: John Beppu <john.beppu@gmail.com>
+  status: :unstarted
+  disposition: 
+  creation_time: 2008-07-05 05:02:48.985210 -07:00
+  references: []
+
+  id: ed8b551bc20dbfdf6289eeb25eaf4c0602f1c5c2
+  log_events: 
+  - - 2008-07-05 05:02:50.083257 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - created
+    - ""
+- !ditz.rubyforge.org,2008-03-06/issue 
+  title: Document Squatting::On::Catalyst
+  desc: ""
+  type: :feature
+  component: Squatting
+  release: "0.40"
+  reporter: John Beppu <john.beppu@gmail.com>
+  status: :unstarted
+  disposition: 
+  creation_time: 2008-07-05 05:03:10.065338 -07:00
+  references: []
+
+  id: 15d438cae0c57f900380c99075a651839e6024b4
+  log_events: 
+  - - 2008-07-05 05:03:11.287545 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - created
+    - ""
+- !ditz.rubyforge.org,2008-03-06/issue 
+  title: Fix other documentation to reflect recent changes.
+  desc: ""
+  type: :bugfix
+  component: Squatting
+  release: "0.40"
+  reporter: John Beppu <john.beppu@gmail.com>
+  status: :unstarted
+  disposition: 
+  creation_time: 2008-07-05 05:03:46.784390 -07:00
+  references: []
+
+  id: c84e51bd6d285186499c6de730452b994afffa78
+  log_events: 
+  - - 2008-07-05 05:03:47.797719 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - created
+    - ""
 components: 
 - !ditz.rubyforge.org,2008-03-06/component 
   name: Squatting
@@ -465,3 +519,12 @@ releases:
     - John Beppu <john.beppu@gmail.com>
     - released
     - ""
+- !ditz.rubyforge.org,2008-03-06/release 
+  name: "0.40"
+  status: :unreleased
+  release_time: 
+  log_events: 
+  - - 2008-07-05 05:02:17.838917 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - created
+    - The purpose of this release is to introduce the new Class::C3-based extensions in Squatting::On::* .
