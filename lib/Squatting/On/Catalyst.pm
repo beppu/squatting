@@ -53,6 +53,7 @@ sub init_cc {
   $cc->headers = { 'Content-Type' => 'text/html' };
   $cc->v       = $cat->stash;
   $cc->state   = $cat->session if ($cat->can('session'));
+  $cc->log     = $cat->log     if ($cat->can('log'));
   $cc->status  = 200;
   $cc;
 }
@@ -111,8 +112,9 @@ HTTP response.
 
 B<NOTE>:  If you want to communicate something from the Catalyst app to the
 Squatting app, you can put data in $c->stash or $c->session before calling
-catalyze().  From inside the Squatting app, these can be accessed via $self->v
-and $self->state.
+catalyze().  From inside a Squatting controller, these can be accessed via
+$self->v and $self->state.  Squatting controllers also get access to
+Catalyst's logging object via $self->log.
 
 =head1 SEE ALSO
 

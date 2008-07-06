@@ -204,9 +204,9 @@ This returns a hashref representing the outgoing HTTP headers.
 =head3 $c->log
 
 This returns a logging object if one has been set up for your app.  If it
-exists, you should be able to call methods like debug(), info(), warn(),
-error(), and fatal() against it, and the output of this would typically end up
-in an error log.
+exists, you should be able to call methods like C<debug()>, C<info()>,
+C<warn()>, C<error()>, and C<fatal()> against it, and the output of this would
+typically end up in an error log.
 
 =head3 $c->view
 
