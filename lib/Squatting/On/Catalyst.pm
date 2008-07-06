@@ -52,7 +52,7 @@ sub init_cc {
   $cc->input   = $cat->req->parameters;
   $cc->headers = { 'Content-Type' => 'text/html' };
   $cc->v       = $cat->stash;
-  $cc->state   = $cat->session if (defined $cat->session);
+  $cc->state   = $cat->session if ($cat->can('session'));
   $cc->status  = 200;
   $cc;
 }
@@ -92,8 +92,8 @@ App.
 The purpose of this module is to allow Squatting apps to be embedded inside
 Catalyst apps.  This is done by adding a C<catalyze> method to the Squatting
 app that knows how to "translate" between Catalyst and Squatting.  To use this
-module, pass the string 'On::Continuity' to the use statement that loads your
-Squatting app.
+module, pass the string C<'On::Catalyst'> to the C<use> statement that loads
+your Squatting app.
 
 =head1 API
 

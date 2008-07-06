@@ -109,7 +109,7 @@ app.
 
 =head1 API 
 
-=head2 The Only Method You'll Ever Need
+=head2 Continuity meets MVC (or just VC, actually)
 
 =head3 App->continue(%options)
 
