@@ -416,8 +416,8 @@ issues:
   component: Squatting
   release: "0.40"
   reporter: John Beppu <john.beppu@gmail.com>
-  status: :in_progress
-  disposition: 
+  status: :closed
+  disposition: :fixed
   creation_time: 2008-07-05 05:03:10.065338 -07:00
   references: []
 
@@ -430,6 +430,10 @@ issues:
   - - 2008-07-05 21:46:13.528398 -07:00
     - John Beppu <john.beppu@gmail.com>
     - changed status from unstarted to in_progress
+    - ""
+  - - 2008-07-05 22:43:31.297765 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - closed issue with disposition fixed
     - ""
 - !ditz.rubyforge.org,2008-03-06/issue 
   title: Fix other documentation to reflect recent changes.
