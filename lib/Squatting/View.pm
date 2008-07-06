@@ -78,7 +78,7 @@ Squatting::View - default view class for Squatting
         my ($self, $v) = @_;
         "You tried to render $self->{template} which was not defined.";
       },
-      arbitrary_data => [ 'is', 'ok', 2 ],
+      arbitrary_data => [ { is => 'ok' }, 2 ],
     )
   );
 
@@ -89,9 +89,6 @@ are represented by subroutine references that will be installed as methods
 of a view object.  The job of a template is to take a hashref of variables
 and return a string.
 
-You may also define a special template named "layout" that's expected to
-also take the output of another template and wrap it.
-
 =head1 API
 
 =head2 General Methods
@@ -99,6 +96,7 @@ also take the output of another template and wrap it.
 =head3 $view = Squatting::View->new($name, %methods)
 
 The constructor takes a name and a hash of attributes and coderefs.
+Note that the name must be unique within the package the view is defined.
 
 =head3 $view->name
 

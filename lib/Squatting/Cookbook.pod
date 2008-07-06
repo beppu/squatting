@@ -188,6 +188,14 @@ this to your C<Root> controller.
   App->relocate('/somewhere');
   sub somewhere : Local { App->catalyze($_[1]) }
 
+If you want the Squatting app to be completely in charge, you don't
+even have to relocate() -- just redefine the default() method like
+this:
+
+  use App 'On::Catalyst';
+  App->init;
+  sub default : Private { App->catalyze($_[1]) }
+
 =head3 HTML::Mason
 
 =head3 Raw mod_perl1

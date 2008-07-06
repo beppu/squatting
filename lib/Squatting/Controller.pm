@@ -30,8 +30,9 @@ sub clone {
 # status  - outgoing HTTP Response status
 # headers - outgoing HTTP headers
 # view    - name of default view
+# log     - logging object
 # app     - name of our app
-for my $m qw(name urls cr env input cookies state v status headers view app) {
+for my $m qw(name urls cr env input cookies state v status headers log view app) {
   *{$m} = sub : lvalue { $_[0]->{$m} }
 }
 
@@ -200,11 +201,22 @@ See L<HTTP::Status> for more details.
 
 This returns a hashref representing the outgoing HTTP headers.
 
+=head3 $c->log
+
+This returns a logging object if one has been set up for your app.  If it
+exists, you should be able to call methods like debug(), info(), warn(),
+error(), and fatal() against it, and the output of this would typically end up
+in an error log.
+
 =head3 $c->view
 
 This returns the name of the default view for the current request.  If
 it's undefined, the first view in @App::Views::V will be considered the
 default.
+
+=head3 $c->app
+
+This returns the name of the app that this controller belongs to.
 
 =head2 Output
 

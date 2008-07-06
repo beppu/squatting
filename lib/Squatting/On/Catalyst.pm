@@ -51,7 +51,8 @@ sub init_cc {
   $cc->cookies = c($cat);
   $cc->input   = $cat->req->parameters;
   $cc->headers = { 'Content-Type' => 'text/html' };
-  $cc->v       = {};
+  $cc->v       = $cat->stash;
+  $cc->state   = $cat->session if (defined $cat->session);
   $cc->status  = 200;
   $cc;
 }
@@ -90,7 +91,9 @@ App.
 
 The purpose of this module is to allow Squatting apps to be embedded inside
 Catalyst apps.  This is done by adding a C<catalyze> method to the Squatting
-app that knows how to "translate" between Catalyst and Squatting.
+app that knows how to "translate" between Catalyst and Squatting.  To use this
+module, pass the string 'On::Continuity' to the use statement that loads your
+Squatting app.
 
 =head1 API
 
@@ -102,9 +105,14 @@ This method takes a Catalyst object, and uses the information it contains to
 let the Squatting app handle one HTTP request.  First, it translates the
 Catalyst::Request object into terms Squatting can understand.  Then it lets
 the Squatting app handle the request.  Finally, it takes the Squatting app's
-output and populates the Catalyst::Response object.  When this method completes
-its work, Catalyst should have everything it needs to send back a complete
+output and populates the Catalyst::Response object.  When this method is done,
+the Catalyst object should have everything it needs to send back a complete
 HTTP response.
+
+B<NOTE>:  If you want to communicate something from the Catalyst app to the
+Squatting app, you can put data in $c->stash or $c->session before calling
+catalyze().  From inside the Squatting app, these can be accessed via $self->v
+and $self->state.
 
 =head1 SEE ALSO
 

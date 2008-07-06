@@ -4,6 +4,7 @@ use strict;
 no  strict 'refs';
 use warnings;
 use Continuity;
+use Squatting::Mapper;
 
 # \%env = e($http_request)
 sub e {

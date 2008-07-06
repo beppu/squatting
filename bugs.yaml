@@ -442,7 +442,7 @@ issues:
   component: Squatting
   release: "0.40"
   reporter: John Beppu <john.beppu@gmail.com>
-  status: :unstarted
+  status: :in_progress
   disposition: 
   creation_time: 2008-07-05 05:03:46.784390 -07:00
   references: []
@@ -453,6 +453,10 @@ issues:
     - John Beppu <john.beppu@gmail.com>
     - created
     - ""
+  - - 2008-07-05 22:50:13.112515 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - changed status from unstarted to in_progress
+    - editing
 components: 
 - !ditz.rubyforge.org,2008-03-06/component 
   name: Squatting

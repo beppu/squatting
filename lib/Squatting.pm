@@ -6,9 +6,6 @@ no  strict 'refs';
 #no  warnings 'redefine';
 use base 'Class::C3::Componentised';
 
-use Continuity;
-use Squatting::Mapper;
-
 use List::Util qw(first);
 use URI::Escape;
 use Carp;
@@ -22,6 +19,7 @@ our $I = 0;
 require Squatting::Controller;
 require Squatting::View;
 
+# use App qw(LIST);
 sub import {
   my $m   = shift;
   my $p   = (caller)[0];
@@ -94,9 +92,20 @@ sub import {
   $m->load_components(@c) if @c;
 }
 
-# Squatting plugins may be anywhere in Squatting::* .
+# Squatting plugins may be anywhere in Squatting::* but by convention
+# (and for fun) you should use poetic diction in your package names.
+#
 # Squatting::On::Continuity
 # Squatting::On::Catalyst
+# Squatting::On::CGI
+# Squatting::On::Jifty 
+#
+# (all your framework are belong to us)
+#
+# Squatting::With::Impunity (What could we do w/ this name?)
+# Squatting::With::Log4Perl (which is how we could add logging support)
+#
+# (etc)
 sub component_base_class { __PACKAGE__ }
 
 # App->mount($AnotherApp, $prefix)  # Map another app on to a URL $prefix.
@@ -229,14 +238,17 @@ What a basic App looks like:
     );
   }
 
-  # Models?  The whole world is your model.  ;-)
+  # Models?  
+  # - The whole world is your model.  ;-)
   # - I've always been ambivalent about defining policy here.
   # - Use whatever works for you.
 
 =head1 DESCRIPTION
 
-Squatting is a web microframework based on Camping
-that uses L<Continuity> as its foundation.
+Squatting is a web microframework based on Camping.
+It originally used L<Continuity> as its foundation,
+but it has since been generalized such that it can
+squat on top of any Perl-based web framework (in theory).
 
 =head2 What does this mean?
 
@@ -244,12 +256,13 @@ that uses L<Continuity> as its foundation.
 
 =item B<Concise API>
 
-_why did a really good job designing Camping's API, so I copied quite a bit
-of the feel of Camping for Squatting.
+_why did a really good job designing Camping's API so that you could get the
+MOST done with the LEAST amount of code possible.  I loved Camping's API so
+much that I ported it to Perl.
 
 =item B<Tiny Codebase>
 
-Right now, it's around 6.6K of actual code (after minifying), but it can
+Right now, it's around 7.7K (B<*>) of actual code (after minifying), but it can
 definitely get smaller.  Also, the number of Perl module dependencies has been
 kept down to a minimum.
 
@@ -259,15 +272,15 @@ Controllers are objects (not classes) that are made to look like HTTP
 resources.  Thus, they respond to methods like get(), post(), put(), and
 delete().
 
-=item B<RESTless Controllers Are Possible (thanks to Continuity)>
+=item B<RESTless Controllers Are Possible>
 
 Stateful continuation-based code can be surprisingly useful (especially for
-COMET), so we try to make RESTless controllers easy to express as well.
+COMET), so we try to make RESTless controllers easy to express as well. B<**>
 
 =item B<Views Are ...Different>
 
 The View API feels like Camping, but Squatting allows multiple views to coexist
-(kinda like Catalyst (but not quite)).
+(somewhat like Catalyst (but not quite)).
 
 =item B<Squatting Apps Are Composable>
 
@@ -284,19 +297,29 @@ Squatting apps into apps written in anything from CGI on up to Catalyst.
 
 =item B<Minimal Policy>
 
-You may use any templating system you want, and you may use any ORM (B<*>) you
+You may use any templating system you want, and you may use any ORM (B<***>) you
 want.  We only have a few rules on how the controller code and the view code
 should be organized, but beyond that, you are free.
 
-B<*> Regarding ORMs, the nature of Continuity (B<**>) makes it somewhat
+=back
+
+B<*> Depending on how you measure the code size, we could be as low as 4.8K.
+That's if I only count Squatting, Squatting::Controller, and Squatting::View.
+When I count every perl module in this distribution, we get up to 7.7K.  I
+only mention this, because Camping doesn't count everything in its 3K size.
+(Sadly, I am not a master of obfuscation.  4K seemed attainable, but now that
+they're down to 3K, I just don't know what to do.  ;-)
+
+B<**> RESTless controllers only work when you're using Continuity as your
+foundation.
+
+B<***> Regarding ORMs, the nature of Continuity (B<****>) makes it somewhat
 DBI-unfriendly, so this may be a deal-breaker for many of you.  However, I look
 at this as an opportunity to try novel storage systems like CouchDB, instead.
 With the high level of concurrency that Squatting can support (when using
 Continuity) we are probably better off this way.
 
-B<**> If you're not using Continuity, then really feel free to use any ORM.
-
-=back
+B<****> If you're not using Continuity, then really feel free to use any ORM.
 
 
 =head1 API
@@ -346,13 +369,17 @@ useful for embedding a Squatting app into app written using another framework.
 
 This is a shortcut for:
 
-  Squatting::Controller->new(@_);
+  Squatting::Controller->new(
+    $name => \@urls, 
+    app   => $App, 
+    %methods
+  );
 
 =head3 R($name, @args, [ \%params ])
 
-R() is a URL generation function that takes a controller name and a list of arguments.
-You may also pass in a hashref representing CGI variables as the very last parameter
-to this function.
+R() is a URL generation function that takes a controller name and a list of
+arguments.  You may also pass in a hashref representing CGI variables as the
+very last parameter to this function.
 
 B<Example>:  Given the following controllers, R() would respond like this.
 
@@ -365,6 +392,9 @@ B<Example>:  Given the following controllers, R() would respond like this.
   R('Home', { foo => 1, bar => 2})      # "/?foo=1&bar=2"
   R('Profile', 'larry')                 # "/~larry"
   R('Profile', 'larry', 'json')         # "/~larry.json"
+                                                             
+As you can see, C<@args> represents the regexp captures, and C<\%params>
+represents the CGI query parameters.
 
 =head2 Use as a Helper for Views
 
@@ -375,16 +405,21 @@ B<Example>:  Given the following controllers, R() would respond like this.
 
 This is a shortcut for:
 
-  Squatting::View->new(@_);
+  Squatting::View->new($name, %methods);
 
 =head3 R($name, @args, [ \%params ])
 
 This is the same R() function that the controllers get access to.
+Please use it to generate URLs so that your apps may be composable
+and embeddable.
 
 =head1 SEE ALSO
 
 L<Squatting::Controller>, L<Squatting::View>, L<Squatting::Mapper>,
+L<Squatting::On::Continuity>, L<Squatting::On::Catalyst>,
 L<Squatting::Cookbook>
+
+L<Class::C3::Componentised>
 
 =head2 Squatting Source Code
 
@@ -396,26 +431,26 @@ L<http://github.com/beppu/squatting/tree/master>
 
 =head2 Bavl Source Code
 
-We're going to throw Squatting into the metaphorical deep end by using it to
-implement the towr.of.bavl.org.  If you're looking for an example of how to use
-Squatting for an ambitious project, look at the Bavl code.
+We're going to throw Squatting (and Continuity) into the metaphorical deep end
+by using it to implement the towr.of.bavl.org.  It's a site that will help
+people learn foreign languages by letting you hear the phrases you're
+interested in learning as actually spoken by fluent speakers.  If you're
+looking for an example of how to use Squatting for an ambitious project, look
+at the Bavl code.
 
 L<http://github.com/beppu/bavl/tree/master>
 
 =head2 Continuity and Coro
 
-When you want to start dabbling with RESTless controllers, it would serve
-you well to understand how Continuity and Coro work.  I recommend reading the
-POD for the following Perl modules:
+When you want to start dabbling with RESTless controllers, it would serve you
+well to understand how Continuity, Coro and Event work.  To learn more, I
+recommend reading the POD for the following Perl modules:
 
 L<Continuity>,
 L<Coro>,
-L<Coro::Event>,
-L<Event>.
+L<AnyEvent>.
 
-Also, check out the Continuity web site.
-
-L<http://continuity.tlt42.org/>
+Combining coroutines with an event loop is a surprisingly powerful technique.
 
 =head2 Camping
 
