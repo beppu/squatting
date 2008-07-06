@@ -6,8 +6,6 @@ use warnings;
 use Class::C3;
 use Data::Dump 'pp';
 
-# XXX - WORK IN PROGRESS
-
 # In order to embed a Squatting app into an app written in another framework,
 # we need to be able to do the following things.
 #
@@ -73,3 +71,43 @@ sub catalyze {
 }
 
 1;
+
+=head1 NAME
+
+Squatting::On::Catalyst - embed a Squatting app into a Catalyst app
+
+=head1 SYNOPSIS
+
+Add these 4 lines to your Catalyst app's Root Controller to embed a Squatting
+App.
+
+  use App 'On::Catalyst'
+  App->init;
+  App->relocate('/somewhere')
+  sub somewhere : Local { App->catalyze($_[1]) }
+
+=head1 DESCRIPTION
+
+The purpose of this module is to allow Squatting apps to be embedded inside
+Catalyst apps.  This is done by adding a C<catalyze> method to the Squatting
+app that knows how to "translate" between Catalyst and Squatting.
+
+=head1 API
+
+=head2 All Your Framework Are Belong To Us
+
+=head3 App->catalyze($c)
+
+This method takes a Catalyst object, and uses the information it contains to
+let the Squatting app handle one HTTP request.  First, it translates the
+Catalyst::Request object into terms Squatting can understand.  Then it lets
+the Squatting app handle the request.  Finally, it takes the Squatting app's
+output and populates the Catalyst::Response object.  When this method completes
+its work, Catalyst should have everything it needs to send back a complete
+HTTP response.
+
+=head1 SEE ALSO
+
+L<Catalyst>, L<Catalyst::Request>, L<Catalyst::Response>
+
+=cut
