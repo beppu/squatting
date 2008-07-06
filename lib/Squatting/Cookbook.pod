@@ -180,6 +180,14 @@ Here are some concrete examples to get you started.
 
 =head3 Catalyst
 
+To embed a Squatting app into a Catalyst app, you can add code like
+this to your C<Root> controller.
+
+  use App 'On::Catalyst';
+  App->init;
+  App->relocate('/somewhere');
+  sub somewhere : Local { App->catalyze($_[1]) }
+
 =head3 HTML::Mason
 
 =head3 Raw mod_perl1

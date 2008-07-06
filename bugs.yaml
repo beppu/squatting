@@ -390,7 +390,7 @@ issues:
   component: Squatting
   release: "0.40"
   reporter: John Beppu <john.beppu@gmail.com>
-  status: :unstarted
+  status: :in_progress
   disposition: 
   creation_time: 2008-07-05 05:02:48.985210 -07:00
   references: []
@@ -401,6 +401,10 @@ issues:
     - John Beppu <john.beppu@gmail.com>
     - created
     - ""
+  - - 2008-07-05 21:24:11.172382 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - changed status from unstarted to in_progress
+    - "*burp*"
 - !ditz.rubyforge.org,2008-03-06/issue 
   title: Document Squatting::On::Catalyst
   desc: ""

@@ -88,3 +88,36 @@ sub continue {
 $SIG{PIPE} = sub { Coro::terminate(0) };
 
 1;
+
+=head1 NAME
+
+Squatting::On::Continuity - use Continuity as the server for your Squatting app
+
+=head1 SYNOPSIS
+
+  use App 'On::Continuity';
+  App->init;
+  App->continue(port => 2012);
+
+=head1 DESCRIPTION
+
+The purpose of this module is to add a C<continue> method to your app that will
+start a Continuity-based web server when invoked.  To use this module, pass the
+string C<'On::Continuity'> to the C<use> statement that loads your Squatting
+app.
+
+=head1 API 
+
+=head2 The Only Method You'll Ever Need
+
+=head3 App->continue(%options)
+
+This method starts a Continuity-based web server.  The %options are passed
+straight through to Continuity, and they let you specify things like what port
+to run the server on.
+
+=head1 SEE ALSO
+
+L<Continuity>, L<Continuity::Mapper>, L<Squatting::Mapper>
+
+=cut

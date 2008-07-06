@@ -160,11 +160,6 @@ sub service {
   return $content;
 }
 
-sub foo {
-  my $self = shift;
-  "Squatting => " . $self->maybe::next::method;
-}
-
 1;
 
 =head1 NAME
