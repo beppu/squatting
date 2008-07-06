@@ -442,8 +442,8 @@ issues:
   component: Squatting
   release: "0.40"
   reporter: John Beppu <john.beppu@gmail.com>
-  status: :in_progress
-  disposition: 
+  status: :closed
+  disposition: :fixed
   creation_time: 2008-07-05 05:03:46.784390 -07:00
   references: []
 
@@ -457,6 +457,10 @@ issues:
     - John Beppu <john.beppu@gmail.com>
     - changed status from unstarted to in_progress
     - editing
+  - - 2008-07-06 05:08:11.413315 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - closed issue with disposition fixed
+    - ""
 components: 
 - !ditz.rubyforge.org,2008-03-06/component 
   name: Squatting
@@ -541,10 +545,14 @@ releases:
     - ""
 - !ditz.rubyforge.org,2008-03-06/release 
   name: "0.40"
-  status: :unreleased
-  release_time: 
+  status: :released
+  release_time: 2008-07-06 05:09:07.200863 -07:00
   log_events: 
   - - 2008-07-05 05:02:17.838917 -07:00
     - John Beppu <john.beppu@gmail.com>
     - created
     - The purpose of this release is to introduce the new Class::C3-based extensions in Squatting::On::* .
+  - - 2008-07-06 05:09:07.200913 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - released
+    - I think it's good to go.  0.40 brings many new features.
