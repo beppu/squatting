@@ -1,5 +1,6 @@
 0.41
   - Fixed a few documentation errors.
+  - Minimized namespace pollution from Squatting::On::* plugins.
 
 0.40
   - Removed $Squatting::app and became both mod_perl compatible and embeddable.
