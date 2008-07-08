@@ -486,8 +486,8 @@ issues:
   component: Squatting
   release: "0.41"
   reporter: John Beppu <john.beppu@gmail.com>
-  status: :in_progress
-  disposition: 
+  status: :closed
+  disposition: :fixed
   creation_time: 2008-07-06 07:27:12.843717 -07:00
   references: []
 
@@ -500,6 +500,10 @@ issues:
   - - 2008-07-08 07:41:44.648481 -07:00
     - John Beppu <john.beppu@gmail.com>
     - changed status from unstarted to in_progress
+    - ""
+  - - 2008-07-08 07:55:30.635501 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - closed issue with disposition fixed
     - ""
 - !ditz.rubyforge.org,2008-03-06/issue 
   title: Make helper functions in Squatting::On::* "private" using closures.
@@ -526,8 +530,8 @@ issues:
   component: Squatting
   release: "0.41"
   reporter: John Beppu <john.beppu@gmail.com>
-  status: :in_progress
-  disposition: 
+  status: :closed
+  disposition: :fixed
   creation_time: 2008-07-06 08:42:53.851261 -07:00
   references: []
 
@@ -540,6 +544,10 @@ issues:
   - - 2008-07-08 07:41:52.308596 -07:00
     - John Beppu <john.beppu@gmail.com>
     - changed status from unstarted to in_progress
+    - ""
+  - - 2008-07-08 07:56:50.535045 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - closed issue with disposition fixed
     - ""
 components: 
 - !ditz.rubyforge.org,2008-03-06/component 
