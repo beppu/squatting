@@ -122,7 +122,7 @@
                                     - -*- -
 
            You may define a generic template called '_' for use when
-                        a specific view can't be found.
+                      a specific template can't be found.
 
                                     - -*- -
 
