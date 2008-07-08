@@ -122,10 +122,6 @@ slightly less verbose.
 This will create a shallow copy of the controller.  You may optionally pass in
 a hash of options that will be merged into the new clone.
 
-=head3 $c->init($cr)
-
-Given a L<Continuity::Request> object, this method will initialize the controller.
-
 =head2 HTTP Request Handlers
 
 =head3 $c->get(@args)
