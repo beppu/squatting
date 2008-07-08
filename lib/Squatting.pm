@@ -415,16 +415,23 @@ and embeddable.
 
 =head1 SEE ALSO
 
-Other Squatting::* modules:
+=over 4
+
+=item B<Other Squatting::* modules>:
+
 L<Squatting::Controller>, L<Squatting::View>, L<Squatting::Mapper>,
 L<Squatting::On::Continuity>, L<Squatting::On::Catalyst>,
 L<Squatting::Cookbook>
 
-Squatting's superclass:
+=item B<Squatting's superclass>:
+
 L<Class::C3::Componentised>
 
-The first useful Squatting app released on CPAN:
+=item B<The first useful Squatting app released on CPAN>:
+
 L<Pod::Server>
+
+=back
 
 =head2 Squatting Source Code
 
