@@ -512,7 +512,7 @@ issues:
   component: Squatting
   release: "0.41"
   reporter: John Beppu <john.beppu@gmail.com>
-  status: :unstarted
+  status: :in_progress
   disposition: 
   creation_time: 2008-07-06 08:41:00.533577 -07:00
   references: []
@@ -523,6 +523,10 @@ issues:
     - John Beppu <john.beppu@gmail.com>
     - created
     - ""
+  - - 2008-07-08 08:28:21.338675 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - changed status from unstarted to in_progress
+    - oh, how malleable perl can be....
 - !ditz.rubyforge.org,2008-03-06/issue 
   title: Fix the README in that one spot where I should have said template instead of view.
   desc: ""
