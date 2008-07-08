@@ -17,7 +17,9 @@ use Data::Dump 'pp';
 # set outgoing HTTP response headers
 # set outgoing content
 
-sub e {
+my %p;
+
+$p{e} = sub {
   my $cat = shift;
   my $req = $cat->req;
   my $uri = $req->uri;
@@ -35,20 +37,20 @@ sub e {
     $env{$key} = $value;
   });
   \%env;
-}
+};
 
-sub c {
+$p{c} = sub {
   my $cat = shift;
   # i think this is wrong...  i may have to massage the data some more.
   $cat->req->cookies;
-}
+};
 
 # init_cc($controller, $catalyst) -- initialize a controller clone
-sub init_cc {
+$p{init_cc} = sub {
   my ($c, $cat) = @_;
   my $cc = $c->clone;
-  $cc->env     = e($cat);
-  $cc->cookies = c($cat);
+  $cc->env     = $p{e}->($cat);
+  $cc->cookies = $p{c}->($cat);
   $cc->input   = $cat->req->parameters;
   $cc->headers = { 'Content-Type' => 'text/html' };
   $cc->v       = $cat->stash;
@@ -56,12 +58,12 @@ sub init_cc {
   $cc->log     = $cat->log     if ($cat->can('log'));
   $cc->status  = 200;
   $cc;
-}
+};
 
 sub catalyze {
   my ($app, $cat) = @_;
   my ($c,   $p)   = &{ $app . "::D" }($cat->request->uri->path);
-  my $cc = init_cc($c, $cat);
+  my $cc = $p{init_cc}->($c, $cat);
   my $content = $app->service($cc, @$p);
   my $h       = $cat->response->headers;
   my $ch      = $cc->headers;

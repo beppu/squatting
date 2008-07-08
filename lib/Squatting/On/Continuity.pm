@@ -6,8 +6,11 @@ use warnings;
 use Continuity;
 use Squatting::Mapper;
 
+# p for private -- this is my way of minimizing namespace pollution
+my %p;
+
 # \%env = e($http_request)
-sub e {
+$p{e} = sub {
   my $r = shift;
   my %env;
   my $uri = $r->uri;
@@ -23,10 +26,10 @@ sub e {
     $env{$key} = $value;
   });
   \%env;
-}
+};
 
 # \%input = i($query_string)  # Extract CGI parameters from QUERY_STRING
-sub i {
+$p{i} = sub {
   my $q = CGI->new($_[0]);
   my %i = $q->Vars;
   +{ map {
@@ -36,26 +39,26 @@ sub i {
       $_ => $i{$_};
     }
   } keys %i }
-}
+};
 
 # \%cookies = c($cookie_header)  # Parse Cookie header(s).
-sub c {
+$p{c} = sub {
   +{ map { ref($_) ? $_->value : $_ } CGI::Cookie->parse($_[0]) };
-}
+};
 
 # init_cc($controller, $continuity_request) -- initialize a controller clone
-sub init_cc {
+$p{init_cc} = sub {
   my ($c, $cr) = @_;
   my $cc = $c->clone;
   $cc->cr      = $cr;
-  $cc->env     = e($cr->http_request);
-  $cc->cookies = c($cc->env->{HTTP_COOKIE});
-  $cc->input   = i(join('&', grep { defined } ($cc->env->{QUERY_STRING}, $cr->request->content)));
+  $cc->env     = $p{e}->($cr->http_request);
+  $cc->cookies = $p{c}->($cc->env->{HTTP_COOKIE});
+  $cc->input   = $p{i}->(join('&', grep { defined } ($cc->env->{QUERY_STRING}, $cr->request->content)));
   $cc->headers = { 'Content-Type' => 'text/html' };
   $cc->v       = {};
   $cc->status  = 200;
   $cc;
-}
+};
 
 # App->continue(%opts) -- Start Continuity's main loop.
 sub continue {
@@ -69,7 +72,7 @@ sub continue {
       callback => sub {
         my $cr = shift;
         my ($c, $p)  = &{$app."::D"}($cr->uri->path);
-        my $cc       = init_cc($c, $cr);
+        my $cc       = $p{init_cc}->($c, $cr);
         my $content  = $app->service($cc, @$p);
         my $response = HTTP::Response->new(
           $cc->status,
