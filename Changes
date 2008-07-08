@@ -1,3 +1,6 @@
+0.41
+  - Fixed a few documentation errors.
+
 0.40
   - Removed $Squatting::app and became both mod_perl compatible and embeddable.
   - Added unit tests for Squatting::Controller and Squatting::View

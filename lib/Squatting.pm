@@ -257,8 +257,8 @@ squat on top of any Perl-based web framework (in theory).
 =item B<Concise API>
 
 _why did a really good job designing Camping's API so that you could get the
-MOST done with the LEAST amount of code possible.  I loved Camping's API so
-much that I ported it to Perl.
+B<MOST> done with the B<LEAST> amount of code possible.  I loved Camping's API
+so much that I ported it to Perl.
 
 =item B<Tiny Codebase>
 
