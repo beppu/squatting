@@ -41,8 +41,10 @@ $p{e} = sub {
 
 $p{c} = sub {
   my $cat = shift;
-  # i think this is wrong...  i may have to massage the data some more.
-  $cat->req->cookies;
+  my $c = $cat->req->cookies;
+  my %k;
+  $k{$_} = $$c{$_}->value for (keys %$c);
+  \%k;
 };
 
 # init_cc($controller, $catalyst) -- initialize a controller clone
