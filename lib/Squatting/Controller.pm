@@ -36,7 +36,7 @@ for my $m qw(name urls cr env input cookies state v status headers log view app)
   *{$m} = sub : lvalue { $_[0]->{$m} }
 }
 
-# HTTP (get post)
+# HTTP methods
 for my $m qw(get post put delete head options trace connect) {
   *{$m} = sub { $_[0]->{$m}->(@_) }
 }
