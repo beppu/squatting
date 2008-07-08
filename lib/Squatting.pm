@@ -137,7 +137,7 @@ sub init {
   @{$_[0]."::Views::V"};
 }
 
-# App->service($controller, @params)  # Override this method if you want to take actions before or after a request is handled.
+# App->service($controller, @params)  # Handle one RESTful HTTP request
 sub service {
   my ($app, $c, @params) = grep { defined } @_;
   my $method = lc $c->env->{REQUEST_METHOD};
