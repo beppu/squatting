@@ -658,10 +658,14 @@ releases:
     - I think it's good to go.  0.40 brings many new features.
 - !ditz.rubyforge.org,2008-03-06/release 
   name: "0.41"
-  status: :unreleased
-  release_time: 
+  status: :released
+  release_time: 2008-07-08 09:46:47.021104 -07:00
   log_events: 
   - - 2008-07-06 07:26:16.245062 -07:00
     - John Beppu <john.beppu@gmail.com>
     - created
     - This will be a bug fix release.
+  - - 2008-07-08 09:46:47.021155 -07:00
+    - John Beppu <john.beppu@gmail.com>
+    - released
+    - ""
