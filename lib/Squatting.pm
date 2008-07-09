@@ -92,7 +92,7 @@ sub import {
   $m->load_components(@c) if @c;
 }
 
-# Squatting plugins may be anywhere in Squatting::* but by convention
+# Squatting plugins may be anywhere in Squatting::*::* but by convention
 # (and for fun) you should use poetic diction in your package names.
 #
 # Squatting::On::Continuity
@@ -100,7 +100,7 @@ sub import {
 # Squatting::On::CGI
 # Squatting::On::Jifty 
 #
-# (all your framework are belong to us)
+# (ALL YOUR FRAMEWORK ARE BELONG TO US)
 #
 # Squatting::With::Impunity (What could we do w/ this name?)
 # Squatting::With::Log4Perl (which is how we could add logging support)
