@@ -280,7 +280,7 @@ COMET), so we try to make RESTless controllers easy to express as well. B<**>
 =item B<Views Are ...Different>
 
 The View API feels like Camping, but Squatting allows multiple views to coexist
-(somewhat like Catalyst (but not quite)).
+(kinda like Catalyst (but not quite)).
 
 =item B<Squatting Apps Are Composable>
 
@@ -357,8 +357,8 @@ at some other prefix, because it won't work.
 
 =head3 App->relocate($prefix)
 
-This method will relocate a Squatting app to the specified prefix.  It's
-useful for embedding a Squatting app into app written using another framework.
+This method will relocate a Squatting app to the specified prefix.  It's useful
+for embedding a Squatting app into apps written in other frameworks.
 
 =head2 Use as a Helper for Controllers
 
