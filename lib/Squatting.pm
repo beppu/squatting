@@ -308,7 +308,7 @@ That's if I only count Squatting, Squatting::Controller, and Squatting::View.
 When I count every perl module in this distribution, we get up to 7.7K.  I
 only mention this, because Camping doesn't count everything in its 3K size.
 (Sadly, I am not a master of obfuscation.  4K seemed attainable, but now that
-they're down to 3K, I just don't know what to do.  ;-)
+they're down to 3K, I don't know what to do.  ;-)
 
 B<**> RESTless controllers only work when you're using Continuity as your
 foundation.
