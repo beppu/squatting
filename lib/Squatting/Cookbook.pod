@@ -149,6 +149,14 @@ use that session id as a key into a persistent store.
 =head2 How to Internationalize and Localize Squatting Apps
 
 
+=head2 How to be an OpenID Consumer
+
+
+
+=head2 How to be an OpenID Provider
+
+
+
 =head2 How to Compose Multiple Squatting Apps Into One App
 
   App->mount('AnotherApp', '/prefix');
@@ -214,7 +222,7 @@ limiting.
 
 =head2 Reverse Proxying to Squatting+Continuity w/ Perlbal
 
-=head2 Reverse Proxying to Squatting+Continuity w/ ngingx
+=head2 Reverse Proxying to Squatting+Continuity w/ nginx
 
 =head2 Piggy-Backing on Top of Other Frameworks
 
