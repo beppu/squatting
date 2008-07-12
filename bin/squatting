@@ -24,7 +24,7 @@ GetOptions(
   'config|c=s%',
   'show-config|s',
   'logo',
-  'h|help',
+  'help|h',
 );
 
 sub help {
