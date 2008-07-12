@@ -84,6 +84,7 @@ if ($app) {
       exit 1;
     }
     $app->init;
+    # XXX - I have to think this over.
     sub Squatting::Controller::mock_init {
       my $self = shift;
       $self->{cr}          = {}; # TODO - provide a mock Continuity::Request

@@ -11,7 +11,7 @@ use URI::Escape;
 use Carp;
 use Data::Dump 'pp';
 
-our $VERSION = '0.41';
+our $VERSION = '0.42';
 
 # TODO - Move $I and the code that uses it out to another (optional) module.
 our $I = 0;

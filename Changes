@@ -1,4 +1,4 @@
-0.42
+0.42 (unreleased)
   - Revised the documentation a bit.
   - Made squatting --help have a higher precedence.
 

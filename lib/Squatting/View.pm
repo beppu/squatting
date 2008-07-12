@@ -65,7 +65,7 @@ Squatting::View - default view class for Squatting
   use Squatting 'views';
   our @V = (
     V(
-      'html',
+      'example',
       layout => sub {
         my ($self, $v, @content) = @_;
         "(header @content footer)";
