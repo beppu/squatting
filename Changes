@@ -1,5 +1,6 @@
 0.42
   - Revised the documentation a bit.
+  - Made squatting --help have a higher precedence.
 
 0.41
   - Fixed a few documentation errors.
