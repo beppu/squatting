@@ -38,13 +38,13 @@ sub import {
       my $c = ${$app."::Controllers::C"}{$controller};
       croak "$controller controller not found" unless $c;
       my $arity = @params;
-      my $pattern = first { my @m = /\(.*?\)/g; $arity == @m } @{$c->urls};
-      croak "couldn't find a matching URL pattern" unless $pattern;
-      while ($pattern =~ /\(.*?\)/) {
-        $pattern =~ s{\(.*?\)}{uri_escape(+shift(@params), "^A-Za-z0-9\-_.!~*’()/")}e;
+      my $path = first { my @m = /\(.*?\)/g; $arity == @m } @{$c->urls};
+      croak "couldn't find a matching URL path" unless $path;
+      while ($path =~ /\(.*?\)/) {
+        $path =~ s{\(.*?\)}{uri_escape(+shift(@params), "^A-Za-z0-9\-_.!~*’()/")}e;
       }
       if ($input) {
-        $pattern .= "?".  join('&' => 
+        $path .= "?".  join('&' => 
           map { 
             my $k = $_;
             ref($input->{$_}) eq 'ARRAY'
@@ -52,7 +52,7 @@ sub import {
               : "$_=".uri_escape($input->{$_})
           } keys %$input);
       }
-      $pattern;
+      $path;
     };
 
     # ($controller, \@regex_captures) = D($path)  # Return controller and captures for a path
