@@ -120,6 +120,14 @@ catalyze().  From inside a Squatting controller, these can be accessed via
 $self->v and $self->state.  Squatting controllers also get access to
 Catalyst's logging object via $self->log.
 
+In summary:
+
+  Catalyst                              Squatting
+  --------                              ---------
+  $c->stash                             $self->v
+  $c->session                           $self->state
+  $c->log                               $self->log
+
 =head1 SEE ALSO
 
 L<Catalyst>, L<Catalyst::Request>, L<Catalyst::Response>
