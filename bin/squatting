@@ -163,7 +163,7 @@ Port for web server (defaults to 4234)
 =item -c, --config ATTR=VALUE
 
 The standard way to configure a Squatting application is to manipulate its
-%CONFIG hash.  The --config option lets you set values in this hash, and you
+C<%CONFIG> hash.  The --config option lets you set values in this hash, and you
 may use --config multiple times in a single command line.
 
 B<Example>:
