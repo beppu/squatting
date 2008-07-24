@@ -362,8 +362,15 @@ for embedding a Squatting app into apps written in other frameworks.
 
 =head2 Use as a Helper for Controllers
 
+In this package, you will define a list of L<Squatting::Controller> objects in C<@C>.
+
   package App::Controllers;
   use Squatting ':controllers';
+  our @C = (
+    C(...),
+    C(...),
+    C(...),
+  );
 
 =head3 C($name => \@urls, %methods)
 
@@ -398,8 +405,16 @@ represents the CGI query parameters.
 
 =head2 Use as a Helper for Views
 
-  package App::Controllers;
+In this package, you will define a list of L<Squatting::View> objects in C<@V>.
+
+  package App::Views;
   use Squatting ':views';
+  our @V = (
+    V(
+      'html',
+      home => sub { "<h1>Home</h1>" },
+    ),
+  );
 
 =head3 V($name, %methods)
 
