@@ -18,21 +18,22 @@ Synopsis
   application and embed it directly into a Catalyst application.  (To see an
   example of this, take a look at the Pod::Server documentation.)
 
-  I'd like to expand Squatting's range by writing more adapters for more
-  frameworks/environments.
+  I'd like to expand Squatting's range by writing adapters for more frameworks
+  and environments.
 
 Benefits to the Perl Community
 
   Imagine that you built a web application, and then imagine you wanted to add
   a blog, or a forum, or a picture gallery, or a store to your site.  What's a
   Perl programmer to do?  Web applications haven't historically been conducive
-  to modular composition.  However, Squatting can change all this for the
-  better.  Not only will Squatting let you embed whole web applications into
-  your existing site, it'll even let you replace the layout of the Squatting
-  app so that you can keep a common look and feel across the entire site.  The
-  best part is that you don't have to throw away all your old work and join the
-  Squatting cult.  You can keep all your old work and make the Squatting adapt
-  to you.
+  to modular composition.  
+  
+  However, Squatting can change all this for the better.  Not only will
+  Squatting let you embed whole web applications into your existing site, it'll
+  even let you replace the layout of the Squatting application so that you can
+  keep a common look and feel across the entire site.  The best part is that
+  you don't have to throw away all your old work and join the Squatting cult.
+  You can keep all your old work and make Squatting adapt to you.
   
   Unfortunately, these hypothetical, embeddable, Squatting applications have
   yet to be written, but even before we get to that part, I'd like to make sure
@@ -40,20 +41,24 @@ Benefits to the Perl Community
 
   This will lay the groundwork for a future where adding major functionality
   to your web site will be as easy installing a module from CPAN and adding
-  a few lines of code to your existing app.
+  a few lines of glue code to your existing application.
 
 Deliverables
 
   * Squatting::On::ModPerl1
   * Squatting::On::ModPerl19
   * Squatting::On::ModPerl2
-  * Squatting::On::Jifty
   * Squatting::On::CGI
-  * ...any other requests?
+  * Squatting::On::FastCGI
+  * Squatting::On::Jifty
+
+    and for the grand finale...
+    
+  * Squatting::On::PHP (Yes, it's possible.)
 
 Project Details
   
-  This project is fairly straight-forward.  For each framework, I have to
+  This project is fairly straightforward.  For each framework, I have to
   translate the HTTP request info from their world view into terms Squatting
   can understand.  Then, after I let Squatting handle a request, I have to take
   the output and translate it back into terms that the original framework can
@@ -62,7 +67,7 @@ Project Details
 
 Project Schedule
 
-  4 weeks to implement and test the modules mentioned above is my conservative
+  5 weeks to implement and test the modules mentioned above is my conservative
   estimate.
 
 Bio
@@ -74,7 +79,8 @@ Bio
   friend and I have been sitting on, and I believed that Perl (the language
   created by our favorite linguist/programmer) would be the most appropriate
   tool for the job.  I wrote Squatting so that I could write the language
-  learning site, but now Squatting seems to have taken on a life of its own.
+  learning site with it, but now Squatting seems to have taken on a life of its
+  own.
 
 Amount Requested
 
