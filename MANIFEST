@@ -1,7 +1,7 @@
 bin/squatting
 bin/vw
-bugs.yaml
 Changes
+doc/squatting-tpf-grant-proposal.txt
 edit
 eg/chat-ajax-push.js
 eg/Chat.pm
@@ -9,6 +9,8 @@ eg/Example.pm
 eg/Example/Controllers.pm
 eg/Example/Views.pm
 eg/jquery.js
+eg/OpenID/Consumer.pm
+eg/OpenID/Provider.pm
 eg/PODServer.pm
 eg/README
 eg/UniCodePoints.pm

@@ -516,7 +516,7 @@ L<http://iolanguage.com/>
 
 John BEPPU E<lt>beppu@cpan.orgE<gt>
 
-(Scott WALTERS (aka scrottie) gets credit for the name of this module.)
+Scott WALTERS (aka scrottie) gets credit for the name of this module.
 
 =head1 COPYRIGHT
 
