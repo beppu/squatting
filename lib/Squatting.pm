@@ -202,14 +202,15 @@ What a basic App looks like:
     package App::Controllers;
     use Squatting ':controllers';
 
-    # Setup a list of controller objects using the C() function.
+    # Setup a list of controller objects in @C using the C() function.
     our @C = (
       C(
         Home => [ '/' ],
         get  => sub {
           my ($self) = @_;
           my $v = $self->v;
-          $v->{title} = 'Hello, World!';
+          $v->{title}   = 'A Simple Squatting Application';
+          $v->{message} = 'Hello, World!';
           $self->render('home');
         },
         post => sub { }
@@ -222,17 +223,17 @@ What a basic App looks like:
     package App::Views;
     use Squatting ':views';
 
-    # Setup a list of view objects using the V() function.
+    # Setup a list of view objects in @V using the V() function.
     our @V = (
       V(
         'html',
         layout  => sub {
           my ($self, $v, $content) = @_;
-          "<html><body>$content</body></html>"
+          "<html><title>$v->{app}</title><body>$content</body></html>"
         },
         home    => sub {
           my ($self, $v) = @_;
-          "<h1>$v->{title}</h1>"
+          "<h1>$v->{message}</h1>"
         },
       ),
     );
