@@ -328,6 +328,7 @@ B<****> If you're not using Continuity, then really feel free to use any ORM.
 
   package App;
   use base 'Squatting';
+  our %CONFIG = ();
   1;
 
 =head3 App->service($controller, @args)

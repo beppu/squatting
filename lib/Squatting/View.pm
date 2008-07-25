@@ -84,10 +84,14 @@ Squatting::View - default view class for Squatting
 
 =head1 DESCRIPTION
 
-In Squatting, views are objects that contain many templates.  Templates
-are represented by subroutine references that will be installed as methods
-of a view object.  The job of a template is to take a hashref of variables
-and return a string.
+In Squatting, views are objects that contain many templates.  Templates are
+represented by coderefs that will be treated as methods of a view object.  The
+job of a template is to take a hashref of variables and return a string.  
+
+Typically, the hashref of variables will be the same as what's in
+C<$controller-E<gt>v>.  This is important to note, because if you want a session
+variable in C<$controller-E<gt>state> to affect the template, you have to put
+it in C<$controller-E<gt>v>.
 
 =head1 API
 
@@ -129,6 +133,17 @@ It's like our version of AUTOLOAD().
 
 B<NOTE>:  You can find out what they tried to render by inspecting
 $self->{template}.
+
+=head3 $view->{$template} = \&coderef
+
+You are allowed to directly replace the template coderefs with your own.
+The most common reason you'd do this would be to replace an app's default
+layout with your own.
+
+  $view->{layout} = sub {
+    my ($self, $v, $content) = @_;
+    # ...
+  };
 
 =head1 SEE ALSO
 
