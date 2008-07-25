@@ -1,9 +1,11 @@
-0.42 (unreleased)
-  - Revised the documentation a bit.
-  - Made squatting --help have a higher precedence.
+0.43 (unreleased)
   * Move controller log into Squatting::With::AccessTrace
   * Move last if-block in service to Squatting::On::Continuity
   * Allow more HTTP methods when using Squatting::On::Continuity
+
+0.42
+  - Revised the documentation a bit.
+  - Made squatting --help have a higher precedence.
 
 0.41
   - Fixed a few documentation errors.
