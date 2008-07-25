@@ -68,7 +68,7 @@ Project Details
 Project Schedule
 
   5 weeks to implement and test the modules mentioned above is my conservative
-  estimate.
+  estimate, and I can begin work immediately.
 
 Bio
 
