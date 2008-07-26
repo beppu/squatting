@@ -1,0 +1,78 @@
+Squatting::On::Catalyst
+
+Squatting is a web microframework for Perl that's based on Camping from the
+Ruby world.  During the transition from Ruby to Perl, Squatting gained some
+mutant powers which is why I'm writing to you today.
+
+One of Squatting's mutant powers is its ability to embed itself into other
+frameworks (like Catalyst).  You can take whole Squatting apps, and embed them
+into your existing web application with just a few lines of glue code.  Allow
+me to demonstrate.
+
+
+STEP 1:  Install Pod::Server from CPAN.
+
+  $ sudo cpan Pod::Server
+
+
+
+STEP 2:  Run Pod::Server so you can see what it looks like.
+
+  $ squatting Pod::Server -p 8088
+
+    or
+
+  $ pod_server
+
+Then, visit http://localhost:8088/ and pay attention to the URLs as you
+click around.  (This will be interesting when you see how the URLs of 
+the whole site will be "relocated" later on in the demonstration.)
+
+
+
+STEP 3:  Next, create a Catalyst application.
+
+  $ catalyst.pl Propaganda
+
+
+
+STEP 4:  Embed Pod::Server into the Catalyst application.
+
+  $ cd Propaganda
+  $ $EDITOR lib/Propaganda/Controller/Root.pm
+
+Then, add the following lines of code to an appropriate place in the
+controller.
+
+  use Pod::Server ’On::Catalyst’;
+  Pod::Server->init;
+  Pod::Server->relocate(’/pod’);
+  $Pod::Simple::HTML::Perldoc_URL_Prefix = ’/pod/’;
+  sub pod : Local { Pod::Server->catalyze($_[1]) }
+
+
+
+STEP 5: Start up the Catalyst application.
+
+  $ script/propaganda_server.pl
+
+Then visit http://localhost:3000/pod/ .  If everything worked, you should see
+that Pod::Server has just been embedded into a Catalyst application.
+
+
+
+What Are The Implications of This?
+
+Right now, anyone who is developing a web app with Catalyst can install
+Pod::Server from CPAN and embed it directly into their web app.  However,
+This is just the beginning.
+
+Imagine if you could install a blog, a wiki, a forum, or a store just as
+easily.
+
+Imagine adding major functionality to any Perl-based site with ~5 lines of
+code.
+
+Squatting makes modular web applications both possible and probable.
+
+
