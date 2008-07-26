@@ -30,7 +30,7 @@ the whole site will be "relocated" later on in the demonstration.)
 
 
 
-STEP 3:  Next, create a Catalyst application.
+STEP 3:  Create a Catalyst application.
 
   $ catalyst.pl Propaganda
 
@@ -56,8 +56,8 @@ STEP 5: Start up the Catalyst application.
 
   $ script/propaganda_server.pl
 
-Then visit http://localhost:3000/pod/ .  If everything worked, you should see
-that Pod::Server has just been embedded into a Catalyst application.
+Finally, visit http://localhost:3000/pod/ .  If everything worked, you should
+see that Pod::Server has just been embedded into a Catalyst application.
 
 
 
