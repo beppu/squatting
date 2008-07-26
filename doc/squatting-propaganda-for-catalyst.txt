@@ -75,4 +75,7 @@ code.
 
 Squatting makes modular web applications both possible and probable.
 
+http://search.cpan.org/dist/Squatting/
+
+http://github.com/beppu/squatting/tree/master
 
