@@ -1,6 +1,8 @@
 0.43 (unreleased)
-  * Move controller log into Squatting::With::AccessTrace
+  - More documentation updates and corrections.
+  * Start documenting Continuity's special powers.
   * Move last if-block in service to Squatting::On::Continuity
+  * Move controller log into Squatting::With::AccessTrace
   * Allow more HTTP methods when using Squatting::On::Continuity
 
 0.42

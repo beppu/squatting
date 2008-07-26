@@ -120,11 +120,15 @@ stick around, so that's what we'll use to implement persistent sessions.
     if (defined $sid) {
       $c->state = $state{$sid} ||= {};
     } 
-    $app->SUPER::service($c, @args);
+    $app->next::method($c, @args);
   }
 
 Here, we override service() in the main module of our app so that $c->state will
 provide a hashref whose values will persist between requests.
+
+Note that instead of writing C<$app-E<gt>SUPER::service>, we have to write
+C<$app-E<gt>next::method>, because Squatting is a sublcass of
+L<Class::C3::Componentised>.
 
 
 =head3 Without Continuity
