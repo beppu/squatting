@@ -65,7 +65,7 @@ What Are The Implications of This?
 
 Right now, anyone who is developing a web app with Catalyst can install
 Pod::Server from CPAN and embed it directly into their web app.  However,
-This is just the beginning.
+this is just the beginning.
 
 Imagine if you could install a blog, a wiki, a forum, or a store just as
 easily.
