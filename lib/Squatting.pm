@@ -27,21 +27,21 @@ sub import {
   $app =~ s/::Controllers$//;
   $app =~ s/::Views$//;
 
-  # $url = R('Controller', @params, { cgi => vars })  # Generate URLs with the routing function
+  # $url = R('Controller', @args, { cgi => vars })  # Generate URLs with the routing function
   if (UNIVERSAL::isa($app, 'Squatting')) {
     *{$p."::R"} = sub {
-      my ($controller, @params) = @_;
+      my ($controller, @args) = @_;
       my $input;
-      if (@params && ref($params[-1]) eq 'HASH') {
-        $input = pop(@params);
+      if (@args && ref($args[-1]) eq 'HASH') {
+        $input = pop(@args);
       }
       my $c = ${$app."::Controllers::C"}{$controller};
       croak "$controller controller not found" unless $c;
-      my $arity = @params;
+      my $arity = @args;
       my $path = first { my @m = /\(.*?\)/g; $arity == @m } @{$c->urls};
       croak "couldn't find a matching URL path" unless $path;
       while ($path =~ /\(.*?\)/) {
-        $path =~ s{\(.*?\)}{uri_escape(+shift(@params), "^A-Za-z0-9\-_.!~*’()/")}e;
+        $path =~ s{\(.*?\)}{uri_escape(+shift(@args), "^A-Za-z0-9\-_.!~*’()/")}e;
       }
       if ($input) {
         $path .= "?".  join('&' => 
@@ -137,13 +137,13 @@ sub init {
   @{$_[0]."::Views::V"};
 }
 
-# App->service($controller, @params)  # Handle one RESTful HTTP request
+# App->service($controller, @args)  # Handle one RESTful HTTP request
 sub service {
-  my ($app, $c, @params) = grep { defined } @_;
+  my ($app, $c, @args) = grep { defined } @_;
   my $method = lc $c->env->{REQUEST_METHOD};
   my $content;
 
-  eval { $content = $c->$method(@params) };
+  eval { $content = $c->$method(@args) };
   warn "EXCEPTION: $@" if ($@);
 
   # TODO - move this code into another (optional) module. {{{
@@ -152,7 +152,7 @@ sub service {
   my $ppi = (%{$c->input}) 
     ? ', ' . pp($c->input) 
     : '';
-  warn sprintf('%5d ', $I), "[$s] $app->$method(@{[ join(', '=>map { \"'$_'\" } $c->name, @params) ]}$ppi)\n";
+  warn sprintf('%5d ', $I), "[$s] $app->$method(@{[ join(', '=>map { \"'$_'\" } $c->name, @args) ]}$ppi)\n";
   # }}}
 
   my $cookies = $c->cookies;
@@ -160,13 +160,8 @@ sub service {
     map { CGI::Cookie->new( -name => $_, %{$cookies->{$_}} ) }
       grep { ref $cookies->{$_} eq 'HASH' }
         keys %$cookies) if (%$cookies);
-  # XXX - move this if-block into Squatting::On::Continuity
-  if ($c->cr && (my $cr_cookies = $c->cr->cookies)) {
-    $cr_cookies =~ s/^Set-Cookie: //;
-    $c->headers->{'Set-Cookie'} = join("; ",
-      grep { not /^\s*$/ } ($c->headers->{'Set-Cookie'}, $cr_cookies));
-  }
-  return $content;
+
+  $content;
 }
 
 1;

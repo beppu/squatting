@@ -60,6 +60,19 @@ $p{init_cc} = sub {
   $cc;
 };
 
+sub service {
+  my ($app, $c, @params) = grep { defined } @_;
+  # call original service()
+  my $content = $app->next::method($c, @params);
+  # do some Continuity-specific cookie munging
+  if (my $cr_cookies = $c->cr->cookies) {
+    $cr_cookies =~ s/^Set-Cookie: //;
+    $c->headers->{'Set-Cookie'} = join("; ",
+      grep { not /^\s*$/ } ($c->headers->{'Set-Cookie'}, $cr_cookies));
+  }
+  $content;
+}
+
 # App->continue(%opts) -- Start Continuity's main loop.
 sub continue {
   my $app = shift;
