@@ -14,10 +14,11 @@ this API is, and I hope they'll see just how far a little bit of code can go.
 
 =head2 Anatomy of a Squatting Application
 
-=head3 Pick a Name for Your App
+=head3 Subclass Squatting
 
   package App;
   use base 'Squatting';
+  our %CONFIG = ();
 
 =head3 Make a Package for Your Controllers
 
