@@ -80,8 +80,9 @@ sub continue {
 
   # Putting a RESTful face on Continuity since 2008.
   Continuity->new(
-    port     => 4234,
-    mapper   => Squatting::Mapper->new(
+    port            => 4234,
+    allowed_methods => [ qw(GET POST HEAD PUT DELETE) ],
+    mapper          => Squatting::Mapper->new(
       app      => $app,
       callback => sub {
         my $cr = shift;
