@@ -108,7 +108,7 @@ if ($app) {
     $pirl->set_package($app."::Controllers");
     $pirl->run;
   } else {
-    $app->import("On::Continuity");
+    $app->import("With::AccessTrace", "On::Continuity");
     $app->init;
     $app->continue(
       port        => $_{port},

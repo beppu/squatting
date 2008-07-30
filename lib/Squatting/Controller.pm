@@ -68,7 +68,8 @@ my $not_found = sub { $_[0]->status = 404; $_[0]->env->{REQUEST_PATH}." not foun
 our $r404 = Squatting::Controller->new(
   R404 => [],
   get  => $not_found,
-  post => $not_found
+  post => $not_found,
+  app  => 'Squatting'
 );
 
 1;

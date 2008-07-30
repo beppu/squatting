@@ -3,8 +3,6 @@ package Squatting::On::Catalyst;
 use strict;
 no  strict 'refs';
 use warnings;
-use Class::C3;
-use Data::Dump 'pp';
 
 # In order to embed a Squatting app into an app written in another framework,
 # we need to be able to do the following things.

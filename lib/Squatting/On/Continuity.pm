@@ -65,7 +65,7 @@ sub service {
   my ($app, $c, @args) = @_;
   # call original service()
   my $content = $app->next::method($c, @args);
-  # do some Continuity-specific cookie munging
+  # afterward, do some Continuity-specific cookie munging
   if (my $cr_cookies = $c->cr->cookies) {
     $cr_cookies =~ s/^Set-Cookie: //;
     $c->headers->{'Set-Cookie'} = join("; ",

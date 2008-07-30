@@ -9,17 +9,15 @@ use base 'Class::C3::Componentised';
 use List::Util qw(first);
 use URI::Escape;
 use Carp;
-use Data::Dump 'pp';
 
 our $VERSION = '0.43';
-
-# TODO - Move $I and the code that uses it out to another (optional) module.
-our $I = 0;
 
 require Squatting::Controller;
 require Squatting::View;
 
-# use App qw(LIST);
+# use App ':controllers'
+# use App ':views'
+# use App @PLUGINS
 sub import {
   my $m   = shift;
   my $p   = (caller)[0];
@@ -145,15 +143,6 @@ sub service {
 
   eval { $content = $c->$method(@args) };
   warn "EXCEPTION: $@" if ($@);
-
-  # TODO - move this code into another (optional) module. {{{
-  $I++;
-  my $s = $c->status;
-  my $ppi = (%{$c->input}) 
-    ? ', ' . pp($c->input) 
-    : '';
-  warn sprintf('%5d ', $I), "[$s] $app->$method(@{[ join(', '=>map { \"'$_'\" } $c->name, @args) ]}$ppi)\n";
-  # }}}
 
   my $cookies = $c->cookies;
   $c->headers->{'Set-Cookie'} = join("; ",

@@ -1,2 +1,2 @@
 #!/bin/bash
-${1:-vim} -p bin/squatting lib/Squatting.pm lib/Squatting/Controller.pm lib/Squatting/View.pm lib/Squatting/Mapper.pm lib/Squatting/Cookbook.pod lib/Squatting/On/Continuity.pm lib/Squatting/On/Catalyst.pm
+${1:-vim} -p bin/squatting lib/Squatting.pm lib/Squatting/Controller.pm lib/Squatting/View.pm lib/Squatting/Mapper.pm lib/Squatting/Cookbook.pod lib/Squatting/On/Continuity.pm lib/Squatting/On/Catalyst.pm lib/Squatting/With/AccessTrace.pm
