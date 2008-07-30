@@ -3,7 +3,7 @@
   - Moved last if-block in service to Squatting::On::Continuity
   - Moved controller log into Squatting::With::AccessTrace
   - Allow more HTTP methods when using Squatting::On::Continuity
-  * Start documenting Continuity's special powers.
+  - Started documenting Continuity's special powers.
 
 0.42
   - Revised the documentation a bit.
