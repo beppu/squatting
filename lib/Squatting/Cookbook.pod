@@ -88,17 +88,17 @@ If your app is called C<App>, then:
 =head4 Anatomy of a View
 
 
-=head2 Special Powers of Continuity
-
 
 =head1 PROGRAMMING TECHNIQUES
 
 =head2 COMET
 
-=head3 Event Architecture
+=head2 The Special Powers of Continuity
 
 The L<Continuity> backend is the only one that will currently allow you to use
 COMET-based techniques.
+
+=head3 Event Architecture
 
 =head3 RESTless Controllers
 
