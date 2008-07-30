@@ -1,6 +1,7 @@
 bin/squatting
 bin/vw
 Changes
+doc/squatting-propaganda-for-catalyst.txt
 doc/squatting-tpf-grant-proposal.txt
 edit
 eg/chat-ajax-push.js
@@ -24,6 +25,7 @@ lib/Squatting/Mapper.pm
 lib/Squatting/On/Catalyst.pm
 lib/Squatting/On/Continuity.pm
 lib/Squatting/View.pm
+lib/Squatting/With/AccessTrace.pm
 Makefile.PL
 MANIFEST			This list of files
 MANIFEST.SKIP
