@@ -6,7 +6,7 @@ use warnings;
 use Continuity;
 use Squatting::Mapper;
 
-# p for private -- this is my way of minimizing namespace pollution
+# p for private  # this is my way of minimizing namespace pollution
 my %p;
 
 # \%env = e($http_request)
@@ -46,7 +46,7 @@ $p{c} = sub {
   +{ map { ref($_) ? $_->value : $_ } CGI::Cookie->parse($_[0]) };
 };
 
-# init_cc($controller, $continuity_request) -- initialize a controller clone
+# init_cc($controller, $continuity_request)  # initialize a controller clone
 $p{init_cc} = sub {
   my ($c, $cr) = @_;
   my $cc = $c->clone;
@@ -60,10 +60,11 @@ $p{init_cc} = sub {
   $cc;
 };
 
+# App->service($controller, @args)  # handle one http request
 sub service {
-  my ($app, $c, @params) = grep { defined } @_;
+  my ($app, $c, @args) = @_;
   # call original service()
-  my $content = $app->next::method($c, @params);
+  my $content = $app->next::method($c, @args);
   # do some Continuity-specific cookie munging
   if (my $cr_cookies = $c->cr->cookies) {
     $cr_cookies =~ s/^Set-Cookie: //;
@@ -73,7 +74,7 @@ sub service {
   $content;
 }
 
-# App->continue(%opts) -- Start Continuity's main loop.
+# App->continue(%opts)  # Start Continuity's main loop.
 sub continue {
   my $app = shift;
 
