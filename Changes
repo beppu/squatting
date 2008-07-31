@@ -1,4 +1,7 @@
-0.50 (unreleased)
+0.60 (unreleased)
+  * Squatting::On::CGI
+
+0.50
   - More documentation updates and corrections.
   - Moved last if-block in service to Squatting::On::Continuity
   - Moved controller log into Squatting::With::AccessTrace
