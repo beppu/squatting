@@ -32,9 +32,16 @@ Squatting::With::AccessTrace - provide a simple access log on STDERR
 Using this plugin will print an executable line of code that represents the
 HTTP request that just came in.  This print out conveniently condenses what
 app, HTTP method, controller, arguments, and CGI params were involved in the
-request.
+request.  It looks like this:
 
-This code was originally in C<&Squatting::service>, but I wanted to make it
-optional, so I moved it into a separate module.
+    1 [200] Example->get('Home')
+    2 [200] Example->get('Home', { bar => 2, baz => 5, foo => 1 })
+    3 [200] Example->get('Profile', 'beppu')
+    4 [200] Example->get('Home')
+    5 [302] Example->get('RubyGems')
+    6 [404] Squatting->get('R404')
+
+The code that generates this was originally in C<&Squatting::service>, but I
+wanted to make it optional, so I moved it into a separate module.
 
 =cut
