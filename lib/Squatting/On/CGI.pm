@@ -12,9 +12,10 @@ $p{init_cc} = sub {
   my ($c, $q)  = @_;
   my $cc       = $c->clone;
   $cc->env     = { %ENV };
+  $cc->cookies = $p{c}->($ENV{HTTP_COOKIE});
   $cc->input   = $p{i}->($q);
-  $cc->v       = { };
   $cc->headers = { 'Content-Type' => 'text/html' };
+  $cc->v       = { };
   $cc->status  = 200;
   $cc;
 };
@@ -30,6 +31,11 @@ $p{i} = sub {
       $_ => $i{$_};
     }
   } keys %i }
+};
+
+# \%cookies = c($cookie_header)  # Parse Cookie header(s).
+$p{c} = sub {
+  +{ map { ref($_) ? $_->value : $_ } CGI::Cookie->parse($_[0]) };
 };
 
 sub cgi {
@@ -81,11 +87,11 @@ Create an app.cgi
 
 =head1 DESCRIPTION
 
-If all else fails, you can still deploy on CGI.
+If all else fails, you can still deploy on good old CGI.
 
 =head1 API
 
-=head2 The Lowest Common Demoninator
+=head2 CGI -- The Lowest Common Demoninator
 
 =head3 App->cgi($q)
 
