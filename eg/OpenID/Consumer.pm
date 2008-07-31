@@ -7,6 +7,7 @@ package OpenID::Consumer::Controllers;
 use strict;
 use warnings;
 use Squatting ':controllers';
+use Net::OpenID::Consumer;
 
 our @C = (
   C(
@@ -14,7 +15,12 @@ our @C = (
     get => sub {
       my ($self) = @_;
     },
-  )
+  ),
+  C(
+    Login => [ '/login' ],
+    get => sub {
+    },
+  ),
 );
 
 package OpenID::Consumer::Views;
