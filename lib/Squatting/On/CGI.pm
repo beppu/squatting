@@ -64,7 +64,7 @@ sub cgi {
     print "Status: " . $response->as_string;
   };
   if ($@) {
-    print $q->header;
+    print $q->header(-status => 500);
     print "<pre>$@</pre>";
   }
 }
@@ -82,7 +82,7 @@ Create an app.cgi
   use App 'On::CGI';
   my $q = CGI->new;
   App->init;
-  App->relocate('/app.cgi');
+  App->relocate('/cgi-bin/app.cgi');
   App->cgi($q);
 
 =head1 DESCRIPTION
@@ -95,6 +95,7 @@ If all else fails, you can still deploy on good old CGI.
 
 =head3 App->cgi($q)
 
-Give the C<cgi> method a CGI object, and it'll take care of everything else.
+Give the C<cgi> method a CGI object, and it will send the apps output to
+STDOUT.
 
 =cut
