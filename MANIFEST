@@ -23,6 +23,7 @@ lib/Squatting/Controller.pm
 lib/Squatting/Cookbook.pod
 lib/Squatting/Mapper.pm
 lib/Squatting/On/Catalyst.pm
+lib/Squatting/On/CGI.pm
 lib/Squatting/On/Continuity.pm
 lib/Squatting/View.pm
 lib/Squatting/With/AccessTrace.pm
