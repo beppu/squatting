@@ -1,11 +1,10 @@
 package Squatting::On::CGI;
 
-use strict;
-no  strict 'refs';
-use warnings;
+#use strict;
+#no  strict 'refs';
+#use warnings;
 use CGI;
 use HTTP::Response;
-use Data::Dump 'pp';
 
 # p for private
 my %p;
