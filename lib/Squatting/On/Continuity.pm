@@ -91,7 +91,7 @@ sub continue {
         my $content  = $app->service($cc, @$p);
         my $response = HTTP::Response->new(
           $cc->status,
-          HTTP::Status::status_message($cc->status),
+          undef,
           [%{$cc->{headers}}],
           $content
         );
