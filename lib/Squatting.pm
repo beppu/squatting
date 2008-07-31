@@ -422,6 +422,7 @@ and embeddable.
 
 L<Squatting::Controller>, L<Squatting::View>, L<Squatting::Mapper>,
 L<Squatting::On::Continuity>, L<Squatting::On::Catalyst>,
+L<Squatting::With::AccessTrace>,
 L<Squatting::Cookbook>
 
 =item B<Squatting's superclass>:
