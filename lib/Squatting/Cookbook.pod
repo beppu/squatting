@@ -93,11 +93,6 @@ If your app is called C<App>, then:
 
 =head2 COMET
 
-=head2 The Special Powers of Continuity
-
-The L<Continuity> backend is the only one that will currently allow you to use
-COMET-based techniques.
-
 =head3 Event Architecture
 
 =head3 RESTless Controllers
