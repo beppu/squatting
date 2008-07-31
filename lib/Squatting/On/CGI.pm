@@ -57,11 +57,11 @@ sub cgi {
     my $content = $app->service($cc, @$args);
     my $response = HTTP::Response->new(
       $cc->status,
-      HTTP::Status::status_message($cc->status),
+      undef,
       [ %{ $cc->{headers} } ],
       $content
     );
-    print $response->as_string;
+    print "Status: " . $response->as_string;
   };
   if ($@) {
     print $q->header;
