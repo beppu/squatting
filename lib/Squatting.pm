@@ -446,8 +446,8 @@ L<http://github.com/beppu/squatting/tree/master>
 =head2 Bavl Source Code
 
 We're going to throw Squatting (and Continuity) into the metaphorical deep end
-by using it to implement the towr.of.bavl.org.  It's a site that will help
-people learn foreign languages by letting you hear the phrases you're
+by using it to implement the L<http://towr.of.bavl.org>.  It's a site that will
+help people learn foreign languages by letting you hear the phrases you're
 interested in learning as actually spoken by fluent speakers.  If you're
 looking for an example of how to use Squatting for an ambitious project, look
 at the Bavl code.
