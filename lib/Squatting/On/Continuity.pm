@@ -135,10 +135,6 @@ L<Continuity> has 2 highly unusual (but useful) capabilities.
 
 =item 1. It can hold many simultaneous HTTP connections open.
 
-Each session is allocated its own L<Coro>-based coroutine.  Under Squatting,
-you can also specify controller-method pairs that should execute under their
-own coroutine.  Thus, each session may run 1 or more coroutines.
-
 =item 2. It can "pause" execution until the next request comes in.
 
 The easiest way to explain this is by example.
