@@ -278,7 +278,7 @@ it at an arbitrary path like /forum.
 
 Already using another framework?  No problem.  You should be able to embed
 Squatting apps into apps written in anything from CGI on up to Catalyst.
-(The documentation for this will be written soon.)
+B<Squatting is compatible with EVERYONE.>
 
 =item B<Minimal Policy>
 
