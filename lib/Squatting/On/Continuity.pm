@@ -137,9 +137,9 @@ L<Continuity> has 2 highly unusual (but useful) capabilities.
 
 =item 2. It can "pause" execution until the next request comes in.
 
-The easiest way to explain this is by example.
-
 =back
+
+The easiest way to explain this is by example.
 
 =head2 Becoming RESTless
 
@@ -156,7 +156,7 @@ Consider this controller which has an infinite loop in it.
         $cr->next;
       }
     },
-    queue => { get => 'arbitrary_string' }
+    queue => { get => 'name_of_queue' }
   )
 
 Here, the code is dropping down to the Continuity level.  The C<$cr> variable
@@ -183,7 +183,7 @@ have to come in.
 
 The key is this line:
 
-  queue => { get => 'arbitrary_string' }
+  queue => { get => 'name_of_queue' }
 
 When you're squatting on Continuity, you're allowed to define your controllers
 with a C<queue> attribute.  It should contain a hashref where the keys are HTTP

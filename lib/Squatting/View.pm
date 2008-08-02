@@ -23,8 +23,8 @@ sub headers : lvalue {
   $_[0]->{headers};
 }
 
-# $content = $view->_render($template)       # render $template
-# $content = $view->_render($template, '_')  # render the generic template
+# $content = $view->_render($template, $vars)       # render $template
+# $content = $view->_render($template, $vars, '_')  # render generic template
 sub _render {
   my ($self, $template, $vars, $alt) = @_;
   $self->{template} = $template;
@@ -67,8 +67,8 @@ Squatting::View - default view class for Squatting
     V(
       'example',
       layout => sub {
-        my ($self, $v, @content) = @_;
-        "(header @content footer)";
+        my ($self, $v, $content) = @_;
+        "(header $content footer)";
       },
       home => sub {
         my ($self, $v) = @_;
@@ -118,7 +118,7 @@ Any coderef that was given to the constructor may be called by name.
 Templates should be passed in a hashref ($v) with variables for it
 to use to generate the final output.
 
-=head3 $view->layout($v, @content)
+=head3 $view->layout($v, $content)
 
 If you define a template named "layout", it'll be used to wrap the
 content of all templates whose name do not begin with "_".  You can
