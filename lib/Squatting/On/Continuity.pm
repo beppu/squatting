@@ -2,7 +2,7 @@ package Squatting::On::Continuity;
 
 use strict;
 no  strict 'refs';
-use warnings;
+#use warnings;
 use Continuity;
 use Squatting::Mapper;
 
