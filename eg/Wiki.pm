@@ -4,8 +4,6 @@ package Wiki;
 # XXX - This app is still under construction!  It probably doesn't work, yet.
 #
 
-use strict;
-use warnings;
 use base 'Squatting';
 our %CONFIG = (
   home_page       => 'HomePage',
@@ -124,6 +122,9 @@ our @V = (
     _page => sub {
       my ($self, $v) = @_;
     },
+    page_edit => sub {
+      my ($self, $v) = @_;
+    }
   )
 );
 
