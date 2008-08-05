@@ -39,8 +39,8 @@ sub new {
   bless({ name => 'RecentChanges' }, $class);
 }
 
-sub add_change {
-  my ($self, $change) = @_;
+sub add {
+  my ($self, $change_message, $by) = @_;
   $self;
 }
 
@@ -49,6 +49,11 @@ package Wiki::Controllers;
 use strict;
 use warnings;
 use Squatting ':controllers';
+
+sub disallow_anonymous_posters {
+  my ($v) = @_;
+  ((not $Wiki::CONFIG{anonymous_edits}) && (not exists($v->{u})))
+}
 
 our @C = (
 
@@ -59,10 +64,6 @@ our @C = (
       my $page = Wiki::Page->new($Wiki::CONFIG{home_page});
       $self->render('page');
     }
-  ),
-
-  C(
-    PageEdit => [ ],
   ),
 
   C(
@@ -82,13 +83,21 @@ our @C = (
       my ($self, $name) = @_;
       my $v      = $self->v;
       my $input  = $self->input;
+      if (disallow_anonymous_posters($v)) {
+        $self->redirect(R('Page', $name));
+        return;
+      }
       $v->{page} = Wiki::Page->new($name);
       $v->{page}->body($input->{body});
       $v->{page}->save;
       my $recent_changes = Wiki::Page::RecentChanges->new;
-      $recent_changes->add_change($input->{message}, $v->{u});
+      $recent_changes->add($input->{message}, $v->{u});
       $self->redirect($input->{redirect_to});
     }
+  ),
+
+  C(
+    PageEdit => [ ],
   ),
 
 );
@@ -110,11 +119,9 @@ our @V = (
           title('Wiki')
         ),
         body(
+          div({ id => 'wiki' }, $content)
         )
       )->as_HTML;
-    },
-    home => sub {
-      my ($self, $v) = @_;
     },
     page => sub {
       my ($self, $v) = @_;
