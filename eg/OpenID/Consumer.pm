@@ -33,7 +33,6 @@ our @C = (
     },
   ),
 
-  # The Conventional Way
   C(
     Login => [ '/login' ],
     get => sub {
@@ -42,7 +41,8 @@ our @C = (
       $self->headers->{'Content-Type'} = 'text/plain';
       if (my $setup_url = $csr->user_setup_url) {
         # redirect/link/popup user to $setup_url
-        return "setup_url $setup_url";
+        $self->redirect($setup_url);
+        return;
       } elsif ($csr->user_cancel) {
         # restore web app state to prior to check_url
         return "user_cancel";
@@ -62,34 +62,9 @@ our @C = (
         return_to  => "http://work:4234/login",
         trust_root => "http://work:4234/",
       );
-      warn $check_url;
       $self->redirect($check_url);
     },
   ),
-
-  # TODO - The Continuity Way
-  do {
-    my $continuous_login = sub {
-      my ($self) = @_;
-      my $cr = $self->cr;
-      my $input = $self->input;
-      my $csr = csr($self);
-      my $claimed_identity = $csr->claimed_identity($input->{openid});
-      my $check_url = $claimed_identity->check_url(
-        return_to  => "http://work:4234/login",
-        trust_root => "http://work:4234/",
-      );
-      warn $check_url;
-      $self->redirect($check_url);
-      $cr->next;
-    };
-    C(
-      ContinuousLogin => ['/continuous_login'],
-      get             => $continuous_login,
-      post            => $continuous_login,
-      queue           => { get => 'continuous_login', post => 'continuous_login' },
-    );
-  },
 
 );
 
