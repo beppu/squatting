@@ -2,7 +2,7 @@
   * implement Squatting::On::HTTP::Engine
   * explicitly document the ways in which you can deploy a site
 
-0.51 (unreleased)
+0.51
   - implemented Squatting::On::CGI
   - implement OpenID::Consumer example
 
