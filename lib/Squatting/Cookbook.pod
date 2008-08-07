@@ -14,7 +14,7 @@ this API is, and I hope they'll see just how far a little bit of code can go.
 
 =head2 Anatomy of a Squatting Application
 
-=head3 Subclass Squatting
+=head3 Make a Subclass of Squatting
 
   package App;
   use base 'Squatting';
