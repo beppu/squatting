@@ -1,8 +1,8 @@
 0.60 (unreleased)
   - implemented Squatting::On::CGI
+  - implement OpenID::Consumer example
   * implement Squatting::On::HTTP::Engine
   * explicitly document the ways in which you can deploy a site
-  * implement OpenID::Consumer example
 
 0.50
   - More documentation updates and corrections.
