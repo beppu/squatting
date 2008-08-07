@@ -1,12 +1,12 @@
 ______________________________________________________________________________
 squatting Example -p 4235
 
-  http://localhost:4236/
+  http://localhost:4235/
 
   This is the first example app I made.
   I tried to show a little bit of everything here.
   For sillyness points, I used CGI.pm's HTML generating functions
-  as my templating system.  ;-)
+  as my templating system.
 
 ______________________________________________________________________________
 squatting PODServer -p 4236
@@ -24,8 +24,7 @@ squatting PODServer -p 4236
   and put it on CPAN, because its output is pretty, and
   it has some nice little usability features.
 
-  Be on the lookout for Pod::Server
-  ...coming to a CPAN mirror near you.
+  UPDATE:  Pod::Server has been uploaded to CPAN.
 
 ______________________________________________________________________________
 squatting UniCodePoints -p 4237 --config count=1024
@@ -50,6 +49,19 @@ squatting Chat -p 4238
     Coro::Event
 
   This is a port of chat-ajax-push.pl from the Continuity examples.
-  Open this page up in 2 or more different browsers and chat.
+  Open this app up in 2 or more different browsers and try chatting.
 
+______________________________________________________________________________
+squatting OpenID::Consumer -p 4239
+
+  http://localhost:4239/
+
+  requires
+    HTML::AsSubs
+    Net::OpenID::Consumer
+    LWPx::ParanoidAgent
+    Cache::File
+
+  This example currently shows the bare minimum you need to implement
+  an OpenID login.  It'll be improved as time goes on.
 
