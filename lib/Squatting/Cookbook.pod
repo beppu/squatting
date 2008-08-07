@@ -204,14 +204,30 @@ this:
   App->init;
   sub default : Private { App->catalyze($_[1]) }
 
-=head3 HTML::Mason
-
 =head3 Raw mod_perl1
 
 =head3 Raw mod_perl2
 
+=head3 HTML::Mason
+
+TODO:  Implement a dhandler that embeds a Squatting app
+
 =head3 CGI
 
+To run a Squatting app in a CGI environment, a script like this has
+to be written.
+
+  use App 'On::CGI';
+  my $q = CGI->new;
+  App->init;
+  App->relocate('/cgi-bin/app.cgi');
+  App->cgi($q);
+
+The key to doing this right is to C<relocate> the app correctly.
+The path that you relocate to should be the same as the C<REQUEST_PATH>
+for the script.  For example, if the URL you use to get to the script
+is http://localhost/cgi-bin/app.cgi , then you should relocate to
+F</cgi-bin/app.cgi>.
 
 =head1 DEPLOYMENT TECHNIQUES
 
@@ -240,6 +256,8 @@ you've suddenly got a lot of traffic to your site, this section is for you.
 =head2 Session Affinity with Multiple Instances
 
 TODO
+
+L<http://onsmalltalk.com/programming/smalltalk/seaside/scaling-seaside-more-advanced-load-balancing-and-publishing/>
 
 =head2 Linux and OpenSSI
 
