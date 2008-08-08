@@ -114,9 +114,9 @@ This returns a hashref of the outgoing HTTP headers.
 
 =head3 $view->$template($v)
 
-Any coderef that was given to the constructor may be called by name.
-Templates should be passed in a hashref ($v) with variables for it
-to use to generate the final output.
+Any coderef that was given to the constructor may be called by name.  Templates
+should be passed in a hashref (C<$v>) with variables for it to use to generate
+the final output.
 
 =head3 $view->layout($v, $content)
 
@@ -129,10 +129,15 @@ pages.
 
 If you define a template named "_", this will act as a catch-all
 that can be asked to render anything that wasn't explicitly defined.
-It's like our version of AUTOLOAD().
+It's like our version of C<AUTOLOAD>.
 
 B<NOTE>:  You can find out what they tried to render by inspecting
-$self->{template}.
+C<$self-E<gt>{template}>.
+
+This feature is useful when you're using a file-based templating system
+like Tenjin or Template Toolkit, and you don't want to write a template
+sub for every single template.  You can make C<$self-E<gt>{template}>
+correspond to a file on disk.
 
 =head3 $view->{$template} = \&coderef
 

@@ -1,4 +1,5 @@
 0.60 (unreleased)
+  - More documentation updates and corrections.
   * implement Squatting::On::HTTP::Engine
   * explicitly document the ways in which you can deploy a site
 
