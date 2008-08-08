@@ -307,7 +307,7 @@ That's all there is too it.  Views for other file-based templating systems will
 follow a similar pattern where the special C<_> template is used to map method
 names to filenames.
 
-=head3 Template::Toolkit
+=head3 Template Toolkit
 
 TODO
 
