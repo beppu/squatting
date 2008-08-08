@@ -127,10 +127,18 @@ C<$app-E<gt>next::method>, because Squatting is a sublcass of
 L<Class::C3::Componentised>.
 
 
-=head3 Without Continuity
+=head3 When Squatting::On::Catalyst
+
+When squatting on top of Catalyst, the Catalyst session becomes
+C<$self-E<gt>state> in Squatting.  The session storage code in Catalyst is very
+mature, so it is highly recommended that all the session setup be done on the
+Catalyst side.
+
+
+=head3 Sessions From Scratch
 
 The challenge is to find a way to assign unique session ids to each visitor, and
-use that session id as a key into a persistent store.
+use that session id as a key into a persistent store.  TMTOWTDI
 
 
 =head2 How to Use Various Templating Systems With Squatting
@@ -265,7 +273,7 @@ you've suddenly got a lot of traffic to your site, this section is for you.
 
 TODO
 
-L<http://onsmalltalk.com/programming/smalltalk/seaside/scaling-seaside-more-advanced-load-balancing-and-publishing/>
+L<Load Balancing Seaside|http://onsmalltalk.com/programming/smalltalk/seaside/scaling-seaside-more-advanced-load-balancing-and-publishing/>
 
 =head2 Linux and OpenSSI
 
