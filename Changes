@@ -1,7 +1,9 @@
 0.60 (unreleased)
   - More documentation updates and corrections.
   * implement Squatting::On::HTTP::Engine
-  * explicitly document the ways in which you can deploy a site
+  * implement Squatting::On::MP13
+  * implement Squatting::On::MP19
+  * implement Squatting::On::MP20
 
 0.51
   - implemented Squatting::On::CGI
