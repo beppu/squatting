@@ -109,6 +109,10 @@ use warnings;
 use Squatting ':views';
 use HTML::AsSubs;
 
+sub x {
+  map { HTML::Element->new('~literal', text => $_) } @_;
+}
+
 our @V = (
   V(
     html,
