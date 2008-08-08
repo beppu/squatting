@@ -387,8 +387,15 @@ GET is where the sequence finishes.
 
 =head2 How to Compose Multiple Squatting Apps Into One App
 
-  App->mount('AnotherApp', '/prefix');
+After you C<init> the app, you can start mounting other apps.
 
+  App->mount('OtherApp0' => '/prefix0');
+  App->mount('OtherApp1' => '/prefix1');
+  App->mount('OtherApp2' => '/prefix2');
+
+If you need to C<relocate>, do that after you finish mounting.  The order is
+always C<init>, C<mount>, and C<relocate>.  Also, remember that an app can only
+be mounted once, and C<relocate> should only be called once.
 
 =head2 How to Embed a Squatting App Into Other Frameworks
 
@@ -442,8 +449,8 @@ TODO:  Implement a dhandler that embeds a Squatting app
 
 =head3 CGI
 
-To run a Squatting app in a CGI environment, a script like this has
-to be written.
+To run a Squatting app in a CGI environment, a script like the following has to
+be written.
 
   use App 'On::CGI';
   my $q = CGI->new;
@@ -470,6 +477,8 @@ and replace its layout method with your own.
     my ($self, $v, $content) = @_;
     # 
     # make the layout look however you want
+    # using any templating system you want
+    # ( or none at all )
     # and return a string
     #
   };
