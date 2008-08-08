@@ -206,7 +206,7 @@ entity escaped, so that's what C<x()> is for.
   package App::Views;
   use strict;
   use warnings;
-  use Squatting 'views';
+  use Squatting ':views';
   use HTML::AsSubs;
 
   sub span { HTML::AsSubs::_elem('span', @_) }
@@ -273,6 +273,7 @@ And here is the actual view:
   use warnings;
   no  warnings 'once';
   use Squatting ':views';
+  use Tenjin;
 
   # make functions defined in this package available to templates
   use base 'Tenjin::Context';
