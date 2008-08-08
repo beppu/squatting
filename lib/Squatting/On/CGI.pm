@@ -77,7 +77,7 @@ Squatting::On::CGI - if all else fails, you can still deploy on CGI
 
 =head1 SYNOPSIS
 
-Create an app.cgi
+Create an app.cgi to drive the Squatting app in a CGI environment.
 
   use App 'On::CGI';
   my $q = CGI->new;
@@ -87,7 +87,11 @@ Create an app.cgi
 
 =head1 DESCRIPTION
 
-If all else fails, you can still deploy on good old CGI.
+The purpose of this module is to allow Squatting apps to be used in a CGI
+environment.  This is done by adding a C<cgi> method to the Squatting app that
+knows how to "translate" between CGI and Squatting.  To use this module, pass
+the string C<'On::Catalyst'> to the C<use> statement that loads your Squatting
+app.
 
 =head1 API
 
