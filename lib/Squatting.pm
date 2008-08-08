@@ -291,7 +291,7 @@ should be organized, but beyond that, you are free.
 B<*> RESTless controllers only work when you're using Continuity as your
 foundation.
 
-B<**> Regarding ORMs, the nature of Continuity (B<****>) makes it somewhat
+B<**> Regarding ORMs, the nature of Continuity (B<***>) makes it somewhat
 DBI-unfriendly, so this may be a deal-breaker for many of you.  However, I look
 at this as an opportunity to try novel storage systems like CouchDB, instead.
 With the high level of concurrency that Squatting can support (when using
