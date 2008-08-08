@@ -5,6 +5,10 @@
   * implement Squatting::On::MP19
   * implement Squatting::On::MP20
 
+0.52 (unreleased)
+  - More documentation updates and corrections
+  - Massive updates to Squatting::Cookbook
+
 0.51
   - implemented Squatting::On::CGI
   - implement OpenID::Consumer example
