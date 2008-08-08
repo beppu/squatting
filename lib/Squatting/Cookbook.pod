@@ -171,17 +171,17 @@ I think the module works just fine, and I'd like to show you how I use it.
 
 =over 4
 
-=item * The exported link() function overrides the builtin link() function. 
+=item The exported link() function overrides the builtin link() function. 
 
 Noted.  You shouldn't be calling the builtin C<link()> in view code anyway, so
 it's not a big deal.
 
-=item * The exported tr() function must be called using &tr(...) syntax.
+=item The exported tr() function must be called using &tr(...) syntax.
 
 This is because it clashes with the builtin tr/../../ operator.
 I can live with this.
 
-=item * Problem: exports so damned much.  (from the code comments)
+=item Problem: exports so damned much.  (from the code comments)
 
 The funny thing is, it's actually not exporting enough.  It's missing a sub for
 the C<span> tag.  (Did that tag even exist in 1994 when this module was
@@ -248,7 +248,8 @@ a really nice feature to have as it makes deployment that much easier.
 
 If HTML::AsSubs is a bit too low tech for you, there are more modern
 expressions of the code-to-html idea on CPAN.  For example, L<Template::Declare>
-looks like it may be worth looking into.  
+looks like it may be worth looking into.  I'm happy with HTML::AsSubs, though.
+
 
 =head3 Tenjin
 
