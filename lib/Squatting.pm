@@ -247,9 +247,9 @@ so much that I ported it to Perl.
 
 =item B<Tiny Codebase>
 
-Right now, it's around 7.7K (B<*>) of actual code (after minifying), but it can
-definitely get smaller.  Also, the number of Perl module dependencies has been
-kept down to a minimum.
+The core of Squatting which includes Squatting, Squatting::Controller, and
+Squatting::View contains about 4.5K of code (after minifying).  Also, the
+number of Perl module dependencies has been kept down to a minimum.
 
 =item B<RESTful Controllers By Default>
 
@@ -260,7 +260,7 @@ delete().
 =item B<RESTless Controllers Are Possible>
 
 Stateful continuation-based code can be surprisingly useful (especially for
-COMET), so we try to make RESTless controllers easy to express as well. B<**>
+COMET), so we try to make RESTless controllers easy to express as well. B<*>
 
 =item B<Views Are ...Different>
 
@@ -282,29 +282,22 @@ B<Squatting is compatible with EVERYONE.>
 
 =item B<Minimal Policy>
 
-You may use any templating system you want, and you may use any ORM (B<***>) you
+You may use any templating system you want, and you may use any ORM (B<**>) you
 want.  We only have a few rules on how the controller code and the view code
 should be organized, but beyond that, you are free.
 
 =back
 
-B<*> Depending on how you measure the code size, we could be as low as 4.8K.
-That's if I only count Squatting, Squatting::Controller, and Squatting::View.
-When I count every perl module in this distribution, we get up to 7.7K.  I
-only mention this, because Camping doesn't count everything in its 3K size.
-(Sadly, I am not a master of obfuscation.  4K seemed attainable, but now that
-they're down to 3K, I don't know what to do.  ;-)
-
-B<**> RESTless controllers only work when you're using Continuity as your
+B<*> RESTless controllers only work when you're using Continuity as your
 foundation.
 
-B<***> Regarding ORMs, the nature of Continuity (B<****>) makes it somewhat
+B<**> Regarding ORMs, the nature of Continuity (B<****>) makes it somewhat
 DBI-unfriendly, so this may be a deal-breaker for many of you.  However, I look
 at this as an opportunity to try novel storage systems like CouchDB, instead.
 With the high level of concurrency that Squatting can support (when using
 Continuity) we are probably better off this way.
 
-B<****> If you're not using Continuity, then really feel free to use any ORM.
+B<***> If you're not using Continuity, then really feel free to use any ORM.
 
 
 =head1 API
