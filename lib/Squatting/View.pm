@@ -134,9 +134,9 @@ It's like our version of C<AUTOLOAD>.
 B<NOTE>:  You can find out what they tried to render by inspecting
 C<$self-E<gt>{template}>.
 
-This feature is useful when you're using a file-based templating system
-like Tenjin or Template Toolkit, and you don't want to write a template
-sub for every single template.  You can make C<$self-E<gt>{template}>
+This feature is useful when you're using a file-based templating system like
+Tenjin or Template Toolkit, and you don't want to write a template sub for
+every single template.  Instead, you can make C<$self-E<gt>{template}>
 correspond to a file on disk.
 
 =head3 $view->{$template} = \&coderef
