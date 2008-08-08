@@ -138,7 +138,7 @@ Catalyst side.
 
 =head3 Sessions From Scratch
 
-The challenge is to find a way to assign unique session ids to each visitor, and
+The challenge is to find a way to assign unique session ids to each visitor and
 use that session id as a key into a persistent store.  TMTOWTDI
 
 
