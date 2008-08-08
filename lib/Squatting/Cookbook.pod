@@ -108,6 +108,7 @@ RESTful and stateless by default, so you can't count on the lexical scope of a
 controller to stick around between requests.  Luckily, package variables *will*
 stick around, so that's what we'll use to implement persistent sessions.
 
+  package App;
   our %state;
   sub service {
     my ($app, $c, @args) = @_;
