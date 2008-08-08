@@ -137,6 +137,14 @@ use that session id as a key into a persistent store.
 
 =head3 HTML::AsSubs
 
+I like L<HTML::AsSubs>, because the code is really small, and it basically
+works.  It's not perfect, and the documentation is very clear on some of its
+minor shortcomings.  However, the docs go a bit too far, and recommend that this
+module not even be used!  It says that there are "cleaner" alternatives, but when
+I looked at them, I came straight back to HTML::AsSubs.
+
+
+
 =head3 Tenjin
 
 =head3 Template::Toolkit
