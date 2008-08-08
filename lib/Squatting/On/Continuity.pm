@@ -127,6 +127,18 @@ start a Continuity-based web server when invoked.  To use this module, pass the
 string C<'On::Continuity'> to the C<use> statement that loads your Squatting
 app.
 
+=head1 API 
+
+=head2 Continuity meets MVC (or just VC, actually)
+
+=head3 App->continue(%options)
+
+This method starts a Continuity-based web server.  The %options are passed
+straight through to Continuity, and they let you specify things like what port
+to run the server on.
+
+=head1 EXPLANATION
+
 =head2 The Special Powers of Continuity
 
 L<Continuity> has 2 highly unusual (but useful) capabilities.
@@ -197,16 +209,6 @@ Every method mentioned in C<queue> will be given its own coroutine to run in.
 TO BE CONTINUED...
 
 For a sneak peak, take a look at the Chat application in the F<eg/> directory.
-
-=head1 API 
-
-=head2 Continuity meets MVC (or just VC, actually)
-
-=head3 App->continue(%options)
-
-This method starts a Continuity-based web server.  The %options are passed
-straight through to Continuity, and they let you specify things like what port
-to run the server on.
 
 =head1 SEE ALSO
 
