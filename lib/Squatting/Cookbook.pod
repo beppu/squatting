@@ -273,7 +273,8 @@ you've suddenly got a lot of traffic to your site, this section is for you.
 
 TODO
 
-L<Load Balancing Seaside|http://onsmalltalk.com/programming/smalltalk/seaside/scaling-seaside-more-advanced-load-balancing-and-publishing/>
+=for later
+L<http://onsmalltalk.com/programming/smalltalk/seaside/scaling-seaside-more-advanced-load-balancing-and-publishing/>
 
 =head2 Linux and OpenSSI
 
