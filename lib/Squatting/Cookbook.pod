@@ -146,33 +146,189 @@ use that session id as a key into a persistent store.  TMTOWTDI
 
 =head3 HTML::AsSubs
 
-I like L<HTML::AsSubs>, because the code is really small, and it basically
-works.  It's not perfect, and the documentation is very clear on some of its
-minor shortcomings.  However, the docs go a bit too far, and recommend that this
-module not even be used!  It says that there are "cleaner" alternatives, but when
-I looked at them, I came straight back to HTML::AsSubs.
+I like L<HTML::AsSubs> for the following reasons:
 
+=over 4
 
+=item * It works as advertised.
+
+=item * The implementation is really small.
+
+=item * It seems to be widely deployed (even though no one uses it).
+
+=item * And generating HTML with code eliminates the need to install templates.
+
+=back
+
+The documentation is up-front about some of the module's shortcomings which I
+appreciate.  However, the docs go a bit too far and recommend that this module
+not even be used!  It says that there are "cleaner" alternatives, but when I
+looked at them, I came straight back to HTML::AsSubs.
+
+I think the module works just fine, and I'd like to show you how I use it.
+
+=head4 Addressing HTML::AsSubs Shortcomings (Alleged and Otherwise)
+
+=over 4
+
+=item * The exported link() function overrides the builtin link() function. 
+
+Noted.  You shouldn't be calling the builtin C<link()> in view code anyway, so
+it's not a big deal.
+
+=item * The exported tr() function must be called using &tr(...) syntax.
+
+This is because it clashes with the builtin tr/../../ operator.
+I can live with this.
+
+=item * Problem: exports so damned much.  (from the code comments)
+
+The funny thing is, it's actually not exporting enough.  It's missing a sub for
+the C<span> tag.  (Did that tag even exist in 1994 when this module was
+written?)  Luckily, this is easy enough to fix.
+
+  sub span { HTML::AsSubs::_elem('span', @_) }
+
+If there are any other missing tags, you know what to do.
+
+=back
+
+There's one more pseudo-tag that I like to add for practical reasons.
+
+  sub x { map { HTML::Element->new('~literal', text => $_) } @_ }
+
+Normally, HTML::AsSubs will entity escape all the text that you give it.
+However, there are many times when you legitimately don't want text to be
+entity escaped, so that's what C<x()> is for.
+
+=head4 An Example View That Uses HTML::AsSubs
+
+  package App::Views;
+  use strict;
+  use warnings;
+  use Squatting 'views';
+  use HTML::AsSubs;
+
+  sub span { HTML::AsSubs::_elem('span', @_) }
+  sub x    { map { HTML::Element->new('~literal', text => $_) } @_ }
+
+  our @V = (
+    V(
+      'html',
+      layout => sub {
+        my ($self, $v, $content) = @_;
+        html(
+          head(
+            title( $v->{title} ),
+            style(x($self->_css)),
+          ),
+          body(
+            x( $content )
+          )
+        )->as_HTML;
+      },
+      _css => sub {qq|
+        body {
+          background : #000;
+          color      : #f5deb3;
+        }
+      |},
+      home => sub {
+        my ($self, $v) = @_;
+        h1( $v->{message} )->as_HTML;
+      },
+    ),
+  );
+  1;
+
+Again, the nicest part about generating HTML from code is that you don't have
+to worry about installing template files.  The templates are in memory as perl
+expressions.  When building web apps that are designed to be embedded, this is
+a really nice feature to have as it makes deployment that much easier.
+
+If HTML::AsSubs is a bit too low tech for you, there are more modern
+expressions of the code-to-html idea on CPAN.  For example, L<Template::Declare>
+looks like it could be worth looking into.
 
 =head3 Tenjin
 
+Tenjin is the fastest templating system that no one outside of Japan seems to
+know about.  It's really unfortunate that this module isn't on CPAN, but
+hopefully this will be rectified in the near future.  Until then, you can
+download it from L<http://kuwata-lab.com/>.
+
+=head4 An Example View That Uses Tenjin
+
+First, make sure your template_path is configurable for deployment purposes.
+
+  package App;
+  our %CONFIG = (
+    template_path => './www'
+  );
+
+And here is the actual view:
+
+  package App::Views;
+  use strict;
+  use warnings;
+  no  warnings 'once';
+  use Squatting ':views';
+
+  # make functions defined in this package available to templates
+  use base 'Tenjin::Context';
+  eval $Tenjin::Context::defun;
+  $Tenjin::CONTEXT_CLASS = 'App::Views';
+
+  our @V = (
+    V(
+      'html',
+      tenjin => Tenjin::Engine->new({ 
+        path => [ $App::CONFIG{template_path} ], postfix => '.html' 
+      }),
+      layout => sub {
+        my ($self, $v, $content) = @_;
+        my $tenjin = $self->{tenjin};
+        $v->{content} = $content;
+        $tenjin->render(":layout", $v);
+      },
+      _ => sub {
+        my ($self, $v) = @_;
+        my $tenjin = $self->{tenjin};
+        $v->{self} = $self;
+        $tenjin->render(":$self->{template}", $v);
+      }
+    ),
+  );
+
+That's all there is too it.  Views for other file-based templating systems will
+follow a similar pattern where the special C<_> template is used to map method
+names to filenames.
+
 =head3 Template::Toolkit
+
+TODO
 
 =head3 HTML::Mason
 
+TODO
+
 =head3 HTML::Template
+
+TODO
 
 
 =head2 How to Internationalize and Localize Squatting Apps
 
 =head3 Using Subdomains For Maximum Flexibility
 
+I'm a fan of the way Wikipedia uses subdomains in its localization strategy.
+
 =head3 Locale::Maketext
 
 
 =head2 How to be an OpenID Consumer
 
-TODO - go into much more detail.
+TODO - go into much more detail and clean up the code.
 
 helper function for making a Net::OpenID::Consumer object
 

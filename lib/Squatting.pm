@@ -213,7 +213,8 @@ What a basic App looks like:
         'html',
         layout  => sub {
           my ($self, $v, $content) = @_;
-          "<html><title>$v->{title}</title><body>$content</body></html>"
+          "<html><head><title>$v->{title}</title></head>".
+          "<body>$content</body></html>";
         },
         home    => sub {
           my ($self, $v) = @_;
