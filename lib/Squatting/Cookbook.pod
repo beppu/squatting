@@ -296,7 +296,7 @@ to be written.
 The key to doing this right is to C<relocate> the app correctly.
 The path that you relocate to should be the same as the C<REQUEST_PATH>
 for the script.  For example, if the URL you use to get to the script
-is http://localhost/cgi-bin/app.cgi , then you should relocate to
+is F<http://localhost/cgi-bin/app.cgi>, then you should relocate to
 F</cgi-bin/app.cgi>.
 
 =head1 DEPLOYMENT TECHNIQUES
