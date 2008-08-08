@@ -90,7 +90,7 @@ Create an app.cgi to drive the Squatting app in a CGI environment.
 The purpose of this module is to allow Squatting apps to be used in a CGI
 environment.  This is done by adding a C<cgi> method to the Squatting app that
 knows how to "translate" between CGI and Squatting.  To use this module, pass
-the string C<'On::Catalyst'> to the C<use> statement that loads your Squatting
+the string C<'On::CGI'> to the C<use> statement that loads your Squatting
 app.
 
 =head1 API
