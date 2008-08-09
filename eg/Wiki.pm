@@ -62,7 +62,8 @@ our @C = (
     get  => sub {
       my ($self) = @_;
       my $page = Wiki::Page->new($Wiki::CONFIG{home_page});
-      $self->render('page');
+      # $self->render('page');
+      return "work in progress";
     }
   ),
 
