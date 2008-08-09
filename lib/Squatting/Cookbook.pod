@@ -156,7 +156,7 @@ I like L<HTML::AsSubs> for the following reasons:
 
 =item * It seems to be widely deployed (even though no one uses it).
 
-=item * And generating HTML with code eliminates the need to install templates.
+=item * And generating HTML with code eliminates the need to install template files.
 
 =back
 
