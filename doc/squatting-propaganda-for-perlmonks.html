@@ -1,0 +1,114 @@
+<h1>Squatting::On::Catalyst</h1>
+
+<blockquote>
+(This was originally posted to the 
+<a href="http://www.gossamer-threads.com/lists/catalyst/users/20480">Catalyst Mailing List</a>.
+It's being reposted on PerlMonks for the benefit of the 
+broader Perl community.)
+</blockquote>
+
+<p>Squatting is a web microframework for Perl that's based on 
+<a href="http://code.whytheluckystiff.net/camping/">Camping</a> from the
+Ruby world.  During the transition from Ruby to Perl, Squatting gained some
+mutant powers which is why I'm writing to you today.
+</p>
+
+<p>One of Squatting's mutant powers is its ability to embed itself into other
+frameworks (like Catalyst).  You can take whole Squatting apps, and embed them
+into your existing web application with just a few lines of glue code.  Allow
+me to demonstrate.
+</p>
+
+
+<readmore>
+
+<h2>STEP 1:  Install Pod::Server from CPAN.</h2>
+
+<code>
+  $ sudo cpan Pod::Server
+</code>
+
+
+<h2>STEP 2:  Run Pod::Server so you can see what it looks like.</h2>
+
+<code>
+  $ squatting Pod::Server -p 8088
+</code>
+
+    or
+
+<code>
+  $ pod_server
+</code>
+
+<p>Then, visit <a href="http://localhost:8088/">http://localhost:8088/</a>
+and pay attention to the URLs as you
+click around.  (This will be interesting when you see how the URLs of 
+the whole site will be "relocated" later on in the demonstration.)
+</p>
+
+
+<h2>STEP 3:  Create a Catalyst application.</h2>
+
+<code>
+  $ catalyst.pl Propaganda
+</code>
+
+
+<h2>STEP 4:  Embed Pod::Server into the Catalyst application.</h2>
+
+<code>
+  $ cd Propaganda
+  $ $EDITOR lib/Propaganda/Controller/Root.pm
+</code>
+
+<p>Then, add the following lines of code to an appropriate place in the
+controller.
+</p>
+
+<code>
+  use Pod::Server ’On::Catalyst’;
+  Pod::Server->init;
+  Pod::Server->relocate(’/pod’);
+  $Pod::Simple::HTML::Perldoc_URL_Prefix = ’/pod/’;
+  sub pod : Local { Pod::Server->catalyze($_[1]) }
+</code>
+
+
+
+<h2>STEP 5: Start up the Catalyst application.</h2>
+
+<code>
+  $ script/propaganda_server.pl
+</code>
+
+<p>Finally, visit 
+<a href="http://localhost:3000/pod/">http://localhost:3000/pod/</a>.  
+If everything worked, you should
+see that Pod::Server has just been embedded into a Catalyst application.
+</p>
+
+
+<h1>What Are The Implications of This?</h1>
+
+<p>Right now, anyone who is developing a web app with Catalyst can install
+Pod::Server from CPAN and embed it directly into their web app.  However,
+this is just the beginning.
+</p>
+
+<p>Imagine if you could install a blog, a wiki, a forum, or a store just as
+easily.
+</p>
+
+<p>Imagine adding major functionality to any Perl-based site with ~5 lines of
+code.
+</p>
+
+<p>Squatting makes modular web applications both possible and probable.
+</p>
+
+<p><a href="http://search.cpan.org/dist/Squatting/">http://search.cpan.org/dist/Squatting/</a></p>
+
+<p><a href="http://github.com/beppu/squatting/tree/master">http://github.com/beppu/squatting/tree/master</a></p>
+
+</readmore>
