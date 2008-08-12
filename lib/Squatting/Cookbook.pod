@@ -97,9 +97,14 @@ If your app is called C<App>, then:
 
 TODO - explain using IRC as a metaphor
 
+Events (and my current preference for ambient event generation)
+
 Channels
 
-Publisher/Subscriber
+Publishers
+
+Subscribers
+
 
 =head3 RESTless Controllers
 
@@ -144,6 +149,11 @@ I'm figuring this out as I go along...
 =head3 Long Polling with jQuery on the Client Side
 
 TODO
+
+jquery.ev.js
+
+  $.ev.loop('/@event')
+  $.ev.stop();
 
 =head2 How to Set Up Sessions
 
