@@ -95,8 +95,55 @@ If your app is called C<App>, then:
 
 =head3 Event Architecture
 
+TODO - explain using IRC as a metaphor
+
+Channels
+
+Publisher/Subscriber
+
 =head3 RESTless Controllers
 
+I'm figuring this out as I go along...
+
+  C(
+    Event => [ '/@event' ],
+    get => sub {
+      warn "coro [$Coro::current]";
+      my ($self) = shift;
+      my $cr     = $self->cr;
+      while (1) {
+        # OUTPUT
+        warn "top of loop";
+        my $x = async {
+          warn "printing...";
+          $cr->print(encode_json([{ type => 'Chat', message => 'Hi' }]));
+        };
+        $x->join;
+
+        # Hold for a brief moment until the next long poll request comes in.
+        warn "waiting for next request";
+        $cr->next;
+
+        # TODO Try starting up 1 coroutine per channel.
+        # TODO Each coroutine will have the same Coro::Signal object.
+        # TODO The first one who sends a signal wins.
+        # TODO The losers will have to be terminated somehow.
+
+        warn "waiting for signal";
+        $signal->timed_wait(20);
+      }
+    },
+    post => sub {
+      my ($self) = shift;
+      $signal->broadcast;
+      1;
+    },
+    queue => { get => 'event' },
+  ),
+
+=head3 Long Polling with jQuery on the Client Side
+
+TODO
 
 =head2 How to Set Up Sessions
 
