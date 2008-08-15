@@ -429,6 +429,13 @@ L<Pod::Server>
 
 =back
 
+=head2 Google Group:  squatting-framework
+
+A Google Group has been setup so that people can discuss Squatting.
+If you have questions about the framework, this is the place to ask.
+
+L<http://groups.google.com/group/squatting-framework>
+
 =head2 Squatting Source Code
 
 The source code is short and it has some useful comments in it, so this might
