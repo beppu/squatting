@@ -65,3 +65,17 @@ squatting OpenID::Consumer -p 4239
   This example currently shows the bare minimum you need to implement
   an OpenID login.  It'll be improved as time goes on.
 
+______________________________________________________________________________
+squatting MicroWiki -p 4240
+
+  http://localhost:4240/
+
+  requires
+    Text::Textile
+    IO::All
+
+  metaperl from perlmonks.org wondered if a wiki could be implemented with
+  Squatting in 20 lines or less.  MicroWiki is my 17 line response.
+
+  http://perlmonks.org/?node_id=704372
+
