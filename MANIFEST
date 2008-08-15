@@ -2,6 +2,7 @@ bin/squatting
 bin/vw
 Changes
 doc/squatting-propaganda-for-catalyst.txt
+doc/squatting-propaganda-for-perlmonks.html
 doc/squatting-tpf-grant-proposal.txt
 edit
 eg/chat-ajax-push.js
@@ -10,12 +11,12 @@ eg/Example.pm
 eg/Example/Controllers.pm
 eg/Example/Views.pm
 eg/jquery.js
+eg/MicroWiki.pm
 eg/OpenID/Consumer.pm
 eg/OpenID/Provider.pm
 eg/PODServer.pm
 eg/README
 eg/UniCodePoints.pm
-eg/Wiki.pm
 etc/init.d/squatting-debian
 etc/init.d/squatting-gentoo
 etc/init.d/squatting-ubuntu
