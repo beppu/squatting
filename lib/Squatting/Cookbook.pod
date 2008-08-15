@@ -313,7 +313,7 @@ looks like it may be worth looking into.  I'm happy with HTML::AsSubs, though.
 Tenjin is the fastest templating system that no one outside of Japan seems to
 know about.  It's really unfortunate that this module isn't on CPAN, but
 hopefully this will be rectified in the near future.  Until then, you can
-download it from L<http://kuwata-lab.com/>.
+download it from L<http://www.kuwata-lab.com/tenjin/>.
 
 =head4 An Example View That Uses Tenjin
 
