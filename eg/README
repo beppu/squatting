@@ -75,7 +75,13 @@ squatting MicroWiki -p 4240
     IO::All
 
   metaperl from perlmonks.org wondered if a wiki could be implemented with
-  Squatting in 20 lines or less.  MicroWiki is my 17 line response.
+  Squatting in 20 lines or less.  MicroWiki was my 17 line response.  It has
+  since been reduced to 11 lines.
 
   http://perlmonks.org/?node_id=704372
+
+  If you find this unreadable, run it through perltidy.
+
+    perltidy < MicroWiki.pm
+
 
