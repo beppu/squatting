@@ -1,7 +1,8 @@
 Beyond (unreleased)
   * implement Squatting::With::Coro::Debug
   * give Squatting::Controller more awareness of Continuity
-  * proper support for file uploads wherever possible
+  * add proper support for file uploads wherever possible
+  * do a better job of simulating requests in squatting -C
 
 0.60 (unreleased)
   - More documentation updates and corrections.
