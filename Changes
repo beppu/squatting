@@ -1,10 +1,13 @@
+Beyond (unreleased)
+  * implement Squatting::With::Coro::Debug
+  * give Squatting::Controller more awareness of Continuity
+
 0.60 (unreleased)
   - More documentation updates and corrections.
   * implement Squatting::On::HTTP::Engine
   * implement Squatting::On::MP13
   * implement Squatting::On::MP19
   * implement Squatting::On::MP20
-  * implement Squatting::With::Coro::Debug
 
 0.52
   - More documentation updates and corrections
