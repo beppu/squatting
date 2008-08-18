@@ -8,6 +8,7 @@ Beyond (unreleased)
   * implement Squatting::On::MP13
   * implement Squatting::On::MP19
   * implement Squatting::On::MP20
+  * implement Squatting::On::FastCGI
 
 0.52
   - More documentation updates and corrections
