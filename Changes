@@ -4,6 +4,7 @@
   * implement Squatting::On::MP13
   * implement Squatting::On::MP19
   * implement Squatting::On::MP20
+  * implement Squatting::With::Coro::Debug
 
 0.52
   - More documentation updates and corrections
@@ -11,7 +12,7 @@
 
 0.51
   - implemented Squatting::On::CGI
-  - implement OpenID::Consumer example
+  - implemented OpenID::Consumer example
 
 0.50
   - More documentation updates and corrections.
