@@ -1,6 +1,7 @@
 Beyond (unreleased)
   * implement Squatting::With::Coro::Debug
   * give Squatting::Controller more awareness of Continuity
+  * proper support for file uploads wherever possible
 
 0.60 (unreleased)
   - More documentation updates and corrections.
@@ -9,6 +10,7 @@ Beyond (unreleased)
   * implement Squatting::On::MP19
   * implement Squatting::On::MP20
   * implement Squatting::On::FastCGI
+  * implement Squatting::On::Jifty
 
 0.52
   - More documentation updates and corrections
