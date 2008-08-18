@@ -1,13 +1,11 @@
 package Squatting::Controller;
 
-use strict;
-no  strict 'refs';
-use warnings;
-no  warnings 'redefine';
+#use strict;
+#no  strict 'refs';
+#use warnings;
+#no  warnings 'redefine';
 
-use CGI::Cookie;
-
-our $AUTOLOAD;
+#our $AUTOLOAD;
 
 # constructor
 sub new {
