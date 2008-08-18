@@ -261,7 +261,7 @@ delete().
 =item B<RESTless Controllers Are Possible>
 
 Stateful continuation-based code can be surprisingly useful (especially for
-COMET), so we try to make RESTless controllers easy to express as well. B<*>
+COMET), so we try to make RESTless controllers easy to express as well. (B<*>)
 
 =item B<Views Are ...Different>
 
