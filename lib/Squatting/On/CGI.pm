@@ -4,6 +4,7 @@ package Squatting::On::CGI;
 #no  strict 'refs';
 #use warnings;
 use CGI;
+use CGI::Cookie;
 use HTTP::Response;
 
 # p for private

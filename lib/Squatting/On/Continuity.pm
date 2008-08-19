@@ -5,6 +5,7 @@ no  strict 'refs';
 #use warnings;
 use Continuity;
 use Squatting::Mapper;
+use CGI::Cookie;
 
 # p for private  # this is my way of minimizing namespace pollution
 my %p;
