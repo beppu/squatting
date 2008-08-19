@@ -103,4 +103,8 @@ app.
 Give the C<cgi> method a CGI object, and it will send the apps output to
 STDOUT.
 
+=head1 SEE ALSO
+
+L<CGI>
+
 =cut
