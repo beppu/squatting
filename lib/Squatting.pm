@@ -10,7 +10,7 @@ use List::Util qw(first);
 use URI::Escape;
 use Carp;
 
-our $VERSION = '0.52';
+our $VERSION = '0.60';
 
 require Squatting::Controller;
 require Squatting::View;
