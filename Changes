@@ -7,6 +7,7 @@ Beyond (unreleased)
 0.60 (unreleased)
   - More documentation updates and corrections.
   - Fixed URL for Tenjin in Squatting::Cookbook.
+  - Implemented Squatting::With::Log
   * BUG: POST -> perlbal -> thttpd -> Squatting::On::CGI == FAIL
   * add default in-memory session to Squatting::On::Continuity
   * implement Squatting::On::HTTP::Engine
