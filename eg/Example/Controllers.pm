@@ -22,6 +22,7 @@ our @C = (
       if (%$input) {
         $v->{sum} = add(values %$input);
       }
+      $self->log->debug('home sweet home');
       $self->render('home')
     }
   ),
@@ -31,6 +32,7 @@ our @C = (
     get     => sub {
       my ($self, $name, $format) = @_;
       $format ||= 'html';
+      $self->log->info("format is $format");
       my $v            = $self->v;
       $v->{name}       = $name;
       $v->{controller} = $self->name;
