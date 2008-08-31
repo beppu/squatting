@@ -183,12 +183,37 @@ you'll find the incoming HTTP headers.
 
 This returns a hashref containing the incoming CGI parameters.
 
+B<Example>:  Interpreting the query ?x=5&y=true&z=2&z=1&z=3 .
+
+  $self->input->{x} is         5
+  $self->input->{y} is    "true"
+  $self->input->{z} is [2, 1, 3]
+
+=head3 $c->param
+
+=head3 $c->param($key)
+
+=head3 $c->param($key, $value)
+
+This is an accessor for C<$c-E<gt>input> that provides an API that's similar
+to the L<CGI> module's C<param()> function.  It exists, because there are
+many perl modules that can make use of an object that follows this API.
+It is not complete, but it should be good enough for L<WWW::Facebook::API>.
+
 =head3 $c->cookies
 
 This returns a hashref that holds both the incoming and outgoing cookies.
 
 Incoming cookies are just simple scalar values, whereas outgoing cookies are
 hashrefs that can be passed to L<CGI::Cookie> to construct a cookie string.
+
+B<Example>:  Setting a cookie named 'foo'
+
+  $self->cookies->{foo} = { -Value => 'bar', -Expires => '+1d' };
+
+B<Example>:  Getting the value of a cookie named 'baz'
+
+  my $baz = $self->cookies->{baz};
 
 =head3 $c->state
 
@@ -206,9 +231,15 @@ is called.
 This returns an integer representing the outgoing HTTP status code.
 See L<HTTP::Status> for more details.
 
+  $c->status = 404;  # Resource Not Found
+
 =head3 $c->headers
 
 This returns a hashref representing the outgoing HTTP headers.
+
+B<Example>:  Setting the outgoing Content-Type to text/plain
+
+  $c->headers->{'Content-Type'} = 'text/plain';
 
 =head3 $c->log
 
