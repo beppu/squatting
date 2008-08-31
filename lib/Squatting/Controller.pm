@@ -39,6 +39,20 @@ for my $m qw(get post head put delete options trace connect) {
   *{$m} = sub { $_[0]->{$m}->(@_) }
 }
 
+# For (sufficient) compatibility w/ the ubiquitous API that CGI.pm introduced
+sub param {
+  my ($self, $k, @v) = @_;
+  if (defined $k) {
+    if (@v) {
+      $self->input->{$k} = ((@v > 1) ? \@v : $v[0]);
+    } else {
+      $self->input->{$k};
+    }
+  } else {
+    keys %{$self->input};
+  }
+}
+
 # $content = $self->render($template, $vars)
 sub render {
   my ($self, $template, $vn) = @_;

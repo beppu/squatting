@@ -77,10 +77,13 @@ If your app is called C<App>, then:
     V(
       'html',
       layout => sub {
+        my ($self, $v, $content) = @_;
       },
       home => sub {
+        my ($self, $v) = @_;
       },
       profile => sub {
+        my ($self, $v) = @_;
       },
     )
   );
@@ -240,11 +243,12 @@ I can live with this.
 
 =item Problem: exports so damned much.  (from the code comments)
 
-The funny thing is, it's actually not exporting enough.  It's missing a sub for
-the C<span> tag.  (Did that tag even exist in 1994 when this module was
-written?)  Luckily, this is easy to fix.
+The funny thing is, it's actually not exporting enough.  It's missing subs for
+the C<span>, C<thead>, and C<tbody> tags.
 
-  sub span { HTML::AsSubs::_elem('span', @_) }
+  sub span  { HTML::AsSubs::_elem('span',  @_) }
+  sub thead { HTML::AsSubs::_elem('thead', @_) }
+  sub tbody { HTML::AsSubs::_elem('tbody', @_) }
 
 If there are any other missing tags, you know what to do.
 
@@ -304,8 +308,9 @@ expressions.  When building web apps that are designed to be embedded, this is
 a really nice feature to have as it makes deployment that much easier.
 
 If HTML::AsSubs is a bit too low tech for you, there are more modern
-expressions of the code-to-html idea on CPAN.  For example, L<Template::Declare>
-looks like it may be worth looking into.  I'm happy with HTML::AsSubs, though.
+expressions of the code-to-html idea on CPAN.  For example,
+L<Template::Declare> and L<HTML::Tiny> may be worth looking into.  I'm happy
+with HTML::AsSubs, though.
 
 
 =head3 Tenjin
