@@ -41,6 +41,9 @@ request.  It looks like this:
     5 [302] Example->get('RubyGems')
     6 [404] Squatting->get('R404')
 
+You also get the number of requests the current process has served and the
+HTTP status of the response in the first and second columns, respectively.
+
 The code that generates this was originally in C<&Squatting::service>, but I
 wanted to make it optional, so I moved it into a separate module.
 
