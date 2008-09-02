@@ -22,6 +22,7 @@ our $log;
 
 sub new {
   my ($class, $config) = @_;
+  return $log if ($log);
   my $path   = $config->{'with.log.path'}   || '='; # (default STDERR)
   my $level  = $config->{'with.log.levels'} || 'debug,info,warn,error,fatal';
   my $levels = +{ map { $_ => 1 } split(/\s*,\s*/, $level) };
@@ -64,3 +65,37 @@ sub disable {
 }
 
 1;
+
+=head1 NAME
+
+Squatting::With::Log - a simple error log for Squatting apps
+
+=head1 SYNOPSIS
+
+Adding simple logging to your Squatting app:
+
+  use App 'With::Log', 'On::CGI';
+
+This will let log from within your controllers:
+
+  C(
+    Day => [ '/(\d+)/(\d+)/(\d+)' ],
+    get => sub {
+      my ($self, $year, $month, $day) = @_;
+      my $log = $self->log;
+      $log->debug(" year: $year");
+      $log->info ("month: $month");
+      $log->warn ("  day: $day");
+      # you also get $log->error and $log->fatal
+      $self->render('day');
+    }
+  )
+
+=head1 DESCRIPTION
+
+Squatting::With::Log provides a simple logging object that can be used from
+within your controllers to send messages to either a log file or STDERR for
+informational purposes.  Typically, these messages would be useful during
+development and debugging but would be disabled during production.
+
+=cut
