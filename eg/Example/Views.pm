@@ -27,7 +27,7 @@ our @V = (
             li(a({-href => '/env'},         "env")),
             li(a({-href => '/env.json'},    "env.json")),
             li(a({-href => '/rubygems'},    "redirect to ruby's gem_server on port 8808")),
-            li(a({-href => '/pod'},         "PODServer has been mounted on /pod")),
+            li(a({-href => '/pod/'},        "PODServer has been mounted on /pod")),
             li(a({-href => '/droids-you-are-looking-for'}, "404")),
           ),
         ),
