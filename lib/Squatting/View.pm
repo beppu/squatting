@@ -112,20 +112,20 @@ This returns a hashref of the outgoing HTTP headers.
 
 =head2 Template Methods
 
-=head3 $view->$template($v)
+=head3 $content = $view->$template($v)
 
 Any coderef that was given to the constructor may be called by name.  Templates
 should be passed in a hashref (C<$v>) with variables for it to use to generate
 the final output.
 
-=head3 $view->layout($v, $content)
+=head3 $content = $view->layout($v, $content)
 
 If you define a template named "layout", it'll be used to wrap the
 content of all templates whose name do not begin with "_".  You can
 use this feature to provide standard headers and footers for your
 pages.
 
-=head3 $view->_($v)
+=head3 $content = $view->_($v)
 
 If you define a template named "_", this will act as a catch-all
 that can be asked to render anything that wasn't explicitly defined.
