@@ -96,13 +96,67 @@ This will let log from within your controllers:
 Squatting::With::Log provides a simple logging object that can be used from
 within your controllers to send messages to either a log file or STDERR for
 informational purposes.  Typically, these messages would be useful during
-development and debugging but would be disabled during production.
+development and debugging but would be disabled for production use.
+
+To use this module, pass the string C<'With::Log'> to the C<use> statement that
+loads your Squatting app.
+
+=head1 CONFIGURATION
+
+Squatting apps may set the following values in their C<%CONFIG> hash to control
+the behavior of this module.
+
+=over 4
+
+=item with.log.path
+
+This should be a string that specifies the full path to where you want the
+logs to be sent.
+
+B<Example>:
+
+  $CONFIG{'with.log.path'} = "/tmp/error_log";
+
+=item with.log.levels
+
+This should be a comma-separated string that lists all the log levels you
+want to enable.
+
+B<Example>:  Only output messages with a log level of C<error> or C<fatal>.
+
+  $CONFIG{'with.log.levels'} = "error,fatal";
+
+=back
 
 =head1 API
 
 =head2 Object Construction
 
 =head3 $log = Squatting::Log->new(\%config)
+
+=head2 Configuration
+
+=head3 $log->enable(@levels)
+
+This method enables the list of log levels you send it.
+
+=head3 $log->disable(@levels)
+
+This method disables the list of log levels you send it.
+
+=head2 Introspection
+
+=head3 $log->is_debug
+
+=head3 $log->is_info
+
+=head3 $log->is_warn
+
+=head3 $log->is_error
+
+=head3 $log->is_fatal
+
+These methods return true if their respective log levels are enabled.
 
 =head2 Logging
 
@@ -115,5 +169,12 @@ development and debugging but would be disabled during production.
 =head3 $log->error(@messages)
 
 =head3 $log->fatal(@messages)
+
+These methods output the list of log messages you send it using the
+specified log level.
+
+=head1 SEE ALSO
+
+L<Catalyst::Log>
 
 =cut
