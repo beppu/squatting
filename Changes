@@ -3,16 +3,19 @@ Beyond (unreleased)
   * give Squatting::Controller more awareness of Continuity
   * add proper support for file uploads wherever possible
   * do a better job of simulating requests in squatting -C
+  * BUG: POST -> perlbal -> thttpd -> Squatting::On::CGI == FAIL
+    Strangely enough, GET is fine.
+  * implement Squatting::On::HTTP::Engine
+  * implement Squatting::On::MP19
+  * resurrect Squatting::H
 
 0.60 (unreleased)
   - More documentation updates and corrections.
   - Fixed URL for Tenjin in Squatting::Cookbook.
   - Implemented Squatting::With::Log
-  * BUG: POST -> perlbal -> thttpd -> Squatting::On::CGI == FAIL
   * add default in-memory session to Squatting::On::Continuity
-  * implement Squatting::On::HTTP::Engine
+  * add --modules parameter to bin/squatting
   * implement Squatting::On::MP13
-  * implement Squatting::On::MP19
   * implement Squatting::On::MP20
   * implement Squatting::On::FastCGI
   * implement Squatting::On::Jifty
