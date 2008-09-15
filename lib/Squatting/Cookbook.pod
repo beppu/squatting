@@ -270,8 +270,10 @@ entity escaped, so that's what C<x()> is for.
   use Squatting ':views';
   use HTML::AsSubs;
 
-  sub span { HTML::AsSubs::_elem('span', @_) }
-  sub x    { map { HTML::Element->new('~literal', text => $_) } @_ }
+  sub span  { HTML::AsSubs::_elem('span', @_) }
+  sub thead { HTML::AsSubs::_elem('thead', @_) }
+  sub tbody { HTML::AsSubs::_elem('tbody', @_) }
+  sub x     { map { HTML::Element->new('~literal', text => $_) } @_ }
 
   our @V = (
     V(
@@ -310,7 +312,7 @@ a really nice feature to have as it makes deployment that much easier.
 If HTML::AsSubs is a bit too low tech for you, there are more modern
 expressions of the code-to-html idea on CPAN.  For example,
 L<Template::Declare> and L<HTML::Tiny> may be worth looking into.  I'm happy
-with HTML::AsSubs, though.
+with L<HTML::AsSubs>, though.
 
 
 =head3 Tenjin
@@ -345,7 +347,7 @@ And here is the actual view:
 
   our @V = (
     V(
-      'html',
+      'tenjin',
       tenjin => Tenjin::Engine->new({ 
         path => [ $App::CONFIG{template_path} ], postfix => '.html' 
       }),
@@ -371,7 +373,37 @@ names to filenames.
 
 =head3 Template Toolkit
 
-TODO
+L<Template Toolkit|Template> is probably the most popular templating system in
+use as of this writing.  This is how you'd implement a view for it.
+
+  package App::Views;
+  use strict;
+  use warnings;
+  use Squatting ':views';
+  use Template;
+
+  our @V = (
+    V(
+      'tt',
+      tt => Template->new(),
+      layout => sub {
+        my ($self, $v, $content) = @_;
+        my $tt = $self->{tt};
+        $v->{content} = $content;
+        $tt->render(":layout", $v);
+      },
+      _ => sub {
+        my ($self, $v) = @_;
+        my $tt = $self->{tt};
+        $v->{self} = $self;
+        $tt->render(":$self->{template}", $v);
+      },
+    ),
+  );
+  1;
+
+As you can see, it's structured very similarly to the Tenjin view in the
+previous example.
 
 =head3 HTML::Mason
 
@@ -387,10 +419,16 @@ TODO
 The longer you wait to internationalize a web application, the harder the task
 becomes due to the ever increasing number of strings being used.  Thus, if you
 have any ambition of catering to an international audience, it would be wise to
-internationalize your application right from the beginning when the task is the
-easiest.
+internationalize your application right from the beginning when the task is at 
+its easiest.
 
-=head3 Using Subdomains For Maximum Flexibility
+=head3 Using Subdomains to Determine Language Preference
+
+First, we need a high level strategy for determining what language to present
+to the user.  Wikipedia's approach of using ISO-639-1 language tags in the
+subdomains of wikipedia.org is my favorite way of doing this.  For example,
+the English version of Wikipedia is at L<http://en.wikipedia.org/> and the
+Korean version of Wikipedia is at L<http://ko.wikipedia.org/>.
 
 =head3 Locale::Maketext
 
