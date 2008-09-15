@@ -1,6 +1,7 @@
 Beyond (unreleased)
   * implement Squatting::With::Coro::Debug
-  * give Squatting::Controller more awareness of Continuity
+  * give Squatting::Controller more awareness of Continuity.
+    Instead of $self->cr->next, what if we could say $self->next ?
   * add proper support for file uploads wherever possible
   * SESSIONS:  Catalyst, Continuity, (and possibly Jifty)
     have nice defaults that a Squatting app can rely upon.
