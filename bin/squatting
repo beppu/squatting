@@ -9,8 +9,9 @@ use Getopt::Long;
 use Data::Dump 'pp';
 
 # defaults
-$_{port}  = 4234;
-$_{debug} = 1;
+$_{port}    = 4234;
+$_{debug}   = 1;
+$_{modules} = [ 'With::Log', 'With::AccessTrace' ];
 
 # command line options
 Getopt::Long::Configure('no_ignore_case');
@@ -23,6 +24,7 @@ GetOptions(
   'version|v',
   'config|c=s%',
   'show-config|s',
+  'module|m=s@',
   'logo',
   'help|h',
 );
@@ -36,6 +38,7 @@ Options:
     -p, --port NUM                   Port for web server (defaults to $_{port})
     -c, --config ATTR=VALUE          Set an app's %CONFIG variables
     -s, --show-config                Display an app's %CONFIG and exit
+    -m, --module MODULE              Load a Squatting plugin into the app
     -l, --log FILE                   Log file  # TODO
     -C, --console                    Run in console mode with Shell::Perl
     --debug NUM                      Continuity debug_level (defaults to $_{debug})
@@ -54,7 +57,7 @@ if ($_{version}) {
   help;
   exit 0;
 } elsif ($_{log}) {
-
+  $_{config}{'with.log.path'} = $_{log};
 } elsif ($_{logo}) {
   print <DATA>;
   exit 0;
@@ -108,7 +111,7 @@ if ($app) {
     $pirl->set_package($app."::Controllers");
     $pirl->run;
   } else {
-    $app->import("With::AccessTrace", "With::Log", "On::Continuity");
+    $app->import(@{ $_{modules} }, "On::Continuity");
     $app->init;
     $app->continue(
       port        => $_{port},
@@ -174,9 +177,20 @@ B<Example>:
 
 Display an App's %CONFIG hash and exit.
 
+=item -m, --module MODULE
+
+This option can be used to load additional Squatting plugins into the app, and
+you may use this option multiple times in a single command line.  Note that
+L<Squatting::With::AccessTrace> and L<Squatting::With::Log> are loaded by
+default.
+
+B<Example>:  Loading Squatting::With::UTF8 and Squatting::With::Coro::Debug
+
+  squatting App -m With::UTF8 -m With::Coro::Debug
+
 =item -l, --log FILE
 
-(TODO) Start a log file ('-' for STDOUT)
+Send log output to a log file.
 
 =item -C, --console
 
