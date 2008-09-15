@@ -14,6 +14,7 @@ Beyond (unreleased)
     Take perlbal out of the setup and everything is fine.
   * implement Squatting::On::HTTP::Engine
   * implement Squatting::On::MP19
+  * implement Squatting::On::Jifty
   * resurrect Squatting::H ?
 
 0.60 (unreleased)
@@ -23,11 +24,10 @@ Beyond (unreleased)
   - added --module parameter to bin/squatting
   - added default in-memory session to Squatting::On::Continuity
     (I discovered that session setup can't happen via the plugin system.
-    If I want sessions, they have to be setup before service is ever called.)
+    If I want sessions, they have to be setup before service is called.)
   * implement Squatting::On::MP13
   * implement Squatting::On::MP20
   * implement Squatting::On::FastCGI
-  * implement Squatting::On::Jifty
 
 0.52
   - More documentation updates and corrections
