@@ -384,9 +384,13 @@ TODO
 
 =head2 How to Internationalize and Localize Squatting Apps
 
-=head3 Using Subdomains For Maximum Flexibility
+The longer you wait to internationalize a web application, the harder the task
+becomes due to the ever increasing number of strings being used.  Thus, if you
+have any ambition of catering to an international audience, it would be wise to
+internationalize your application right from the beginning when the task is the
+easiest.
 
-I'm a fan of the way Wikipedia uses subdomains in its localization strategy.
+=head3 Using Subdomains For Maximum Flexibility
 
 =head3 Locale::Maketext
 
