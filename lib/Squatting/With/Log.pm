@@ -98,4 +98,22 @@ within your controllers to send messages to either a log file or STDERR for
 informational purposes.  Typically, these messages would be useful during
 development and debugging but would be disabled during production.
 
+=head1 API
+
+=head2 Object Construction
+
+=head3 $log = Squatting::Log->new(\%config)
+
+=head2 Logging
+
+=head3 $log->debug(@messages)
+
+=head3 $log->info(@messages)
+
+=head3 $log->warn(@messages)
+
+=head3 $log->error(@messages)
+
+=head3 $log->fatal(@messages)
+
 =cut
