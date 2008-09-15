@@ -111,7 +111,7 @@ if ($app) {
     $pirl->set_package($app."::Controllers");
     $pirl->run;
   } else {
-    $app->import(@{ $_{modules} }, "On::Continuity");
+    $app->load_components(@{ $_{modules} }, "On::Continuity");
     $app->init;
     $app->continue(
       port        => $_{port},

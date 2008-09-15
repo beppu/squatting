@@ -2,19 +2,28 @@ Beyond (unreleased)
   * implement Squatting::With::Coro::Debug
   * give Squatting::Controller more awareness of Continuity
   * add proper support for file uploads wherever possible
+  * SESSIONS:  Catalyst, Continuity, (and possibly Jifty)
+    have nice defaults that a Squatting app can rely upon.
+    However, the rest of the backends are lower level, and
+    session storage is an open question there.  I'd like to
+    create a standard way for the Squatting::On::* family to
+    setup session storage.
   * do a better job of simulating requests in squatting -C
   * BUG: POST -> perlbal -> thttpd -> Squatting::On::CGI == FAIL
     Strangely enough, GET is fine.
+    Take perlbal out of the setup and everything is fine.
   * implement Squatting::On::HTTP::Engine
   * implement Squatting::On::MP19
-  * resurrect Squatting::H
+  * resurrect Squatting::H ?
 
 0.60 (unreleased)
   - More documentation updates and corrections.
   - Fixed URL for Tenjin in Squatting::Cookbook.
   - Implemented Squatting::With::Log
-  * add default in-memory session to Squatting::On::Continuity
-  * add --modules parameter to bin/squatting
+  - added --module parameter to bin/squatting
+  - added default in-memory session to Squatting::On::Continuity
+    (I discovered that session setup can't happen via the plugin system.
+    If I want sessions, they have to be setup before service is ever called.)
   * implement Squatting::On::MP13
   * implement Squatting::On::MP20
   * implement Squatting::On::FastCGI
