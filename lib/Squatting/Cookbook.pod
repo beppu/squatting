@@ -414,6 +414,10 @@ TODO
 TODO
 
 
+=head2 How to Take Advantage of Having Multiple Views
+
+
+
 =head2 How to Internationalize and Localize Squatting Apps
 
 The longer you wait to internationalize a web application, the harder the task
@@ -469,7 +473,7 @@ C<service()> method can be overridden as follows:
 
 The important code is in the C<language_settings()> function.
 
-=head3 Creating Localizations with Locale::Maketext
+=head3 Creating Localization Classes with Locale::Maketext
 
 
 =head3 Handling UTF-8 Input Correctly
