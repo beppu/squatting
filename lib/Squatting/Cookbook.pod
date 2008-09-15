@@ -425,10 +425,10 @@ its easiest.
 =head3 Using Subdomains to Determine Language Preference
 
 First, we need a high-level strategy for determining what language to present
-to the user.  Wikipedia's approach of using ISO-639-1 language tags in the
-subdomains of wikipedia.org is my favorite way of doing this.  For example,
-the English version of Wikipedia is at L<http://en.wikipedia.org/> and the
-Korean version of Wikipedia is at L<http://ko.wikipedia.org/>.  
+to the user.  Wikipedia's approach of using ISO-639-1 language tags in
+subdomains is my favorite way of doing this.  (For example, the English version
+of Wikipedia is at L<http://en.wikipedia.org/> and the Korean version of
+Wikipedia is at L<http://ko.wikipedia.org/>.)
 
 I like this approach for a number of reasons.
 
@@ -436,7 +436,7 @@ I like this approach for a number of reasons.
 
 =item Visitors have control over what language to use.
 
-=item The URLs look nice and are easy to manage.
+=item The URLs look nice while remaining easy to manage.
 
 =item It's search engine friendly.
 
@@ -470,7 +470,6 @@ C<service()> method can be overridden as follows:
 The important code is in the C<language_settings()> function.
 
 =head3 Creating Localizations with Locale::Maketext
-
 
 
 =head3 Handling UTF-8 Input Correctly
