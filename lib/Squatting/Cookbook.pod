@@ -471,7 +471,7 @@ C<service()> method can be overridden as follows:
   use App::L10N;
   use I18N::LangTags::List;
 
-  sub language_settings {
+  sub translation_function {
     my ($c) = @_;
     my @h   = split(/\./ => $c->env->{HTTP_HOST});
     my $lang_tag = I18N::LangTags::List::name($h[0]) || 'en';
@@ -481,11 +481,11 @@ C<service()> method can be overridden as follows:
 
   sub service {
     my ($app, $c, @args) = @_;
-    $c->v->{tr} = language_settings($c);
+    $c->v->{tr} = translation_function($c);
     $app->next::method($c, @args);
   }
 
-The important code is in the C<language_settings()> function.
+The important code is in C<translation_function($c)>.
 
 =head3 Creating Localization Classes with Locale::Maketext
 
