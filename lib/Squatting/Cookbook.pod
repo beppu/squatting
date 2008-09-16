@@ -413,9 +413,23 @@ TODO
 
 TODO
 
+=head3 XML::Atom
+
+TODO - This is not a templating system, but it's useful to know how to generate
+well-formed Atom feeds, so I'm going to include it in this section as well.
+
 
 =head2 How to Take Advantage of Having Multiple Views
 
+In the documentation for the L<Squatting> module, it said that multiple views
+per app were supported, and that it was "kinda like Catalyst (but not quite)".
+L<Catalyst> also supports multiple views per app, so there are certain techniques
+that both frameworks can implement.
+
+=head3 Kinda Like Catalyst -- Views as Data Formats
+
+
+=head3 But Not Quite -- Multiple Views of the Same Format == Themes
 
 
 =head2 How to Internationalize and Localize Squatting Apps
@@ -633,10 +647,10 @@ and replace its layout method with your own.
   $view->{layout} = sub {
     my ($self, $v, $content) = @_;
     # 
-    # make the layout look however you want
+    # Make the layout look however you want
     # using any templating system you want
-    # ( or none at all )
-    # and return a string
+    # ( or none at all ),
+    # and return a string that wraps $content
     #
   };
 
