@@ -1,5 +1,4 @@
 bin/squatting
-bin/vw
 Changes
 doc/squatting-propaganda-for-catalyst.txt
 doc/squatting-propaganda-for-perlmonks.html
@@ -18,9 +17,6 @@ eg/OpenID/Provider.pm
 eg/PODServer.pm
 eg/README
 eg/UniCodePoints.pm
-etc/init.d/squatting-debian
-etc/init.d/squatting-gentoo
-etc/init.d/squatting-ubuntu
 lib/Squatting.pm
 lib/Squatting/Controller.pm
 lib/Squatting/Cookbook.pod
