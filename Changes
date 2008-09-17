@@ -26,6 +26,8 @@ Beyond (unreleased)
   - added default in-memory session to Squatting::On::Continuity
     (I discovered that session setup can't happen via the plugin system.
     If I want sessions, they have to be setup before service is called.)
+  - removed bin/vw from distribution, because it will be
+    distributed with App::VW from now on.
   * implement Squatting::On::MP13
   * implement Squatting::On::MP20
   * implement Squatting::On::FastCGI
