@@ -1,7 +1,0 @@
-#!/usr/bin/perl
-
-use strict;
-use warnings;
-
-print "coming soon.\n\n";
-print "vw : squatting :: rv : camping\n";

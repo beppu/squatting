@@ -6,7 +6,7 @@ WriteMakefile (
   LICENSE       => 'mit',
   VERSION_FROM  => 'lib/Squatting.pm',
   ABSTRACT_FROM => 'lib/Squatting.pm',
-  EXE_FILES     => [ 'bin/squatting', 'bin/vw' ],
+  EXE_FILES     => [ 'bin/squatting' ],
   PREREQ_PM     => {
     'Class::C3::Componentised' => 0,
     'HTTP::Daemon'             => 0,
