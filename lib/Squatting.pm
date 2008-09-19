@@ -312,20 +312,19 @@ B<***> If you're not using Continuity, then really feel free to use any ORM.
 First...
 
 B<Read> L<Squatting::Cookbook/The Anatomy of a Squatting Application>. 
-It's very short, and it explains a lot.  
+It's very short, and it explains how to build a Squatting app from scratch.
 
 Then...
 
 B<Play> with some of the examples in the F<eg/> directory of the Squatting
 distribution.  Download the tarball from CPAN if you have to, but please
-take a look at the examples I created for you, and try running them and
-observing their behavior.
+try to run the examples.  (The F<README> file in the F<eg/> directory will
+tell you about the prerequisites you'll need.)
 
 Finally...
 
 B<Create> your first Squatting app; copy and paste the example app from 
-the L</SYNOPSIS> if you're feeling lazy, but create something with your
-own hands.
+the L</SYNOPSIS> and then modify it.
 
 =head1 API
 

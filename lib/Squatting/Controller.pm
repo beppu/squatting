@@ -53,7 +53,7 @@ sub param {
   }
 }
 
-# $content = $self->render($template, $vars)
+# $content = $self->render($template, $view)
 sub render {
   my ($self, $template, $vn) = @_;
   my $view;
