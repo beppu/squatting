@@ -229,6 +229,12 @@ What a basic App looks like:
   # - I've always been ambivalent about defining policy here.
   # - Use whatever works for you.
 
+Getting Started:
+
+  perldoc Squatting::Cookbook
+
+  # Read "The Anatomy of a Squatting Application".
+
 =head1 DESCRIPTION
 
 Squatting is a web microframework based on Camping.
@@ -300,6 +306,26 @@ Continuity) we are probably better off this way.
 
 B<***> If you're not using Continuity, then really feel free to use any ORM.
 
+
+=head2 How do I get started?
+
+First...
+
+B<Read> L<Squatting::Cookbook/The Anatomy of a Squatting Application>. 
+It's very short, and it explains a lot.  
+
+Then...
+
+B<Play> with some of the examples in the F<eg/> directory of the Squatting
+distribution.  Download the tarball from CPAN if you have to, but please
+take a look at the examples I created for you, and try running them and
+observing their behavior.
+
+Finally...
+
+B<Create> your first Squatting app; copy and paste the example app from 
+the L</SYNOPSIS> if you're feeling lazy, but create something with your
+own hands.
 
 =head1 API
 
@@ -469,7 +495,7 @@ Combining coroutines with an event loop is a surprisingly powerful technique.
 
 =head2 Camping
 
-Squatting is the spiritual descendant of Camping, so studying the Camping API
+Squatting is descended from Camping, so studying the Camping API
 will indirectly teach you much of the Squatting API.
 
 L<http://code.whytheluckystiff.net/camping/>

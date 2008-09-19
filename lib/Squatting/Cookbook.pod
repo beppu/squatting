@@ -12,7 +12,7 @@ but to port Camping to Perl, and that's how Squatting was born.
 My hope is that other Perl programmers will be able to appreciate how concise
 this API is, and I hope they'll see just how far a little bit of code can go.
 
-=head2 Anatomy of a Squatting Application
+=head2 The Anatomy of a Squatting Application
 
 =head3 Make a Subclass of Squatting
 
@@ -443,7 +443,7 @@ its easiest.
 =head3 Using Subdomains to Determine Language Preference
 
 First, we need a high-level strategy for determining what language to present
-to the user.  Wikipedia's approach of using ISO-639-1 language tags in
+to the user.  Wikipedia's approach of using 2-letter language codes in their
 subdomains is my favorite way of doing this.  (For example, the English version
 of Wikipedia is at L<http://en.wikipedia.org/> and the Korean version of
 Wikipedia is at L<http://ko.wikipedia.org/>.)
