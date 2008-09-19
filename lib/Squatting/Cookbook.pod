@@ -7,7 +7,7 @@ Squatting::Cookbook - Web Development Techniques for Squatting
 Squatting exists because I fell in love with Camping's API, and I couldn't bear
 the thought of building another site using some other API.  When I decided that
 the next site I wanted to build would be implemented in Perl, I had no choice
-but to port Camping to Perl, and that's how Squatting was born.
+but to port Camping from Ruby to Perl, and that's how Squatting was born.
 
 My hope is that other Perl programmers will be able to appreciate how concise
 this API is, and I hope they'll see just how far a little bit of code can go.
