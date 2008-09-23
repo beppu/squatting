@@ -28,6 +28,10 @@ Beyond (unreleased)
     If I want sessions, they have to be setup before service is called.)
   - removed bin/vw from distribution, because it will be
     distributed with App::VW from now on.
+  - worked around a weird bug where
+    Squatting::On::Catalyst + FastCGI
+    was using the wrong path.
+  * finish L<Squatting::Cookbook/The Anatomy of a Squatting Application>
   * implement Squatting::On::MP13
   * implement Squatting::On::MP20
   * implement Squatting::On::FastCGI

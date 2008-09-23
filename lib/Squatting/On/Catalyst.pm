@@ -23,8 +23,8 @@ $p{e} = sub {
   my $uri = $req->uri;
   my %env;
   $env{QUERY_STRING}   = $uri->query || '';
-  $env{REQUEST_PATH}   = $uri->path;
-  $env{REQUEST_URI}    = $uri->path_query;
+  $env{REQUEST_PATH}   = '/' . $cat->req->path;
+  $env{REQUEST_URI}    = $env{REQUEST_PATH} . "?$env{QUERY_STRING}";
   $env{REQUEST_METHOD} = $req->method;
   my $h = $req->headers;
   $h->scan(sub{
@@ -62,7 +62,7 @@ $p{init_cc} = sub {
 
 sub catalyze {
   my ($app, $cat) = @_;
-  my ($c,   $p)   = &{ $app . "::D" }($cat->request->uri->path);
+  my ($c,   $p)   = &{ $app . "::D" }('/'.$cat->request->path);
   my $cc = $p{init_cc}->($c, $cat);
   my $content = $app->service($cc, @$p);
   my $h       = $cat->response->headers;
