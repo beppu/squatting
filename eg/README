@@ -84,4 +84,29 @@ squatting MicroWiki -p 4240
 
     perltidy < MicroWiki.pm
 
+______________________________________________________________________________
+squatting CouchWiki -p 4241
+
+  http://localhost:4241/
+
+  requires
+    Clone
+    HTML::AsSubs
+    Text::Textile
+    AnyEvent::CouchDB
+
+  I received an email from someone who wanted an example of how to use
+  AnyEvent in combination with Squatting and Continuity, so I ended up
+  creating CouchWiki.
+
+  * It started out as an unobfuscated MicroWiki.
+  * Then I switched to CouchDB for storage (instead of the filesystem).
+
+  After you've created a few pages through the browser, try doing this
+  in the shell:
+
+  $ squatting CouchWiki -C
+  > recent_changes
+  > page('Home')
+
 
