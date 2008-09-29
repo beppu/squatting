@@ -98,7 +98,7 @@ If your app is called C<App>, then:
 
 =head3 Event Architecture
 
-TODO - explain using IRC as a metaphor
+TODO - explain, possibly using IRC as a metaphor
 
 Events (and my current preference for ambient event generation)
 
@@ -111,43 +111,78 @@ Subscribers
 
 =head3 RESTless Controllers
 
-I'm figuring this out as I go along...
+The following is the C<Event> controller from the Bavl project.  It is included
+here to give you something to ponder while I think about how to explain this
+better.  (I'm figuring this out as I go along.)
 
   C(
     Event => [ '/@event' ],
     get => sub {
       warn "coro [$Coro::current]";
       my ($self) = shift;
+      my $input  = $self->input;
       my $cr     = $self->cr;
+      my @ch     = channels($input->{channels});
+      my $last   = time;
       while (1) {
-        # OUTPUT
+        # Output
         warn "top of loop";
+        my @events = 
+          grep { defined } 
+          map  { my $ch = $bavl->channels->{$_}; $ch->read } @ch;
         my $x = async {
           warn "printing...";
-          $cr->print(encode_json([{ type => 'Chat', message => 'Hi' }]));
+          $cr->print(encode_json(\@events));
         };
         $x->join;
 
         # Hold for a brief moment until the next long poll request comes in.
         warn "waiting for next request";
         $cr->next;
+        $last = time;
+        my $channels = [ $cr->param('channels') ];
+        @ch = channels($channels);
 
-        # TODO Try starting up 1 coroutine per channel.
-        # TODO Each coroutine will have the same Coro::Signal object.
-        # TODO The first one who sends a signal wins.
-        # TODO The losers will have to be terminated somehow.
+        # Try starting up 1 coroutine per channel.
+        # Each coroutine will have the same Coro::Signal object => $activity.
+        my $activity = Coro::Signal->new;
+        my @coros = map {
+          my $ch = $bavl->channels->{$_};
+          async { $ch->signal->wait; $activity->broadcast };
+        } @ch;
 
-        warn "waiting for signal";
-        $signal->timed_wait(20);
+        # The first one who sends a signal to $activity wins.
+        warn "waiting for activity on any of (@ch)";
+        $activity->timed_wait(20);
+
+        # Cancel the remaining coros.
+        for (@coros) { $_->cancel }
       }
     },
+
+    # The current POST action exists for debugging purposes, only.
+    # In practice, channel updates will happen ambiently 
+    # when model data changes.
+    # Hooks will be put into place to facilitate this.
+    # 
+    # In the future, the POST action may be used as a notification
+    # to the server side that $.ev.stop() happened
+    # on the client side.
     post => sub {
       my ($self) = shift;
-      $signal->broadcast;
+      my $input  = $self->input;
+      my $ch = $bavl->channels->{ $input->{channels} };
+      if ($ch) {
+        $ch->write({ type => 'time', value => scalar(localtime) });
+      }
       1;
     },
     queue => { get => 'event' },
   ),
+
+This might look scary, but if we're lucky, we'll be able to turn this into
+a reusable component.
+
 
 =head3 Long Polling with jQuery on the Client Side
 
