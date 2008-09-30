@@ -10,6 +10,14 @@ use Data::Dump 'pp';
 
 our @C = (
        C(
+               Home => [ '/' ],
+               get => sub {
+                       my ($self) = @_;
+                       $self->redirect(R('Count'));
+               },
+       ),
+
+       C(
                Count => [ '/@count' ],
                get => sub {
                        my ($self) = @_;

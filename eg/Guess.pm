@@ -5,7 +5,14 @@ package Guess::Controllers;
 use Squatting ':controllers';
 
 our @C = (
-       
+       C(
+               Home => [ '/' ],
+               get => sub {
+                       my ($self) = @_;
+                       $self->redirect(R('Guess'));
+               },
+       ),
+
        C(
                Guess => [ '/guess' ],
                get => sub {
