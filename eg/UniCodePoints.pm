@@ -1,7 +1,7 @@
 package UniCodePoints;
 
-warn 'export PERL_UNICODE=SD  # before running this app' 
-  unless $ENV{PERL_UNICODE} =~ /S/ && $ENV{PERL_UNICODE} =~ /D/;
+#warn 'export PERL_UNICODE=SD  # before running this app' 
+#  unless $ENV{PERL_UNICODE} =~ /S/ && $ENV{PERL_UNICODE} =~ /D/;
 
 use base 'Squatting';
 use strict;

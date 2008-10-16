@@ -12,27 +12,70 @@ but to port Camping from Ruby to Perl, and that's how Squatting was born.
 My hope is that other Perl programmers will be able to appreciate how concise
 this API is, and I hope they'll see just how far a little bit of code can go.
 
+Please excuse the lack of polish on this document.  It is a work in progress.
+
 =head2 The Anatomy of a Squatting Application
 
+This section describes the structure of a simple Squatting app.
+For the sake of our examples, please assume the following:
+
+=over 4
+
+=item The name of the app is "App".
+
+It may lack of creativity, but it makes things easier.
+
+=item C<$App> eq "App".
+
+This is also used to emphasize that this is a general principle that works
+for all apps.
+
+=back
+
 =head3 Make a Subclass of Squatting
+
+First, create a package named after the app.  This package should subclass
+L<Squatting> and have a package variable named C<%CONFIG>.
 
   package App;
   use base 'Squatting';
   our %CONFIG = ();
 
+C<%CONFIG> is a special variable that contains the configuration for the app.
+One of the handy features of the L<squatting> script is that it can be used
+to change the values in C<%CONFIG> from the command line.  To see a demonstration
+of this, try the following commands:
+
+  squatting Pod::Server
+  squatting Pod::Server -c background_color='#301'
+
+Notice how the background color is a dark blue in the first example, but when
+we pass in a custom background_color, the background color is a dark red.
+
 =head3 Make a Package for Your Controllers
 
-If your app is called C<App>, then:
+Next, create a package for your controllers.
 
 =over 4
 
-=item Your controllers must be defined in a package called C<App::Controllers>.
+=item The package name should be $App . "::Controllers".
 
-=item You must say C<use Squatting ':controllers'>.
+This package name is plural, because we're using the package not as a class
+definition but as a namespace for containing controllers.
 
-=item You must put your controllers in a package variable named C<@C>.
+=item The package should C<use Squatting ':controllers'>.
+
+Using L<Squatting> this way will export two functions:  C<R()> for URL
+generation, and C<C()> as a shortcut for creating L<Squatting::Controller>
+objects.
+
+=item The package should have a package variable named C<@C>.
+
+C<@C>'s purpose is to contain a list of L<Squatting::Controller> objects.
 
 =back
+
+B<Example>:
 
   package App::Controllers;
   use Squatting ':controllers';
