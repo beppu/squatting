@@ -452,7 +452,8 @@ names to filenames.
 =head3 Template Toolkit
 
 L<Template Toolkit|Template> is probably the most popular templating system in
-use as of this writing.  This is how you'd implement a view for it.
+use by the Perl community as of this writing.  This is one way you could implement
+a view for it:
 
   package App::Views;
   use strict;
@@ -462,26 +463,31 @@ use as of this writing.  This is how you'd implement a view for it.
 
   our @V = (
     V(
-      'tt',
-      tt => Template->new(),
+      'html',
+      tt => Template->new($App::CONFIG{tt_config}),
+
       layout => sub {
-        my ($self, $v, $content) = @_;
+        my ($self, $v, $body) = @_;
         my $tt = $self->{tt};
-        $v->{content} = $content;
-        $tt->render(":layout", $v);
+        $v->{body} = $body;
+        my $output;
+        $tt->process('layout' . $App::CONFIG{tt_postfix}, $v, \$output);
+        return $output;
       },
+
       _ => sub {
         my ($self, $v) = @_;
         my $tt = $self->{tt};
-        $v->{self} = $self;
-        $tt->render(":$self->{template}", $v);
+        $v->{R} = \&R;
+        my $output;
+        $tt->process($self->{template} . $App::CONFIG{tt_postfix}, $v, \$output);
+        return $output;
       },
     ),
   );
-  1;
 
-As you can see, it's structured very similarly to the Tenjin view in the
-previous example.
+Credit for this example goes to draegtun.  
+L<http://draegtun.wordpress.com/2008/10/21/using-template-toolkit-with-squatting/>
 
 =head3 HTML::Mason
 
