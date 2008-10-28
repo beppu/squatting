@@ -78,6 +78,7 @@ if ($app) {
   for (keys %{$_{config}}) {
     if (/\[/ || /\{/) {
       my $key = $_;
+      # XXX - If you can think of a better way, let me know.
       eval '$C->'.$key.' = $_{config}'."{'$key'}";
     } else {
       $C->{$_} = $_{config}{$_}
