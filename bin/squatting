@@ -65,6 +65,8 @@ if ($_{version}) {
 
 }
 
+# warn pp($_{config}), "\n";
+
 my $app = shift;
 if ($app) {
   $app =~ s/\.pmc?$//;
@@ -74,7 +76,12 @@ if ($app) {
   require "$path";
   my $C = \%{$app."::CONFIG"};
   for (keys %{$_{config}}) {
-    $C->{$_} = $_{config}{$_}
+    if (/\[/ || /\{/) {
+      my $key = $_;
+      eval '$C->'.$key.' = $_{config}'."{'$key'}";
+    } else {
+      $C->{$_} = $_{config}{$_}
+    }
   }
   if ($_{'show-config'}) {
     print pp($C), "\n";
@@ -87,7 +94,7 @@ if ($app) {
       exit 1;
     }
     $app->init;
-    # XXX - I have to think this over.
+    # XXX - This is broken.  I have to think this over.
     sub Squatting::Controller::mock_init {
       my $self = shift;
       $self->{cr}          = {}; # TODO - provide a mock Continuity::Request
