@@ -45,16 +45,12 @@ Benefits to the Perl Community
 
 Deliverables
 
-  * Squatting::On::ModPerl1
-  * Squatting::On::ModPerl19
-  * Squatting::On::ModPerl2
-  * Squatting::On::CGI
-  * Squatting::On::FastCGI
+  * Squatting::On::MP13
+  * Squatting::On::MP19
+  * Squatting::On::MP20
+  * Squatting::On::HTTP::Engine
+  * Squatting::On::Mojo
   * Squatting::On::Jifty
-
-    and for the grand finale...
-    
-  * Squatting::On::PHP (Yes, it's possible.)
 
 Project Details
   
@@ -84,5 +80,5 @@ Bio
 
 Amount Requested
 
-  $1500.00
+  $1000.00
 
