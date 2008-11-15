@@ -1,12 +1,13 @@
 #!/bin/bash
+vim=${vim:-vim}
 case ${1:-base} in
   base)
-    vim -p bin/squatting lib/Squatting.pm lib/Squatting/Controller.pm lib/Squatting/View.pm lib/Squatting/Mapper.pm lib/Squatting/Cookbook.pod 
+    $vim -p bin/squatting lib/Squatting.pm lib/Squatting/Controller.pm lib/Squatting/View.pm lib/Squatting/Mapper.pm lib/Squatting/Cookbook.pod 
     ;;
   on)
-    vim -p lib/Squatting/On/*.pm
+    $vim -p lib/Squatting/On/*.pm
     ;;
   with)
-    vim -p lib/Squatting/With/AccessTrace.pm lib/Squatting/With/Log.pm
+    $vim -p lib/Squatting/With/AccessTrace.pm lib/Squatting/With/Log.pm
     ;;
 esac
