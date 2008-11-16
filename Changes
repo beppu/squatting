@@ -22,6 +22,8 @@ Beyond (unreleased)
   * implement Squatting::On::Jifty
   * implement Squatting::On::FastCGI
   * resurrect Squatting::H ?
+  * in Squatting::Controller's POD, teach people how to document controllers.
+  * in Squatting::View's POD, teach people how to document views.
 
 0.60 (unreleased)
   - More documentation updates and corrections.
