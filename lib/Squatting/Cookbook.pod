@@ -12,27 +12,16 @@ but to port Camping from Ruby to Perl, and that's how Squatting was born.
 My hope is that other Perl programmers will be able to appreciate how concise
 this API is, and I hope they'll see just how far a little bit of code can go.
 
-Please excuse the lack of polish on this document.  It is a work in progress.
 
 =head2 The Anatomy of a Squatting Application
 
-This section describes the structure of a simple Squatting app.
-For the sake of our examples, please assume the following:
+A Squatting app is simply a list of controller and view objects.  They are
+assumed to be in specially named packages and variables, so the bulk of this
+section will be devoted to describing this naming convention.
 
-=over 4
+A Squatting app named "App" will be created to demonstrate this.
 
-=item The name of the app is "App".
-
-It may lack of creativity, but it makes things easier.
-
-=item C<$App> eq "App".
-
-This is also used to emphasize that this is a general principle that works
-for all apps.
-
-=back
-
-=head3 Make a Subclass of Squatting
+=head3 Making a Subclass of Squatting
 
 First, create a package named after the app.  This package should subclass
 L<Squatting> and have a package variable named C<%CONFIG>.
@@ -43,33 +32,24 @@ L<Squatting> and have a package variable named C<%CONFIG>.
 
 C<%CONFIG> is a special variable that contains the configuration for the app.
 One of the handy features of the L<squatting> script is that it can be used
-to change the values in C<%CONFIG> from the command line.  To see a demonstration
-of this, try the following commands:
+to change the values in C<%CONFIG> from the command line.
 
-  squatting Pod::Server
-  squatting Pod::Server -c background_color='#301'
-
-Notice how the background color is a dark blue in the first example, but when
-we pass in a custom background_color, the background color is a dark red.
-
-=head3 Make a Package for Your Controllers
-
-Next, create a package for your controllers.
+=head3 Making a Package for Your Controllers
 
 =over 4
 
 =item The package name should be $App . "::Controllers".
 
-This package name is plural, because we're using the package not as a class
-definition but as a namespace for containing controllers.
+This package name is plural, because we're using the package as a namespace
+for containing controllers.  It is B<NOT> a class definition.
 
 =item The package should C<use Squatting ':controllers'>.
 
-Using L<Squatting> this way will export two functions:  C<R()> for URL
+Using L<Squatting> this way will import two functions:  C<R()> for URL
 generation, and C<C()> as a shortcut for creating L<Squatting::Controller>
 objects.
 
-=item The package should have a package variable named C<@C>.
+=item A package variable named C<@C> should contain controllers.
 
 C<@C>'s purpose is to contain a list of L<Squatting::Controller> objects.
 
@@ -97,20 +77,32 @@ B<Example>:
       }
     )
   );
+  1;
 
 =head4 Anatomy of a Controller
 
-=head3 Make a Package for Your Views
+In Squatting, a controller object represents an HTTP resource that can respond
+to HTTP methods.  It has a C<name> and a list of C<urls> (actually url regex
+patterns) that identify it.  It can also have methods like C<get> and C<post>
+that correspond to the HTTP methods C<GET> and C<POST>.
 
-If your app is called C<App>, then:
+
+=head3 Make a Package for Your Views
 
 =over 4
 
-=item Your views must be defined in a package called C<App::Views>.
+=item The package name should be $App . "::Views".
 
-=item You must say C<use Squatting ':views'>.
+Again, this package name is plural, because it is being used as a namespace
+to contain views.  It is B<NOT> a class definition.
 
-=item You must put your views in a package variable named C<@V>.
+=item The package should C<use Squatting ':views'>.
+
+Using L<Squatting> this way will import two functions:  C<R()> for URL
+generation, and C<V()> as a shortcut for creating L<Squatting::View>
+objects.
+
+=item A package variable named C<@V> should contain views.
 
 =back
 
@@ -485,6 +477,7 @@ a view for it:
       },
     ),
   );
+  1;
 
 Credit for this example goes to draegtun.  
 L<http://draegtun.wordpress.com/2008/10/21/using-template-toolkit-with-squatting/>
@@ -495,12 +488,47 @@ TODO
 
 =head3 HTML::Template
 
-TODO
+L<HTML::Template> is one of the strictest templating systems around.  There is
+very little processing you can do from within the templates, so you're really
+forced to do all your data manipulation B<BEFORE> the templating system sees
+it.  Some people like this hard separation, and if you're one of them, here is
+how you'd make use of HTML::Template from within Squatting.
+
+  package App::Views;
+  use strict;
+  use warnings;
+  use Squatting ':views';
+  use HTML::Template::Pro;
+
+  our @V = (
+    V(
+      'html',
+      layout => sub {
+        my ($self, $v, $content) = @_;
+        my $root = $App::CONFIG{root};
+        my $t = HTML::Template::Pro->new(filename => "$root/layout.html");
+        $v->{content} = $content;
+        $t->param(%$v);
+        $t->output;
+      },
+      _ => sub {
+        my ($self, $v) = @_;
+        my $root = $App::CONFIG{root};
+        my $template = $self->{template};
+        my $t = HTML::Template::Pro->new(filename => "$root/$template.html");
+        $t->param(%$v);
+        $t->output;
+      },
+    )
+  );
+  1;
 
 =head3 XML::Atom
 
 TODO - This is not a templating system, but it's useful to know how to generate
 well-formed Atom feeds, so I'm going to include it in this section as well.
+
+Views are not just for HTML....
 
 
 =head2 How to Take Advantage of Having Multiple Views
@@ -690,6 +718,33 @@ this:
   App->init;
   sub default : Private { App->catalyze($_[1]) }
 
+=head3 HTTP::Engine
+
+Running an app on top of L<HTTP::Engine> is accomplished by using the
+L<Squatting::On::HTTP::Engine> module like this:
+
+  use App 'On::HTTP::Engine';
+  App->init;
+  App->http_engine(
+    interface => 'ServerSimple',
+    args      => {
+      host => 'localhost',
+      port => 2222,
+    }
+  )->run;
+
+Squatting::On::HTTP::Engine supports many other interfaces such as
+FCGI and ModPerl (for Apache 2.2 only), so please consult the docs for
+this module if this method of deployment interests you.
+
+=head3 Mojo
+
+TODO
+
+=head3 Jifty
+
+TODO
+
 =head3 Raw mod_perl1
 
 TODO
@@ -747,7 +802,11 @@ limiting.
 
 =head2 Reverse Proxying to Squatting+Continuity w/ Perlbal
 
+TODO
+
 =head2 Reverse Proxying to Squatting+Continuity w/ nginx
+
+TODO
 
 =head2 Piggy-Backing on Top of Other Frameworks
 
