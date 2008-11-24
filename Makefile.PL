@@ -15,6 +15,8 @@ WriteMakefile (
     'JSON::XS'                 => 0,
     'Shell::Perl'              => 0,
     'IO::All'                  => 0,
+    'Test::More'               => 0,
+    'HTTP::Response'           => 0,
   },
   depend => { distmeta => 'metamunge' }
 );
