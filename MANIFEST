@@ -20,6 +20,7 @@ eg/UniCodePoints.pm
 lib/Squatting.pm
 lib/Squatting/Controller.pm
 lib/Squatting/Cookbook.pod
+lib/Squatting/H.pm
 lib/Squatting/Mapper.pm
 lib/Squatting/On/Catalyst.pm
 lib/Squatting/On/CGI.pm
