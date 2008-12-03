@@ -31,7 +31,7 @@ sub clone {
 
 # $object->slots -- keys of underlying hashref of $object
 sub slots {
-  keys %{$_[0]} 
+  keys %{$_[0]}
 }
 
 # $object->as_hash -- unbless
@@ -46,7 +46,7 @@ sub as_json {
   if ($self->{to_json}) {
     $self->{to_json}->($self);
   } else {
-    encode_json($self->to_hash);
+    encode_json($self->as_hash);
   }
 }
 *to_json = \&as_json;
@@ -86,9 +86,35 @@ Squatting::H - a slot based object for my amusement
 
 =head2 Object Construction
 
+=head3 $object = Squatting::H->new(\%merge)
+
+                         
+=head3 $object = $object->merge(\%merge)
+
+
+=head3 $object2 = $object->clone(\%merge)
+
+
 =head2 General
 
+=head3 @slot_names = $object->slots;
+
+=head3 $object->as_hash
+
+=head3 $object->to_hash
+
+
+
+=head3 $object->as_json
+
+=head3 $object->to_json
+
+=head3 $object->TO_JSON
+
+
 =head1 SEE ALSO
+
+L<http://camping.rubyforge.org/classes/Camping/H.html>
 
 =cut
 
