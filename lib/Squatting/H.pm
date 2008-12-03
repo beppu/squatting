@@ -29,9 +29,9 @@ sub clone {
   $clone;
 }
 
-# $object->keys -- keys of underlying hashref of $object
-sub keys {
-  CORE::keys(%{$_[0]})
+# $object->slots -- keys of underlying hashref of $object
+sub slots {
+  keys %{$_[0]} 
 }
 
 # $object->as_hash -- unbless
