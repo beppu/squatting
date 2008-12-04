@@ -21,7 +21,6 @@ Beyond (unreleased)
   * implement Squatting::On::MP19
   * implement Squatting::On::Jifty
   * implement Squatting::On::FastCGI
-  * resurrect Squatting::H ?
   * in Squatting::Controller's POD, teach people how to document controllers.
   * in Squatting::View's POD, teach people how to document views.
 
@@ -31,14 +30,13 @@ Beyond (unreleased)
   - Implemented Squatting::With::Log
   - added --module parameter to bin/squatting
   - added default in-memory session to Squatting::On::Continuity
-    (I discovered that session setup can't happen via the plugin system.
-    If I want sessions, they have to be setup before service is called.)
   - removed bin/vw from distribution, because it will be
     distributed with App::VW from now on.
   - worked around a weird bug where
     Squatting::On::Catalyst + FastCGI
     was using the wrong path.
   - added support for nested %CONFIG vars in bin/squatting
+  - resurrected Squatting::H
   * finish L<Squatting::Cookbook/The Anatomy of a Squatting Application>
   * implement Squatting::On::MP13
   * implement Squatting::On::MP20
