@@ -17,6 +17,7 @@ eg/OpenID/Provider.pm
 eg/PODServer.pm
 eg/README
 eg/UniCodePoints.pm
+lib/squatting.pl
 lib/Squatting.pm
 lib/Squatting/Controller.pm
 lib/Squatting/Cookbook.pod
