@@ -26,7 +26,6 @@ lib/Squatting/Mapper.pm
 lib/Squatting/On/Catalyst.pm
 lib/Squatting/On/CGI.pm
 lib/Squatting/On/Continuity.pm
-lib/Squatting/On/FastCGI.pm
 lib/Squatting/On/Jifty.pm
 lib/Squatting/On/MP13.pm
 lib/Squatting/On/MP19.pm
