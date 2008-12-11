@@ -12,7 +12,7 @@ use Data::Dump 'pp';
 # defaults
 $_{port}    = 4234;
 $_{debug}   = 1;
-$_{modules} = [ 'With::Log', 'With::AccessTrace' ];
+$_{module}  = [ 'With::Log', 'With::AccessTrace' ];
 
 # command line options
 Getopt::Long::Configure('no_ignore_case');
@@ -67,6 +67,7 @@ if ($_{version}) {
 }
 
 # warn pp($_{config}), "\n";
+# warn pp(\%_), "\n";
 
 my $app = shift;
 if ($app) {
@@ -95,6 +96,7 @@ if ($app) {
       print "Please install Shell::Perl if you'd like to use the Squatting console.\n";
       exit 1;
     }
+    $app->load_components(@{$_{module}});
     $app->init;
     # XXX - This is broken.  I have to think this over.
     sub Squatting::Controller::mock_init {
@@ -120,7 +122,8 @@ if ($app) {
     $pirl->set_package($app."::Controllers");
     $pirl->run;
   } else {
-    $app->load_components(@{ $_{modules} }, "On::Continuity");
+    my @components = ( "On::Continuity", @{$_{module}} );
+    $app->load_components(@components);
     $app->init;
     $app->continue(
       port        => $_{port},
