@@ -666,15 +666,20 @@ GET is where the sequence finishes.
 
 =head2 How to Compose Multiple Squatting Apps Into One App
 
-After you C<init> the app, you can start mounting other apps.
+B<*BEFORE*> you C<init> the app, you can mount other apps like this:
 
   App->mount('OtherApp0' => '/prefix0');
   App->mount('OtherApp1' => '/prefix1');
   App->mount('OtherApp2' => '/prefix2');
 
-If you need to C<relocate>, do that after you finish mounting.  The order is
-always C<init>, C<mount>, and C<relocate>.  Also, remember that an app can only
-be mounted once, and C<relocate> should only be called once.
+Once you're done mounting, run init:
+
+  App->init();
+
+Finally, if you need to C<relocate>, do that after you finish mounting.  
+Remember:  the order is always C<mount>, C<init>, and C<relocate>.  Also,
+remember that an app can only be mounted once, and C<relocate> should only be
+called once.
 
 =head2 How to Embed a Squatting App Into Other Frameworks
 
