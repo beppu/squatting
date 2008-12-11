@@ -1,7 +1,8 @@
 package Squatting::With::Coro::Debug;
 
-use strict;
-use warnings;
+#use strict;
+#use warnings;
+use Coro::Debug;
 
 sub init {
   my ($app)  = shift;
