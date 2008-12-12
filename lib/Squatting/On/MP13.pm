@@ -1,9 +1,131 @@
 package Squatting::On::MP13;
 
+use strict;
+use warnings;
+use Apache;
+use Apache::Constants ':common';
+use Squatting::H;
+
+# adapt Apache::Log's interface to Squatting::Log's interface
+our $log = Squatting::H->new({
+  _log_ => undef,
+  debug => sub {
+    my ($self, @messages) = @_;
+    $self->_log_->debug(@messages);
+  },
+  info => sub {
+    my ($self, @messages) = @_;
+    $self->_log_->info(@messages);
+  },
+  warn => sub {
+    my ($self, @messages) = @_;
+    $self->_log_->warn(@messages);
+  },
+  error => sub {
+    my ($self, @messages) = @_;
+    $self->_log_->error(@messages);
+  },
+  fatal => sub {
+    my ($self, @messages) = @_;
+    $self->_log_->emerg(@messages);
+  },
+});
+
+# p for private
+my %p;
+$p{init_cc} = sub {
+  my ($c, $r)  = @_;
+  my $cc       = $c->clone;
+  $cc->env     = { %ENV };
+  $cc->cookies = $p{c}->($ENV{HTTP_COOKIE});
+  $cc->input   = $p{i}->($q);
+  $cc->headers = { 'Content-Type' => 'text/html' };
+  $cc->v       = { };
+  $cc->status  = 200;
+  $cc->log     = $log;
+  $log->_log_  = $r->log;
+  $cc;
+};
+
+# \%input = i($q)  # Extract CGI parameters from a CGI object
+$p{i} = sub {
+  my $q = $_[0];
+  my %i = $q->Vars;
+  +{ map {
+    if ($i{$_} =~ /\0/) {
+      $_ => [ split("\0", $i{$_}) ];
+    } else {
+      $_ => $i{$_};
+    }
+  } keys %i }
+};
+
+# \%cookies = c($cookie_header)  # Parse Cookie header(s).
+$p{c} = sub {
+  +{ map { ref($_) ? $_->value : $_ } CGI::Cookie->parse($_[0]) };
+};
+
 sub mp13 {
+  no strict 'refs';
+  my ($app, $r) = @_;
+  my ($c,   $p) = &{ $app . "::D" }($r->uri);
+  my $cc = $p{init_cc}->($c, $r);
+  my $content = $app->service($cc, @$p);
+  while (my($header, $value) = each(%{$cc->headers})) {
+    $r->header_out($header, $value);
+  }
+  $r->status($cc->status);
+  $r->send_http_header;
+  $r->print($content);
+  OK;
 }
 
 1;
+
+__END__
+
+=head1 NAME
+
+Squatting::On::MP13 - a handler for Apache 1.3's mod_perl
+
+=head1 SYNOPSIS
+
+Load the App + Squatting::On::MP13
+
+  <Perl>
+    use App 'On::MP13';
+    App->init;
+  </Perl>
+
+Setup a method handler in your Apache config
+
+  <Location />
+    SetHandler perl-script
+    PerlHandler App->mp13
+  </Location>
+
+=head1 DESCRIPTION
+
+The purpose of this module is to add an C<mp13> method to your app that can be
+used as a mod_perl handler.  To use this module, pass the string C<'On::MP13'>
+to the C<use> statement that loads your Squatting app.  Also, make sure you've
+configured your Apache to use C<App-E<gt>mp13> as the handler.
+
+=head1 API
+
+=head2 They should have stopped at Apache 1.3.37.
+
+=head3 App->mp13($r)
+
+This method takes an L<Apache> request object, and translates the request into
+terms that Squatting understands.  Then, after your app has handled the request,
+it will send out an HTTP response via mod_perl.
+
+=head1 SEE ALSO
+
+L<Apache>
+
+=cut
 
 # Local Variables: ***
 # mode: cperl ***
