@@ -175,7 +175,7 @@ specified log level.
 
 =head1 SEE ALSO
 
-L<Catalyst::Log>
+L<Catalyst::Log> - The Squatting::Log API is the same as the Catalyst::Log API.
 
 =cut
 
