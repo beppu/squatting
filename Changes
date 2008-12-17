@@ -25,7 +25,7 @@ Beyond (unreleased)
     was using the wrong path.
   - added support for nested %CONFIG vars in bin/squatting
   - resurrected Squatting::H
-  - implement Squatting::With::Coro::Debug
+  - implemented Squatting::With::Coro::Debug
   * finish L<Squatting::Cookbook/The Anatomy of a Squatting Application>
   * implement Squatting::On::MP13
   * implement Squatting::On::MP20
