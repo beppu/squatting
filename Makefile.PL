@@ -17,6 +17,7 @@ WriteMakefile (
     'IO::All'                  => 0,
     'Test::More'               => 0,
     'HTTP::Response'           => 0,
+    'Clone'                    => 0,
   },
   depend => { distmeta => 'metamunge' }
 );
