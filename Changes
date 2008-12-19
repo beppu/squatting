@@ -1,27 +1,14 @@
 Beyond (unreleased)
-  * implement Squatting::With::Coro::Debug
   * give Squatting::Controller more awareness of Continuity.
     Instead of $self->cr->next, what if we could say $self->next ?
   * add proper support for file uploads wherever possible.
     # I think adding an upload method to the controllers would work.
-  * SESSIONS:  Catalyst, Continuity, (and possibly Jifty)
-    have nice defaults that a Squatting app can rely upon.
-    However, the rest of the backends are lower level, and
-    session storage is an open question there.  I'd like to
-    create a standard way for the Squatting::On::* family to
-    setup session storage.
-    # What seems unfortunate is that I can't just wrap service()
-    # to do this like Camping was able to.  The C3 method resolution order
-    # is working against me in this case.  :-/
   * do a better job of simulating requests in squatting -C
   * BUG: POST -> perlbal -> thttpd -> Squatting::On::CGI == FAIL
     Strangely enough, GET is fine.
     Take perlbal out of the setup and everything is fine.
-  * implement Squatting::On::HTTP::Engine
   * implement Squatting::On::MP19
   * implement Squatting::On::Jifty
-  * implement Squatting::On::FastCGI
-  * resurrect Squatting::H ?
   * in Squatting::Controller's POD, teach people how to document controllers.
   * in Squatting::View's POD, teach people how to document views.
 
@@ -31,14 +18,14 @@ Beyond (unreleased)
   - Implemented Squatting::With::Log
   - added --module parameter to bin/squatting
   - added default in-memory session to Squatting::On::Continuity
-    (I discovered that session setup can't happen via the plugin system.
-    If I want sessions, they have to be setup before service is called.)
   - removed bin/vw from distribution, because it will be
     distributed with App::VW from now on.
   - worked around a weird bug where
     Squatting::On::Catalyst + FastCGI
     was using the wrong path.
   - added support for nested %CONFIG vars in bin/squatting
+  - resurrected Squatting::H
+  - implemented Squatting::With::Coro::Debug
   * finish L<Squatting::Cookbook/The Anatomy of a Squatting Application>
   * implement Squatting::On::MP13
   * implement Squatting::On::MP20

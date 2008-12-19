@@ -255,8 +255,8 @@ so much that I ported it to Perl.
 =item B<Tiny Codebase>
 
 The core of Squatting (which includes Squatting, Squatting::Controller, and
-Squatting::View) contains about 4.2K of code (after minifying).  Also, the
-number of Perl module dependencies has been kept down to a minimum.
+Squatting::View) can be squished into less than 4K of obfuscated perl.  Also,
+the number of Perl module dependencies has been kept down to a minimum.
 
 =item B<RESTful Controllers By Default>
 

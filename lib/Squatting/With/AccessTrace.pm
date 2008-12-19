@@ -48,3 +48,14 @@ The code that generates this was originally in C<&Squatting::service>, but I
 wanted to make it optional, so I moved it into a separate module.
 
 =cut
+
+# Local Variables: ***
+# mode: cperl ***
+# indent-tabs-mode: nil ***
+# cperl-close-paren-offset: -2 ***
+# cperl-continued-statement-offset: 2 ***
+# cperl-indent-level: 2 ***
+# cperl-indent-parens-as-block: t ***
+# cperl-tab-always-indent: nil ***
+# End: ***
+# vim:tabstop=8 softtabstop=2 shiftwidth=2 shiftround expandtab
