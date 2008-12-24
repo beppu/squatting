@@ -440,9 +440,14 @@ and embeddable.
 =item B<Other Squatting::* modules>:
 
 L<Squatting::Controller>, L<Squatting::View>, L<Squatting::Mapper>,
+L<Squatting::H>,
 L<Squatting::On::Continuity>, L<Squatting::On::Catalyst>, L<Squatting::On::CGI>,
-L<Squatting::With::AccessTrace>,
-L<Squatting::Cookbook>
+L<Squatting::On::MP13>,
+L<Squatting::With::AccessTrace>, L<Squatting::With::Log>,
+L<Squatting::With::Coro::Debug>
+L<Squatting::Cookbook>;
+
+L<Squatting::On::HTTP::Engine>
 
 =item B<Squatting's superclass>:
 
