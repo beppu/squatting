@@ -1,5 +1,6 @@
 package Squatting::H;
 use strict;
+use warnings;
 use Clone;
 
 our $AUTOLOAD;
