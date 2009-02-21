@@ -3,31 +3,33 @@ package Squatting::On::MP13;
 use strict;
 use warnings;
 use Apache;
+use Apache::Log;
+use Apache::Cookie;
 use Apache::Constants ':common';
 use Squatting::H;
 
 # adapt Apache::Log's interface to Squatting::Log's interface
 our $log = Squatting::H->new({
-  _log_ => undef,
+  _log  => undef,
   debug => sub {
     my ($self, @messages) = @_;
-    $self->_log_->debug(@messages);
+    $self->_log->debug(@messages);
   },
   info => sub {
     my ($self, @messages) = @_;
-    $self->_log_->info(@messages);
+    $self->_log->info(@messages);
   },
   warn => sub {
     my ($self, @messages) = @_;
-    $self->_log_->warn(@messages);
+    $self->_log->warn(@messages);
   },
   error => sub {
     my ($self, @messages) = @_;
-    $self->_log_->error(@messages);
+    $self->_log->error(@messages);
   },
   fatal => sub {
     my ($self, @messages) = @_;
-    $self->_log_->emerg(@messages);
+    $self->_log->emerg(@messages);
   },
 });
 
@@ -38,34 +40,21 @@ $p{init_cc} = sub {
   my $cc       = $c->clone;
   $cc->env     = { %ENV };
   $cc->cookies = $p{c}->($ENV{HTTP_COOKIE});
-  $cc->input   = $p{i}->($q);
+  $cc->input   = { $r->args };
   $cc->headers = { 'Content-Type' => 'text/html' };
   $cc->v       = { };
   $cc->status  = 200;
   $cc->log     = $log;
-  $log->_log_  = $r->log;
+  $log->_log($r->log);
   $cc;
 };
 
-# \%input = i($q)  # Extract CGI parameters from a CGI object
-$p{i} = sub {
-  my $q = $_[0];
-  my %i = $q->Vars;
-  +{ map {
-    if ($i{$_} =~ /\0/) {
-      $_ => [ split("\0", $i{$_}) ];
-    } else {
-      $_ => $i{$_};
-    }
-  } keys %i }
-};
-
-# \%cookies = c($cookie_header)  # Parse Cookie header(s).
+# \%cookies = $p{c}->($cookie_header)  # Parse Cookie header(s).
 $p{c} = sub {
-  +{ map { ref($_) ? $_->value : $_ } CGI::Cookie->parse($_[0]) };
+  +{ map { ref($_) ? $_->value : $_ } Apache::Cookie->parse($_[0]) };
 };
 
-sub mp13 {
+sub mp13($$) {
   no strict 'refs';
   my ($app, $r) = @_;
   my ($c,   $p) = &{ $app . "::D" }($r->uri);
@@ -75,9 +64,19 @@ sub mp13 {
     $r->header_out($header, $value);
   }
   $r->status($cc->status);
-  $r->send_http_header;
   $r->print($content);
   OK;
+}
+
+sub init {
+  no strict 'refs';
+  no warnings 'redefine';
+  my ($app) = @_;
+  *{ $app . "::handler" } = sub {
+    my ($r) = @_;
+    $app->mp13($r);
+  };
+  $app->next::method;
 }
 
 1;
