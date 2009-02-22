@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use Apache;
 use Apache::Log;
-use Apache::Cookie;
+use CGI::Cookie;
 use Apache::Constants ':common';
 use Squatting::H;
 
@@ -51,7 +51,7 @@ $p{init_cc} = sub {
 
 # \%cookies = $p{c}->($cookie_header)  # Parse Cookie header(s).
 $p{c} = sub {
-  +{ map { ref($_) ? $_->value : $_ } Apache::Cookie->parse($_[0]) };
+  +{ map { ref($_) ? $_->value : $_ } CGI::Cookie->parse($_[0]) };
 };
 
 sub mp13($$) {
