@@ -89,26 +89,53 @@ Squatting::On::MP13 - a handler for Apache 1.3's mod_perl
 
 =head1 SYNOPSIS
 
-Load the App + Squatting::On::MP13
+First, load the App + Squatting::On::MP13:
 
   <Perl>
     use App 'On::MP13';
     App->init;
   </Perl>
 
-Setup a method handler in your Apache config
+Then, setup a handler in your Apache config:
 
   <Location />
-    SetHandler perl-script
+    SetHandler  perl-script
+    PerlHandler App
+  </Location>
+
+Alternatively, if your mod_perl has L<method handler|mod_perl_method_handlers>
+support, you can say:
+
+  <Location />
+    SetHandler  perl-script
     PerlHandler App->mp13
   </Location>
+
+VirtualHost configuration using L<Pod::Server> as an example:
+
+  <VirtualHost *:80>
+    ServerName   podserver.mydomain.org
+    DocumentRoot /www/podserver.mydomain.org
+    ErrorLog     logs/podserver.mydomain.org-error_log
+    CustomLog    logs/podserver.mydomain.org-access_log common
+    <Perl>
+      use Pod::Server 'On::MP13';
+      Pod::Server->init;
+    </Perl>
+    <Location />
+      SetHandler  perl-script
+      PerlHandler Pod::Server
+    </Location>
+  </VirtualHost>
 
 =head1 DESCRIPTION
 
 The purpose of this module is to add an C<mp13> method to your app that can be
-used as a mod_perl handler.  To use this module, pass the string C<'On::MP13'>
-to the C<use> statement that loads your Squatting app.  Also, make sure you've
-configured your Apache to use C<App-E<gt>mp13> as the handler.
+used as a mod_perl method handler.  It also adds a conventional mod_perl handler
+so that Squatting apps can be deployed on mod_perl installations that don't
+have method handler support built in.  To use this module, pass the string
+C<'On::MP13'> to the C<use> statement that loads your Squatting app.  Also,
+make sure you've configured your Apache to use C<App-E<gt>mp13> as the handler.
 
 =head1 API
 
@@ -120,9 +147,20 @@ This method takes an L<Apache> request object, and translates the request into
 terms that Squatting understands.  Then, after your app has handled the request,
 it will send out an HTTP response via mod_perl.
 
+=head3 App::handler($r)
+
+Unfortunately, it is common for mod_perl to not have method handler support
+compiled in, so a more conventional mod_perl handler is also provided.  This
+just calls C<App-E<gt>mp13($r)>.
+
+(Note that this sub is added directly to the App that loaded
+Squatting::On::MP13.  It's C<App::handler> and NOT C<App-E<gt>handler>.)
+
 =head1 SEE ALSO
 
-L<Apache>
+L<Squatting::On::MP20>
+
+L<Apache>, L<mod_perl>, L<mod_perl_method_handlers>
 
 =cut
 
