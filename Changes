@@ -9,6 +9,7 @@ Beyond (unreleased)
     Take perlbal out of the setup and everything is fine.
   * implement Squatting::On::MP19
   * implement Squatting::On::Jifty
+  * implement Squatting::On::HTTP::Server::Simple
   * in Squatting::Controller's POD, teach people how to document controllers.
   * in Squatting::View's POD, teach people how to document views.
 
