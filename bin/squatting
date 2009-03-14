@@ -3,6 +3,7 @@
 use strict;
 no  strict 'refs';
 use warnings;
+use lib 'lib';
 
 use Squatting;
 use Squatting::H;
