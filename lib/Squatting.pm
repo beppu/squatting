@@ -269,10 +269,15 @@ delete().
 Stateful continuation-based code can be surprisingly useful (especially for
 COMET), so we try to make RESTless controllers easy to express as well. (B<*>)
 
-=item B<Views Are ...Different>
+=item B<Squatting Apps Can Have Multiple Views>
 
-The View API feels like Camping, but Squatting allows multiple views to coexist
-(kinda like Catalyst (but not quite)).
+Views are also objects (not classes) whose methods represent templates to
+be rendered.  An app can have more than one view which is useful in 2 ways.
+1) Different output formats can be encapsulated into different views.  (For
+example, you can setup view objects for JSON vs XML vs YAML.)
+2) Changing the look and feel of a Squatting app is simply a matter of
+replacing one view object with another.  (Thus, all Squatting apps are
+inherently themable.)
 
 =item B<Squatting Apps Are Composable>
 
@@ -298,11 +303,11 @@ should be organized, but beyond that, you are free.
 B<*> RESTless controllers only work when you're using Continuity as your
 foundation.
 
-B<**> Regarding ORMs, the nature of Continuity (B<***>) makes it somewhat
-DBI-unfriendly, so this may be a deal-breaker for many of you.  However, I look
-at this as an opportunity to try novel storage systems like CouchDB, instead.
-With the high level of concurrency that Squatting can support (when using
-Continuity) we are probably better off this way.
+B<**> Regarding ORMs, the asynchronous nature of Continuity (B<***>) makes it
+somewhat DBI-unfriendly.  However, I look at this as an opportunity to try
+novel storage systems like CouchDB, instead.  With the high level of
+concurrency that Squatting can support (when using Continuity) we are probably
+better off this way.
 
 B<***> If you're not using Continuity, then really feel free to use any ORM.
 
