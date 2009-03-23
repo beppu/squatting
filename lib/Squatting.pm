@@ -271,13 +271,9 @@ COMET), so we try to make RESTless controllers easy to express as well. (B<*>)
 
 =item B<Squatting Apps Can Have Multiple Views>
 
-Views are also objects (not classes) whose methods represent templates to
-be rendered.  An app can have more than one view which is useful in 2 ways.
-1) Different output formats can be encapsulated into different views.  (For
-example, you can setup view objects for JSON vs XML vs YAML.)
-2) Changing the look and feel of a Squatting app is simply a matter of
-replacing one view object with another.  (Thus, all Squatting apps are
-inherently themable.)
+Views are also objects (not classes) whose methods represent templates to be
+rendered.  An app can also have more than one view.  Changing a Squatting app's
+look and feel can be as simple as swapping out one view object for another.
 
 =item B<Squatting Apps Are Composable>
 
@@ -444,13 +440,17 @@ and embeddable.
 
 =item B<Other Squatting::* modules>:
 
-L<Squatting::Controller>, L<Squatting::View>, L<Squatting::Mapper>,
-L<Squatting::H>,
+L<Squatting::Controller>, L<Squatting::View>, L<Squatting::Mapper>
+
+L<Squatting::H>
+
 L<Squatting::On::Continuity>, L<Squatting::On::Catalyst>, L<Squatting::On::CGI>,
-L<Squatting::On::MP13>,
+L<Squatting::On::MP13>, L<Squatting::On::MP20>
+
 L<Squatting::With::AccessTrace>, L<Squatting::With::Log>,
 L<Squatting::With::Coro::Debug>
-L<Squatting::Cookbook>;
+
+L<Squatting::Cookbook>
 
 L<Squatting::On::HTTP::Engine>
 
