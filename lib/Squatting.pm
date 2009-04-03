@@ -290,42 +290,13 @@ B<Squatting aims to be compatible with EVERYONE.>
 
 =item B<Minimal Policy>
 
-You may use any templating system you want, and you may use any ORM (B<**>) you
+You may use any templating system you want, and you may use any ORM you
 want.  We only have a few rules on how the controller code and the view code
 should be organized, but beyond that, you are free.
 
 =back
 
-B<*> RESTless controllers only work when you're using Continuity as your
-foundation.
-
-B<**> Regarding ORMs, the asynchronous nature of Continuity (B<***>) makes it
-somewhat DBI-unfriendly.  However, I look at this as an opportunity to try
-novel storage systems like CouchDB, instead.  With the high level of
-concurrency that Squatting can support (when using Continuity) we are probably
-better off this way.
-
-B<***> If you're not using Continuity, then really feel free to use any ORM.
-
-
-=head2 How do I get started?
-
-First...
-
-B<Read> L<Squatting::Cookbook/The Anatomy of a Squatting Application>. 
-It's very short, and it explains how to build a Squatting app from scratch.
-
-Then...
-
-B<Play> with some of the examples in the F<eg/> directory of the Squatting
-distribution.  Download the tarball from CPAN if you have to, but please
-try to run the examples.  (The F<README> file in the F<eg/> directory will
-tell you about the prerequisites you'll need.)
-
-Finally...
-
-B<Create> your first Squatting app; copy and paste the example app from 
-the L</SYNOPSIS> and then modify it.
+B<*> RESTless controllers currently only work when you're L<Squatting::On::Continuity>.
 
 =head1 API
 
