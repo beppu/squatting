@@ -229,12 +229,6 @@ What a basic App looks like:
   # - I've always been ambivalent about defining policy here.
   # - Use whatever works for you.
 
-Getting Started:
-
-  perldoc Squatting::Cookbook
-
-  # Read "The Anatomy of a Squatting Application".
-
 =head1 DESCRIPTION
 
 Squatting is a web microframework based on Camping.
@@ -320,6 +314,9 @@ this is the method you should override in your subclass.
 =head3 App->init
 
 This method takes no parameters and initializes some internal variables.
+
+B<NOTE>:  You can override this method if you want to do more things when
+the App is initialized.
 
 =head3 App->mount($AnotherApp, $prefix)
 
@@ -420,7 +417,8 @@ L<Squatting::With::Coro::Debug>
 
 L<Squatting::Cookbook>
 
-L<Squatting::On::HTTP::Engine>
+L<Squatting::On::HTTP::Engine>,
+L<Squatting::On::Mojo>
 
 =item B<Squatting's superclass>:
 
@@ -475,7 +473,7 @@ Combining coroutines with an event loop is a surprisingly powerful technique.
 Squatting is descended from Camping, so studying the Camping API
 will indirectly teach you much of the Squatting API.
 
-L<http://code.whytheluckystiff.net/camping/>
+L<http://github.com/why/camping/tree/master>
 
 =head2 Prototype-based OO
 

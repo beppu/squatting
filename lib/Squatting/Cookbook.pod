@@ -15,117 +15,163 @@ this API is, and I hope they'll see just how far a little bit of code can go.
 
 =head2 The Anatomy of a Squatting Application
 
-A Squatting app is simply a list of controller and view objects.  They are
-assumed to be in specially named packages and variables, so the bulk of this
-section will be devoted to describing this naming convention.
 
-A Squatting app named "App" will be created to demonstrate this.
 
-=head3 Making a Subclass of Squatting
-
-First, create a package named after the app.  This package should subclass
-L<Squatting> and have a package variable named C<%CONFIG>.
+=head3 The Main Module should be a subclass of Squatting
 
   package App;
+  use strict;
+  use warnings;
   use base 'Squatting';
-  our %CONFIG = ();
 
-C<%CONFIG> is a special variable that contains the configuration for the app.
-One of the handy features of the L<squatting> script is that it can be used
-to change the values in C<%CONFIG> from the command line.
+  # Be sure to pull in the other modules of your app.
+  use App::Controllers;
+  use App::Views;
 
-=head3 Making a Package for Your Controllers
+  # OPTIONAL: App configuration
+  our %CONFIG = (
+    root => 'www'
+  );
 
-=over 4
+  # OPTIONAL: App initialization
+  sub init {
+    my ($class) = @_;
 
-=item The package name should be $App . "::Controllers".
+    # If there is any initialization that you want to do
+    # when the app starts up, the init method is a good
+    # place to do it.
 
-This package name is plural, because we're using the package as a namespace
-for containing controllers.  It is B<NOT> a class definition.
+    $class->next::method;
+  }
 
-=item The package should C<use Squatting ':controllers'>.
+  # OPTIONAL: Response wrapper
+  sub service {
+    my ($class, $c, @args) = @_;
 
-Using L<Squatting> this way will import two functions:  C<R()> for URL
-generation, and C<C()> as a shortcut for creating L<Squatting::Controller>
-objects.
+    # Like Camping, the service method can be overridden
+    # to let your code do things before and after a request.
+    # The parameters to this method are:
+    #
+    # $c    - the Squatting::Controller object
+    # @args - regex captures created by matching $c->urls
+    #           against the request path
 
-=item A package variable named C<@C> should contain controllers.
+    # - before a request
 
-C<@C>'s purpose is to contain a list of L<Squatting::Controller> objects.
+    my $body = $class->next::method(@args);
 
-=back
+    # - after a request
 
-B<Example>:
+    # and be sure to return the response body (if any)
+    $body;
+  }
+
+  1;
+
+=head3 The Controllers Module Should Contain a List of Controller Objects
 
   package App::Controllers;
+  use strict;
+  use warnings;
   use Squatting ':controllers';
+
+  # - @C contains Squatting::Controller objects
   our @C = (
+
+    # Typically, you'll start with a controller for the app's home page.
     C(
-      Home => [ '/' ],
-      get  => sub {
+      # Name => [ @list_of_url_patterns ]
+      Home   => [ '/' ],
+
+      # method => handler
+      get      => sub {
         my ($self) = @_;
+        $self->v->{message} = 'Hello, world.';
         $self->render('home');
       }
     ),
+
+    # Here's an example of a controller that handles both
+    # GET and POST requests.
     C(
-      Profile => [ '/~(\w+)' ],
-      get => sub {
-        my ($self, $name) = @_;
-        my $v = $self->v;
-        $v->{name} = $name;
-        $self->render('profile');
+      # Name  => [ @list_of_url_patterns ]
+      Contact => [ '/contact' ],
+
+      # method => handler
+      get      => sub {
+        my ($self) = @_;
+        $self->render('contact');
+      },
+
+      # method => handler
+      post     => sub {
+        my ($self) = @_;
+        $self->redirect(R('Contact'));
+      },
+    ),
+
+    # Here's an example of a controller for handling static requests.
+    C(
+      # Name => [ @list_of_url_patterns ]
+      Static => [ '/(css|js|images/.*)' ],
+
+      # It's OK to put extra data in the controller.
+      mime => {
+        css => 'text/css',
+        js  => 'text/javascript',
+        jpg => 'image/jpeg',
+        gif => 'image/gif',
+        png => 'image/png',
+      },
+
+      # method => handler
+      get      => sub {
+        my ($self, $path) = @_;
+        if ($path =~ qr{\.\.}) {
+          $self->status = 403;
+          return;
+        }
+        my ($type) = ($path =~ /\.(\w+)$/);
+        $self->headers->{'Content-Type'} =
+          $self->{mime}->{$type} || 'text/plain';
+        my $file = "$App::CONFIG{root}/$path";
+        if (-e $file) {
+          return scalar read_file($file);
+        } else {
+          $self->status = 404;
+          return;
+        }
       }
-    )
+    ),
+
   );
+
   1;
 
-=head4 Anatomy of a Controller
-
-In Squatting, a controller object represents an HTTP resource that can respond
-to HTTP methods.  It has a C<name> and a list of C<urls> (actually url regex
-patterns) that identify it.  It can also have methods like C<get> and C<post>
-that correspond to the HTTP methods C<GET> and C<POST>.
-
-
-=head3 Make a Package for Your Views
-
-=over 4
-
-=item The package name should be $App . "::Views".
-
-Again, this package name is plural, because it is being used as a namespace
-to contain views.  It is B<NOT> a class definition.
-
-=item The package should C<use Squatting ':views'>.
-
-Using L<Squatting> this way will import two functions:  C<R()> for URL
-generation, and C<V()> as a shortcut for creating L<Squatting::View>
-objects.
-
-=item A package variable named C<@V> should contain views.
-
-=back
+=head3 The Views Module Should Contain a List of View Objects
 
   package App::Views;
+  use strict;
+  use warnings;
   use Squatting ':views';
+
+  # - @V contains Squatting::View objects
   our @V = (
     V(
-      'html',
+      'default',
       layout => sub {
         my ($self, $v, $content) = @_;
       },
       home => sub {
         my ($self, $v) = @_;
       },
-      profile => sub {
+      contact => sub {
         my ($self, $v) = @_;
       },
     )
   );
 
-=head4 Anatomy of a View
-
-
+  1;
 
 =head1 PROGRAMMING TECHNIQUES
 
@@ -162,8 +208,8 @@ better.  (I'm figuring this out as I go along.)
       while (1) {
         # Output
         warn "top of loop";
-        my @events = 
-          grep { defined } 
+        my @events =
+          grep { defined }
           map  { my $ch = $bavl->channels->{$_}; $ch->read } @ch;
         my $x = async {
           warn "printing...";
@@ -196,10 +242,10 @@ better.  (I'm figuring this out as I go along.)
     },
 
     # The current POST action exists for debugging purposes, only.
-    # In practice, channel updates will happen ambiently 
+    # In practice, channel updates will happen ambiently
     # when model data changes.
     # Hooks will be put into place to facilitate this.
-    # 
+    #
     # In the future, the POST action may be used as a notification
     # to the server side that $.ev.stop() happened
     # on the client side.
@@ -246,7 +292,7 @@ stick around, so that's what we'll use to implement persistent sessions.
     my $sid = $cr->{session_id};
     if (defined $sid) {
       $c->state = $state{$sid} ||= {};
-    } 
+    }
     $app->next::method($c, @args);
   }
 
@@ -301,7 +347,7 @@ I think the module works just fine, and I'd like to show you how I use it.
 
 =over 4
 
-=item The exported link() function overrides the builtin link() function. 
+=item The exported link() function overrides the builtin link() function.
 
 Noted.  You shouldn't be calling the builtin C<link()> in view code anyway, so
 it's not a big deal.
@@ -418,8 +464,8 @@ And here is the actual view:
   our @V = (
     V(
       'tenjin',
-      tenjin => Tenjin::Engine->new({ 
-        path => [ $App::CONFIG{template_path} ], postfix => '.html' 
+      tenjin => Tenjin::Engine->new({
+        path => [ $App::CONFIG{template_path} ], postfix => '.html'
       }),
       layout => sub {
         my ($self, $v, $content) = @_;
@@ -479,7 +525,7 @@ a view for it:
   );
   1;
 
-Credit for this example goes to draegtun.  
+Credit for this example goes to draegtun.
 L<http://draegtun.wordpress.com/2008/10/21/using-template-toolkit-with-squatting/>
 
 =head3 HTML::Mason
@@ -549,7 +595,7 @@ that both frameworks can implement.
 The longer you wait to internationalize a web application, the harder the task
 becomes due to the ever increasing number of strings being used.  Thus, if you
 have any ambition of catering to an international audience, it would be wise to
-internationalize your application right from the beginning when the task is at 
+internationalize your application right from the beginning when the task is at
 its easiest.
 
 =head3 Using Subdomains to Determine Language Preference
@@ -624,7 +670,7 @@ helper function for making a Net::OpenID::Consumer object
     );
   }
 
-Login controller; form is provided somewhere else; POST is the entry point; 
+Login controller; form is provided somewhere else; POST is the entry point;
 GET is where the sequence finishes.
 
   C(
@@ -676,7 +722,7 @@ Once you're done mounting, run init:
 
   App->init();
 
-Finally, if you need to C<relocate>, do that after you finish mounting.  
+Finally, if you need to C<relocate>, do that after you finish mounting.
 Remember:  the order is always C<mount>, C<init>, and C<relocate>.  Also,
 remember that an app can only be mounted once, and C<relocate> should only be
 called once.
@@ -790,7 +836,7 @@ and replace its layout method with your own.
   my $view = $App::Views::V[0];
   $view->{layout} = sub {
     my ($self, $v, $content) = @_;
-    # 
+    #
     # Make the layout look however you want
     # using any templating system you want
     # ( or none at all ),
