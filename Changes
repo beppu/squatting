@@ -15,6 +15,9 @@ Beyond (unreleased)
   * fix the Tenjin example in the Cookbook
   * finish L<Squatting::Cookbook/The Anatomy of a Squatting Application>
 
+0.61 unreleased
+  - added Squatting::H->bless
+
 0.60 2008-04-21
   - More documentation updates and corrections.
   - Fixed URL for Tenjin in Squatting::Cookbook.
