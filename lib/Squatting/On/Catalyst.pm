@@ -23,8 +23,8 @@ $p{e} = sub {
   my $uri = $req->uri;
   my %env;
   $env{QUERY_STRING}   = $uri->query || '';
-  $env{REQUEST_PATH}   = '/' . $cat->req->path;
-  $env{REQUEST_URI}    = $env{REQUEST_PATH} . "?$env{QUERY_STRING}";
+  $env{REQUEST_PATH}   = '/' . $req->path;
+  $env{REQUEST_URI}    = "$env{REQUEST_PATH}?$env{QUERY_STRING}";
   $env{REQUEST_METHOD} = $req->method;
   my $h = $req->headers;
   $h->scan(sub{

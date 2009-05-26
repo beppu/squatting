@@ -5,11 +5,18 @@ use Clone;
 
 our $AUTOLOAD;
 
-# Object->new(\%attributes) -- constructor
+# Squatting::H->new(\%attributes) -- constructor
 sub new {
   my ($class, $opts) = @_;
   $opts ||= {};
-  bless { %$opts } => $class;
+  CORE::bless { %$opts } => $class;
+}
+
+# Squatting::H->bless(\%attributes) -- like new() but directly bless $opts instead of making a shallow copy.
+sub bless {
+  my ($class, $opts) = @_;
+  $opts ||= {};
+  CORE::bless $opts => $class;
 }
 
 # $object->merge(\%attributes) -- merge keys and values of another hashref into $self
@@ -100,8 +107,13 @@ of your object.
 
 =head3 $object = Squatting::H->new(\%attributes)
 
-This method is used to construct a new object.  A hashref of attributes may
-be passed to this method to initialize the object.
+This method is used to construct a new object.  A hashref of attributes may be
+passed to this method to initialize the object.  A shallow copy of
+C<\%attributes> will then be created and blessed before being returned.
+
+=head3 $object = Squatting::H->bless(\%attributes)
+
+This is like new(), but it doesn't bother making a shallow copy of C<\%attributes>.
                          
 =head3 $object = $object->merge(\%attributes)
 

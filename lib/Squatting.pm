@@ -10,7 +10,7 @@ use List::Util qw(first);
 use URI::Escape;
 use Carp;
 
-our $VERSION = '0.60';
+our $VERSION = '0.61';
 
 require Squatting::Controller;
 require Squatting::View;
@@ -229,12 +229,6 @@ What a basic App looks like:
   # - I've always been ambivalent about defining policy here.
   # - Use whatever works for you.
 
-Getting Started:
-
-  perldoc Squatting::Cookbook
-
-  # Read "The Anatomy of a Squatting Application".
-
 =head1 DESCRIPTION
 
 Squatting is a web microframework based on Camping.
@@ -269,10 +263,11 @@ delete().
 Stateful continuation-based code can be surprisingly useful (especially for
 COMET), so we try to make RESTless controllers easy to express as well. (B<*>)
 
-=item B<Views Are ...Different>
+=item B<Squatting Apps Can Have Multiple Views>
 
-The View API feels like Camping, but Squatting allows multiple views to coexist
-(kinda like Catalyst (but not quite)).
+Views are also objects (not classes) whose methods represent templates to be
+rendered.  An app can also have more than one view.  Changing a Squatting app's
+look and feel can be as simple as swapping out one view object for another.
 
 =item B<Squatting Apps Are Composable>
 
@@ -289,42 +284,13 @@ B<Squatting aims to be compatible with EVERYONE.>
 
 =item B<Minimal Policy>
 
-You may use any templating system you want, and you may use any ORM (B<**>) you
+You may use any templating system you want, and you may use any ORM you
 want.  We only have a few rules on how the controller code and the view code
 should be organized, but beyond that, you are free.
 
 =back
 
-B<*> RESTless controllers only work when you're using Continuity as your
-foundation.
-
-B<**> Regarding ORMs, the nature of Continuity (B<***>) makes it somewhat
-DBI-unfriendly, so this may be a deal-breaker for many of you.  However, I look
-at this as an opportunity to try novel storage systems like CouchDB, instead.
-With the high level of concurrency that Squatting can support (when using
-Continuity) we are probably better off this way.
-
-B<***> If you're not using Continuity, then really feel free to use any ORM.
-
-
-=head2 How do I get started?
-
-First...
-
-B<Read> L<Squatting::Cookbook/The Anatomy of a Squatting Application>. 
-It's very short, and it explains how to build a Squatting app from scratch.
-
-Then...
-
-B<Play> with some of the examples in the F<eg/> directory of the Squatting
-distribution.  Download the tarball from CPAN if you have to, but please
-try to run the examples.  (The F<README> file in the F<eg/> directory will
-tell you about the prerequisites you'll need.)
-
-Finally...
-
-B<Create> your first Squatting app; copy and paste the example app from 
-the L</SYNOPSIS> and then modify it.
+B<*> RESTless controllers currently only work when you're L<Squatting::On::Continuity>.
 
 =head1 API
 
@@ -348,6 +314,9 @@ this is the method you should override in your subclass.
 =head3 App->init
 
 This method takes no parameters and initializes some internal variables.
+
+B<NOTE>:  You can override this method if you want to do more things when
+the App is initialized.
 
 =head3 App->mount($AnotherApp, $prefix)
 
@@ -439,15 +408,17 @@ and embeddable.
 
 =item B<Other Squatting::* modules>:
 
-L<Squatting::Controller>, L<Squatting::View>, L<Squatting::Mapper>,
-L<Squatting::H>,
+L<Squatting::Controller>, L<Squatting::View>,
+L<Squatting::Mapper>, L<Squatting::H>,
 L<Squatting::On::Continuity>, L<Squatting::On::Catalyst>, L<Squatting::On::CGI>,
-L<Squatting::On::MP13>,
+L<Squatting::On::MP13>, L<Squatting::On::MP20>,
 L<Squatting::With::AccessTrace>, L<Squatting::With::Log>,
 L<Squatting::With::Coro::Debug>
-L<Squatting::Cookbook>;
 
-L<Squatting::On::HTTP::Engine>
+L<Squatting::Cookbook>
+
+L<Squatting::On::HTTP::Engine>,
+L<Squatting::On::Mojo>
 
 =item B<Squatting's superclass>:
 
@@ -502,7 +473,7 @@ Combining coroutines with an event loop is a surprisingly powerful technique.
 Squatting is descended from Camping, so studying the Camping API
 will indirectly teach you much of the Squatting API.
 
-L<http://code.whytheluckystiff.net/camping/>
+L<http://github.com/why/camping/tree/master>
 
 =head2 Prototype-based OO
 

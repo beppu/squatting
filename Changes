@@ -13,8 +13,13 @@ Beyond (unreleased)
   * in Squatting::Controller's POD, teach people how to document controllers.
   * in Squatting::View's POD, teach people how to document views.
   * consider writing a module-starter plugin
+  * fix the Tenjin example in the Cookbook
+  * finish L<Squatting::Cookbook/The Anatomy of a Squatting Application>
 
-0.60 (unreleased)
+0.61 unreleased
+  - added Squatting::H->bless
+
+0.60 2008-04-21
   - More documentation updates and corrections.
   - Fixed URL for Tenjin in Squatting::Cookbook.
   - Implemented Squatting::With::Log
@@ -30,8 +35,6 @@ Beyond (unreleased)
   - implemented Squatting::With::Coro::Debug
   - implemented Squatting::On::MP13
   - implemented Squatting::On::MP20
-  * fix the Tenjin example in the Cookbook
-  * finish L<Squatting::Cookbook/The Anatomy of a Squatting Application>
 
 0.52
   - More documentation updates and corrections
