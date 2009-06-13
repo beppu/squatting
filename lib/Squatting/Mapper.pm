@@ -20,9 +20,9 @@ sub get_session_id_from_hit {
     $self->Continuity::debug(2, "    Session: got queue '$session_id'");
   }
   my $continuity = $controller->{continuity};
-  my $ctrl_name = $controller->name;
+  my $controller_name = $controller->name;
   if (defined($continuity)) {
-    $session_id .= ".$app.$ctrl_name.$path";
+    $session_id .= ".$app.$controller_name.$path";
   }
   $session_id;
 }
@@ -35,10 +35,9 @@ Squatting::Mapper - map requests to session queues
 
 =head1 DESCRIPTION
 
-The purpose of this module is to be on the lookout for requests that should
-be handled by L<Continuity>-based L<Squatting::Controller> objects.  This is
-usually done by giving your controller a C<continuity> attribute and setting
-it to a true value:
+The purpose of this module is to be on the lookout for requests that should get
+special treatment by L<Continuity>.  This is usually done by giving your
+controller a C<continuity> attribute and setting it to a true value:
 
   C(
     Events => [ '/@events/(\d+)' ],
@@ -46,8 +45,10 @@ it to a true value:
     get => sub {
       my ($self, $rand) = @_;
       my $cr = $self->cr;
-      while (1) {
-        # do stuff...
+      while (1) {           # <--- COMET event loops typically loop forever
+        # broadcasting relevant events
+        # to long-polling HTTP requests
+        # as they come in...
         $cr->next;
       }
     },
@@ -55,9 +56,31 @@ it to a true value:
     continuity => 1,        # <--- causes Squatting::Mapper to notice
   )
 
+When it sees that C<continuity> is true, the request will be given a
+session id based on: $cookie_session + $app_name + $controller_name + $path.
+Normally, it's just $cookie_session, but when you get these extra pieces
+added to your session id, that tells Continuity that you want to have a
+separate coroutine for this request.
+
+The primary intended use for handling requests in a separate coroutine is to
+facilitate COMET event loops.  When a user visits a COMET-enabled site, there
+will be some JavaScript that starts a long-polling HTTP request.  On the
+server-side, the long-polling handler will typically have an infinite loop in
+it, so it needs to sit off in its own coroutine so that it doesn't affect the
+coroutine that is handling the normal, RESTful requests.
+
+If the user decides to open multiple-tabs to the same COMET-enabled site,
+each of those tabs needs to be differentiated on the server-side as well.
+That's when it becomes useful to stick something random in the path.
+Notice in the example that the path regex is '/@events/(\d+)'.
+
+It would be the job of the JavaScript to append a random string of digits to
+the end of an '/@events/(\d+)' URL before starting the long-poll request.
+That'll let Squatting::Mapper give each tab its own coroutine as well.
+
 =head1 SEE ALSO
 
-L<Continuity::Mapper>
+L<Squatting::On::Continuity>, L<Continuity::Mapper>
 
 =cut
 
