@@ -9,12 +9,20 @@ sub get_session_id_from_hit {
   my ($self, $request) = @_;
   my $app = $self->{app};
   my $session_id = $self->SUPER::get_session_id_from_hit($request);
-  my ($controller, $params) = &{$app."::D"}($request->uri->path);
+  my $path = $request->uri->path;
+  my ($controller, $params) = &{$app."::D"}($path);
   my $method = lc $request->method;
   my $queue = $controller->{queue}->{$method};
   if (defined($queue)) {
+    warn '$controller->{queue} has been deprecated in favor of $controller->{continuity}'."\n";
+    warn "  perldoc Squatting::On::Continuity\n    for more details.\n";
     $session_id .= ".$app.$queue";
     $self->Continuity::debug(2, "    Session: got queue '$session_id'");
+  }
+  my $continuity = $controller->{continuity};
+  my $ctrl_name = $controller->name;
+  if (defined($continuity)) {
+    $session_id .= ".$app.$ctrl_name.$path";
   }
   $session_id;
 }
@@ -28,10 +36,24 @@ Squatting::Mapper - map requests to session queues
 =head1 DESCRIPTION
 
 The purpose of this module is to be on the lookout for requests that should
-route to controllers that have a C<queue> attribute.  If it encounters such a
-request, it gives Continuity a $session_id with the app name and queue name
-appeneded to it.  This will cause Continuity to run this request in a different
-session queue.
+be handled by L<Continuity>-based L<Squatting::Controller> objects.  This is
+usually done by giving your controller a C<continuity> attribute and setting
+it to a true value:
+
+  C(
+    Events => [ '/@events/(\d+)' ],
+
+    get => sub {
+      my ($self, $rand) = @_;
+      my $cr = $self->cr;
+      while (1) {
+        # do stuff...
+        $cr->next;
+      }
+    },
+
+    continuity => 1,        # <--- causes Squatting::Mapper to notice
+  )
 
 =head1 SEE ALSO
 

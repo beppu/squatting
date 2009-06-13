@@ -10,7 +10,7 @@ use List::Util qw(first);
 use URI::Escape;
 use Carp;
 
-our $VERSION = '0.61';
+our $VERSION = '0.70';
 
 require Squatting::Controller;
 require Squatting::View;
@@ -507,7 +507,7 @@ Scott WALTERS (aka scrottie) gets credit for the name of this module.
 
 =head1 COPYRIGHT
 
-Copyright (c) 2008 John BEPPU E<lt>beppu@cpan.orgE<gt>.
+Copyright (c) 2008-9 John BEPPU E<lt>beppu@cpan.orgE<gt>.
 
 =head2 The "MIT" License
 
