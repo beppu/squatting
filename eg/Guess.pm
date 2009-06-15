@@ -17,15 +17,15 @@ our @C = (
                Guess => [ '/guess' ],
                get => sub {
                        my ($self) = @_;
-                       
+
                        my $cr = $self->cr;
 
                        my $rand100 = sub { int(rand(100)) };
                        my $to_guess = $rand100->();
                        my $tries = 0;
-                       
+
                        while(1) {
-                               my $n = $cr->param('n');                                
+                               my $n = $cr->param('n');
                                $cr->print(qq|
                                        <html>
                                                <head>
@@ -38,11 +38,11 @@ our @C = (
                                                if ($n) {
                                                        return "<i>The guess is invalid.</i>" if $n !~ /\d+/;
                                                        return ($n<$to_guess)
-                                                               ?       "<i>The answer is higher.</i>"  
+                                                               ?       "<i>The answer is higher.</i>"
                                                                : ($n>$to_guess)
                                                                        ?       "<i>The answer is lower.</i>"
                                                                        :       "<i>You guessed it in $tries tries</i>";
-                                               }                                              
+                                               }
                                        }->() . qq|
                                        <form method="get" />
                                        |. (($n!=$to_guess)
@@ -56,7 +56,7 @@ our @C = (
                                                        return "<a href=\"/guess\">start again</a>"
                                                }->()
                                        ) .     qq|
-                                       
+
                                        </form>
                                |);
                                $cr->print(qq|
@@ -64,11 +64,11 @@ our @C = (
                                        </html>
                                |);
                                $cr->next;
-                               
+
                                $tries++;
                        } # while
                },
-               queue => { get => 'guess' }
+               continuity => 1,
        ),
 
 );
