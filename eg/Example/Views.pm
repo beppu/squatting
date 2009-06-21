@@ -26,6 +26,7 @@ our @V = (
             li(a({-href => '/~beppu.json'}, "profile.json")),
             li(a({-href => '/env'},         "env")),
             li(a({-href => '/env.json'},    "env.json")),
+            li(a({-href => '/cookies'},     "cookies")),
             li(a({-href => '/rubygems'},    "redirect to ruby's gem_server on port 8808")),
             li(a({-href => '/pod/'},        "PODServer has been mounted on /pod")),
             li(a({-href => '/droids-you-are-looking-for'}, "404")),
@@ -54,6 +55,25 @@ our @V = (
       my ($self, $v) = @_;
       h2("env"),
       pre(dump($v));
+    },
+    cookies => sub {
+      my ($self, $v) = @_;
+      h2("Cookies"),
+      dl(
+        map {
+          dt($_->{name}),
+          dd($_->{value})
+        } @{$v->{cookies}}
+      ),
+      start_form(-method => 'POST', -action => R('Cookie'), -enctype => &CGI::URL_ENCODED),
+        dl(
+          dt('Cookie Name'),
+          dd(textfield(-name => 'name')),
+          dt('Cookie Value'),
+          dd(textfield(-name => 'value')),
+        ),
+        submit(),
+      end_form(),
     },
   ),
 

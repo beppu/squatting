@@ -16,8 +16,20 @@ Beyond (unreleased)
   * fix the Tenjin example in the Cookbook
   * finish L<Squatting::Cookbook/The Anatomy of a Squatting Application>
 
-0.61 unreleased
+0.70 unreleased
   - added Squatting::H->bless
+  - changed Squatting::Mapper semantics
+    - $controller->{queue} has been deprecated in favor of
+      $controller->{continuity}
+    - Squatting::Mapper now dispatches on
+      $sid + $controller + $path
+      (in that order)
+      - It used to just be $sid + $controller,
+        but when people start opening multiple tabs,
+        that wasn't enough.  It was necessary to be
+        able to distinguish between the different tabs,
+        and putting something random at the end of a path
+        was one way to do that, so it's now the default.
 
 0.60 2008-04-21
   - More documentation updates and corrections.

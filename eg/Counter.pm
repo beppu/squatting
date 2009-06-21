@@ -23,20 +23,20 @@ our @C = (
                        my ($self) = @_;
                        my $cr     = $self->cr;
                        my $log = $self->log;
-                       
+
                        my %p = (
                                i => 1
                        );
                        my %callbacks;
-                       tie my %history, 'Tie::IxHash::FixedSize', {size => 10};                        
-                       
+                       tie my %history, 'Tie::IxHash::FixedSize', {size => 10};
+
                        my $get_new_ci = sub {
-                               my $ci = -1;                            
-                               return sub {                                    
+                               my $ci = -1;
+                               return sub {
                                        $ci++ if ($ci <= ($cr->param('ci') || $ci));
                                        return $ci;
-                               }                              
-                       }->();  
+                               }
+                       }->();
                        $history{$get_new_ci->()} = {%p};
                        sub gen_link {
                                my ($text, $code) = @_;
@@ -48,19 +48,19 @@ our @C = (
                                my $cr = shift;
                                my $cb = $cr->param('cb');
                                my $ci = ($cr->param('ci') || 0);
-                               $log->debug($ci);              
-                               if(defined $cb) {                                                                                                              
+                               $log->debug($ci);
+                               if(defined $cb) {
                                        if (exists $callbacks{$cb}
-                                               &&      ref($callbacks{$cb}) eq "CODE") {                                                      
+                                               &&      ref($callbacks{$cb}) eq "CODE") {
                                                $callbacks{$cb}->($cr);
                                                delete $callbacks{$cb};
-                                               $history{$ci} = {%p};                          
-                                       }       elsif (exists $history{$ci}) {                          
+                                               $history{$ci} = {%p};
+                                       }       elsif (exists $history{$ci}) {
                                                %p = %{$history{$ci}};
                                        }
-                               }                      
+                               }
                        }
-       
+
                        while (1) {
                                process_links($cr);
                                $cr->print(gen_link('next' => sub {
@@ -74,7 +74,7 @@ our @C = (
                                $cr->next;
                        }
                },
-               queue => { get => 'count' }
+               continuity => 1,
        )
 );
 

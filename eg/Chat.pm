@@ -35,7 +35,7 @@ our @C = (
         $w->next;
       }
     },
-    queue => { get => 'pushstream' },
+    continuity => 1,
   ),
 
   C(
