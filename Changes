@@ -7,16 +7,16 @@ Beyond (unreleased)
   * BUG: POST -> perlbal -> thttpd -> Squatting::On::CGI == FAIL
     Strangely enough, GET is fine.
     Take perlbal out of the setup and everything is fine.
-  * implement Squatting::On::MP19
   * implement Squatting::On::Jifty
   * in Squatting::Controller's POD, teach people how to document controllers.
   * in Squatting::View's POD, teach people how to document views.
-  * consider writing a module-starter plugin
+  * consider writing a module-setup plugin
   * fix the Tenjin example in the Cookbook
   * finish L<Squatting::Cookbook/The Anatomy of a Squatting Application>
 
 0.70 unreleased
-  - added Squatting::H->bless
+  - reimplemented Squatting::With::Log using Squatting::H
+  - added Squatting::H->bless (breaking all the rules ;)
   - changed Squatting::Mapper semantics
     - $controller->{queue} has been deprecated in favor of
       $controller->{continuity}

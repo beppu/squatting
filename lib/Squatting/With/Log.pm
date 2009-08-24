@@ -1,33 +1,11 @@
 package Squatting::With::Log;
 
-#use strict;
-#no  strict 'refs';
-#use warnings;
-
-sub service {
-  my ($app, $c, @args) = @_;
-  my $config = \%{$app.'::CONFIG'};
-  $c->log ||= Squatting::Log->new($config);
-  $app->next::method($c, @args);
-}
-
-package Squatting::Log;
-
-#use strict;
-#no  strict 'refs';
-#use warnings;
+use strict;
+no  strict 'refs';
+use warnings;
+use Squatting::H;
 use IO::All;
-
-our $log;
-
-sub new {
-  my ($class, $config) = @_;
-  return $log if ($log);
-  my $path   = $config->{'with.log.path'}   || '='; # (default STDERR)
-  my $level  = $config->{'with.log.levels'} || 'debug,info,warn,error,fatal';
-  my $levels = +{ map { $_ => 1 } split(/\s*,\s*/, $level) };
-  $log = bless({ path => $path, levels => $levels } => $class);
-}
+use Clone 'clone';
 
 sub timestamp {
   my ($sec, $min, $hour, $mday, $mon, $year) = localtime;
@@ -38,30 +16,54 @@ sub timestamp {
   );
 }
 
+our $Log = Squatting::H->new({
+  _path   => '=',
+  _levels => {},
+  enable  => sub {
+    my $self = shift;
+    $self->{_levels}->{$_} = 1 for (@_);
+    keys %{$self->{_levels}};
+  },
+  disable => sub {
+    my $self = shift;
+    delete($self->{_levels}->{$_}) for (@_);
+    keys %{$self->{_levels}};
+  },
+});
+$Log->{levels} = sub {
+  keys %{$_[0]->{_levels}};
+};
 for my $level (qw(debug info warn error fatal)) {
-  *{$level} = sub {
+  $Log->{$level} = sub {
     my ($self, @messages) = @_;
     my $is_level = "is_$level";
     return unless $self->$is_level;
     for (@messages) {
-      sprintf('%-5s %s ! %s'."\n", $level, timestamp, $_) >> io($self->{path});
+      sprintf('%-5s %s ! %s'."\n", $level, timestamp, $_) >> io($self->{_path});
     }
   };
-  *{"is_$level"} = sub {
-    $_[0]->{levels}->{$level};
+  $Log->{"is_$level"} = sub {
+    $_[0]->{_levels}->{$level};
   };
 }
 
-sub enable {
-  my $self = shift;
-  $self->{levels}->{$_} = 1 for (@_);
-}
+# every app gets its own log object in %log
+our %log;
+my $log_object = sub {
+  my ($app)  = @_;
+  my $config = \%{$app.'::CONFIG'};
+  $log{$app} ||= do {
+    my $path   = $config->{'with.log.path'}   || '='; # (default STDERR)
+    my $level  = $config->{'with.log.levels'} || 'debug,info,warn,error,fatal';
+    my $levels = +{ map { $_ => 1 } split(/\s*,\s*/, $level) };
+    $Log->clone({ path => $path, levels => $levels });
+  };
+};
 
-*{"levels"} = \&enable;
-
-sub disable {
-  my $self = shift;
-  $self->{levels}->{$_} = 0 for (@_);
+sub service {
+  my ($app, $c, @args) = @_;
+  $c->log ||= $log_object->($app);
+  $app->next::method($c, @args);
 }
 
 1;
