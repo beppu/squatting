@@ -12,8 +12,9 @@ sub service {
   my $ppi  = (%{ $c->input })
     ? ', ' . pp($c->input)
     : '';
+  my $referer = (defined $c->env->{HTTP_REFERER}) ? "# ".$c->env->{HTTP_REFERER} : " ";
   warn sprintf('%5d ', $I++),
-    "[$s] $app->$meth(@{[ join(', '=>map { \"'$_'\" } $c->name, @args) ]}$ppi)\n";
+    "[$s] $app->$meth(@{[ join(', '=>map { \"'$_'\" } $c->name, @args) ]}$ppi) $referer\n";
   $body;
 }
 
