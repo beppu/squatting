@@ -15,266 +15,136 @@ this API is, and I hope they'll see just how far a little bit of code can go.
 
 =head2 The Anatomy of a Squatting Application
 
+For many of the examples to follow, a Squatting app called "App" will be used.
+First, let's take a look at how the packages are laid out.
 
+  +-----------------------------------------------------------------+
+  | App                                                             |
+  |   init()              one-time initialization                   |
+  |   service()           run on every HTTP request                 |
+  |                                                                 |
+  |   %CONFIG             app configuration goes here               |
+  |                                                                 |
+  | +-------------------------------------------------------------+ |
+  | | App::Controllers                                            | |
+  | |   @C                list of controller objects goes here    | |
+  | |                                                             | |
+  | |   C()               utility function for making controllers | |
+  | |   R()               a URL generation function               | |
+  | |                                                             | |
+  | +-------------------------------------------------------------+ |
+  | +-------------------------------------------------------------+ |
+  | | App::Views                                                  | |
+  | |   @V                list of view objects goes here          | |
+  | |                                                             | |
+  | |   V()               utility function for making views       | |
+  | |   R()               a URL generation function               | |
+  | |                                                             | |
+  | +-------------------------------------------------------------+ |
+  +-----------------------------------------------------------------+
 
-=head3 The Main Module should be a subclass of Squatting
+Most Squatting apps will be composed of at least 3 packages.
 
-  package App;
-  use strict;
-  use warnings;
-  use base 'Squatting';
+=over 2
 
-  # Be sure to pull in the other modules of your app.
-  use App::Controllers;
-  use App::Views;
+=item First you need a package for the App itself.
 
-  # OPTIONAL: App configuration
-  our %CONFIG = (
-    root => 'www'
-  );
+B<App> will inherit from L<Squatting>.
 
-  # OPTIONAL: App initialization
-  sub init {
-    my ($class) = @_;
+Override the C<init> method if you want to perform some initialization upon start up.
 
-    # If there is any initialization that you want to do
-    # when the app starts up, the init method is a good
-    # place to do it.
+Override the C<service> method if you want to do something before or after an HTTP request.
 
-    $class->next::method;
-  }
+Put your app config in %CONFIG.
 
-  # OPTIONAL: Response wrapper
-  sub service {
-    my ($class, $c, @args) = @_;
+=item Then you need a package to hold the controller objects.
 
-    # Like Camping, the service method can be overridden
-    # to let your code do things before and after a request.
-    # The parameters to this method are:
-    #
-    # $c    - the Squatting::Controller object
-    # @args - regex captures created by matching $c->urls
-    #           against the request path
-
-    # - before a request
-
-    my $body = $class->next::method(@args);
-
-    # - after a request
-
-    # and be sure to return the response body (if any)
-    $body;
-  }
-
-  1;
-
-=head3 The Controllers Module Should Contain a List of Controller Objects
+B<App::Controllers> should C<use Squatting ':controllers'> and populate @C
+with controller objects.
 
   package App::Controllers;
   use strict;
   use warnings;
   use Squatting ':controllers';
-
-  # - @C contains Squatting::Controller objects
   our @C = (
-
-    # Typically, you'll start with a controller for the app's home page.
     C(
-      # Name => [ @list_of_url_patterns ]
-      Home   => [ '/' ],
-
-      # method => handler
-      get      => sub {
-        my ($self) = @_;
-        $self->v->{message} = 'Hello, world.';
-        $self->render('home');
-      }
+      Home => [ '/' ],
+      get => sub { }
     ),
-
-    # Here's an example of a controller that handles both
-    # GET and POST requests.
     C(
-      # Name  => [ @list_of_url_patterns ]
       Contact => [ '/contact' ],
-
-      # method => handler
-      get      => sub {
-        my ($self) = @_;
-        $self->render('contact');
-      },
-
-      # method => handler
-      post     => sub {
-        my ($self) = @_;
-        $self->redirect(R('Contact'));
-      },
+      get => sub { },
+      post => sub { },
     ),
-
-    # Here's an example of a controller for handling static requests.
-    C(
-      # Name => [ @list_of_url_patterns ]
-      Static => [ '/(css|js|images/.*)' ],
-
-      # It's OK to put extra data in the controller.
-      mime => {
-        css => 'text/css',
-        js  => 'text/javascript',
-        jpg => 'image/jpeg',
-        gif => 'image/gif',
-        png => 'image/png',
-      },
-
-      # method => handler
-      get      => sub {
-        my ($self, $path) = @_;
-        if ($path =~ qr{\.\.}) {
-          $self->status = 403;
-          return;
-        }
-        my ($type) = ($path =~ /\.(\w+)$/);
-        $self->headers->{'Content-Type'} =
-          $self->{mime}->{$type} || 'text/plain';
-        my $file = "$App::CONFIG{root}/$path";
-        if (-e $file) {
-          return scalar read_file($file);
-        } else {
-          $self->status = 404;
-          return;
-        }
-      }
-    ),
-
   );
 
-  1;
+=item Finally you should have a package for holding the view objects.
 
-=head3 The Views Module Should Contain a List of View Objects
+B<App::Views> should C<use Squatting ':views'> and populate @V
+with view objects.
 
   package App::Views;
   use strict;
   use warnings;
   use Squatting ':views';
-
-  # - @V contains Squatting::View objects
   our @V = (
     V(
-      'default',
-      layout => sub {
-        my ($self, $v, $content) = @_;
-      },
-      home => sub {
-        my ($self, $v) = @_;
-      },
-      contact => sub {
-        my ($self, $v) = @_;
-      },
-    )
+      "default",
+      layout  => sub { },
+      home    => sub { },
+      contact => sub { },
+    ),
   );
 
-  1;
+=back
+
+Keep in mind that the packages for controllers and views are not classes.  They
+are never instantiated.  Think of them more as namespaces, because that's the
+way Squatting interprets them.  Their main purpose is to be containers for
+objects.
+
+It might help to think of a Squatting app as a data structure.  A reductionist
+might say that an app is just an object that contains a list of controller and
+view objects, and he wouldn't be that far off from the truth.  This design
+decision is what allowed Squatting to embed itself just about anywhere.  Being
+a piece of data means that you're free to move around, and this is what gave
+this framework a lot of unintended power.
+
 
 =head1 PROGRAMMING TECHNIQUES
 
 =head2 COMET
 
-=head3 Event Architecture
+The easiest way to add COMET support to a Squatting app is to install
+L<Stardust> via CPAN and mount it.  Stardust is a Squatting app that implements
+a simple COMET server that's intended to run alongside any old regular web app.
+It provides a RESTful API so that even people who don't use Perl can use it as
+their COMET server and pass realtime messages around.  However, if you're using
+Stardust with a Squatting app, you get to bypass the RESTful API and send
+messages into the system directly.
 
-TODO - explain, possibly using IRC as a metaphor
+B<Installation>:
 
-Events (and my current preference for ambient event generation)
+  sudo cpan Stardust
 
-Channels
+B<Documentation>:
 
-Publishers
+  perldoc Stardust
+  stardust.pl --help
+  stardust.pl --demo
 
-Subscribers
+If you want to understand how it works, take a look at the code.  It's a very
+small Squatting app that only has a few controllers, and it'll acquaint you with
+the wonders of L<Coro> and L<AnyEvent>.
 
+B<Source>:
 
-=head3 RESTless Controllers
-
-The following is the C<Event> controller from the Bavl project.  It is included
-here to give you something to ponder while I think about how to explain this
-better.  (I'm figuring this out as I go along.)
-
-  C(
-    Event => [ '/@event' ],
-    get => sub {
-      warn "coro [$Coro::current]";
-      my ($self) = shift;
-      my $input  = $self->input;
-      my $cr     = $self->cr;
-      my @ch     = channels($input->{channels});
-      my $last   = time;
-      while (1) {
-        # Output
-        warn "top of loop";
-        my @events =
-          grep { defined }
-          map  { my $ch = $bavl->channels->{$_}; $ch->read } @ch;
-        my $x = async {
-          warn "printing...";
-          $cr->print(encode_json(\@events));
-        };
-        $x->join;
-
-        # Hold for a brief moment until the next long poll request comes in.
-        warn "waiting for next request";
-        $cr->next;
-        $last = time;
-        my $channels = [ $cr->param('channels') ];
-        @ch = channels($channels);
-
-        # Try starting up 1 coroutine per channel.
-        # Each coroutine will have the same Coro::Signal object => $activity.
-        my $activity = Coro::Signal->new;
-        my @coros = map {
-          my $ch = $bavl->channels->{$_};
-          async { $ch->signal->wait; $activity->broadcast };
-        } @ch;
-
-        # The first one who sends a signal to $activity wins.
-        warn "waiting for activity on any of (@ch)";
-        $activity->timed_wait(20);
-
-        # Cancel the remaining coros.
-        for (@coros) { $_->cancel }
-      }
-    },
-
-    # The current POST action exists for debugging purposes, only.
-    # In practice, channel updates will happen ambiently
-    # when model data changes.
-    # Hooks will be put into place to facilitate this.
-    #
-    # In the future, the POST action may be used as a notification
-    # to the server side that $.ev.stop() happened
-    # on the client side.
-    post => sub {
-      my ($self) = shift;
-      my $input  = $self->input;
-      my $ch = $bavl->channels->{ $input->{channels} };
-      if ($ch) {
-        $ch->write({ type => 'time', value => scalar(localtime) });
-      }
-      1;
-    },
-    queue => { get => 'event' },
-  ),
-
-This might look scary, but if we're lucky, we'll be able to turn this into
-a reusable component.
-
-
-=head3 Long Polling with jQuery on the Client Side
-
-TODO
-
-jquery.ev.js
-
-  $.ev.loop('/@event')
-  $.ev.stop();
+L<http://github.com/beppu/stardust/tree/master>
 
 =head2 How to Set Up Sessions
+
+(I could actually use a little coding help here.  If someone could take the time to
+write a plugin called L<Squatting::With::Apache::Session> that would be great.)
 
 =head3 Continuity and Process Memory
 
@@ -851,11 +721,15 @@ and replace its layout method with your own.
 This is the simplest thing you could possibly do, but it's also somewhat
 limiting.
 
-=head2 Reverse Proxying to Squatting+Continuity w/ Perlbal
+=head2 Reverse Proxying to Squatting+Continuity w/ nginx
 
 TODO
 
-=head2 Reverse Proxying to Squatting+Continuity w/ nginx
+=head2 Reverse Proxying to Squatting+Continuity w/ Apache 2.2
+
+TODO
+
+=head2 Reverse Proxying to Squatting+Continuity w/ Perlbal
 
 TODO
 
