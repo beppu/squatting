@@ -1,14 +1,19 @@
+.shipit
 bin/squatting
 Changes
+doc/squatting-intro.xul
 doc/squatting-propaganda-for-catalyst.txt
 doc/squatting-propaganda-for-perlmonks.html
 doc/squatting-tpf-grant-proposal.txt
 edit
 eg/chat-ajax-push.js
 eg/Chat.pm
+eg/CouchWiki.pm
+eg/Counter.pm
 eg/Example.pm
 eg/Example/Controllers.pm
 eg/Example/Views.pm
+eg/Guess.pm
 eg/HTTPAuth.pm
 eg/jquery.js
 eg/MicroWiki.pm
@@ -17,6 +22,7 @@ eg/OpenID/Provider.pm
 eg/PODServer.pm
 eg/README
 eg/UniCodePoints.pm
+eg/UTF8.pm
 lib/squatting.pl
 lib/Squatting.pm
 lib/Squatting/Controller.pm
@@ -40,3 +46,4 @@ README
 t/00_basic.t
 t/01_controller.t
 t/02_view.t
+t/20_squatting_with_log.t
