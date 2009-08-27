@@ -103,7 +103,7 @@ are never instantiated.  Think of them more as namespaces, because that's the
 way Squatting interprets them.  Their main purpose is to be containers for
 objects.
 
-It might help to think of a Squatting app as a data structure.  A reductionist
+B<It might help to think of a Squatting app as a data structure.>  A reductionist
 might say that an app is just an object that contains a list of controller and
 view objects, and he wouldn't be that far off from the truth.  This design
 decision is what allowed Squatting to embed itself just about anywhere.  Being
