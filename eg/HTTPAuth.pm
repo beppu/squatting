@@ -17,7 +17,6 @@ use Squatting ':controllers';
 use strict;
 use warnings;
 use MIME::Base64;
-use Data::Dump 'pp';
 
 sub authorized {
   my $self = shift;

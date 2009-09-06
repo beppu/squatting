@@ -109,4 +109,15 @@ squatting CouchWiki -p 4241
   > recent_changes
   > page('Home')
 
+______________________________________________________________________________
+squatting HTTPAuth -p 4242
+
+  http://localhost:4242/
+
+  requires
+    MIME::Base64
+    HTML::AsSubs
+
+  This example shows you how to implement HTTP Basic Auth in Squatting.
+  http://en.wikipedia.org/wiki/Basic_access_authentication
 
