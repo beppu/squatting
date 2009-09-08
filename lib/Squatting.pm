@@ -34,7 +34,7 @@ sub import {
         $input = pop(@args);
       }
       my $c = ${$app."::Controllers::C"}{$controller};
-      croak "$controller controller not found" unless $c;
+      croak "$controller controller not found in '\%$app\::Controllers::C" unless $c;
       my $arity = @args;
       my $path = first { my @m = /\(.*?\)/g; $arity == @m } @{$c->urls};
       croak "couldn't find a matching URL path" unless $path;
