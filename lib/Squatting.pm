@@ -424,9 +424,12 @@ L<Squatting::On::Mojo>
 
 L<Class::C3::Componentised>
 
-=item B<The first useful Squatting app released on CPAN>:
+=item B<Squatting apps you can find on CPAN>:
 
-L<Pod::Server>
+L<Pod::Server> - a nice way to browse through the POD for your locally
+installed perl modules.
+
+L<Stardust> - a simple COMET server.
 
 =back
 
