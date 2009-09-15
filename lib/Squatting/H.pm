@@ -19,20 +19,20 @@ sub bless {
   CORE::bless $opts => $class;
 }
 
-# $object->merge(\%attributes) -- merge keys and values of another hashref into $self
-sub merge {
-  my ($self, $merge) = @_;
-  for (keys %$merge) {
-    $self->{$_} = $merge->{$_};
+# $object->extend(\%attributes) -- extend keys and values of another hashref into $self
+sub extend {
+  my ($self, $extend) = @_;
+  for (keys %$extend) {
+    $self->{$_} = $extend->{$_};
   }
   $self;
 }
 
 # $object->clone(\%attributes) -- copy constructor
 sub clone {
-  my ($self, $merge) = @_;
+  my ($self, $extend) = @_;
   my $clone = Clone::clone($self);
-  $clone->merge($merge) if ($merge);
+  $clone->extend($extend) if ($extend);
   $clone;
 }
 
@@ -115,10 +115,10 @@ C<\%attributes> will then be created and blessed before being returned.
 
 This is like new(), but it doesn't bother making a shallow copy of C<\%attributes>.
                          
-=head3 $object = $object->merge(\%attributes)
+=head3 $object = $object->extend(\%attributes)
 
 This method will add new attributes to an object.  If the attributes already
-existed, the new ones will take precedence.
+existed, the new values will replace the old values.
 
 =head3 $clone = $object->clone(\%attributes)
 

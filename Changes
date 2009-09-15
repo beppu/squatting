@@ -14,6 +14,10 @@ Beyond (unreleased)
   * consider writing a module-setup plugin
   * fix the Tenjin example in the Cookbook
 
+0.80 unreleased
+  - Squatting::H->merge renamed to Squatting::H->extend to
+    be consistent w/ the way these words are used in Javascript.
+
 0.70 2009-08-27
   - reimplemented Squatting::With::Log using Squatting::H
   - added Squatting::H->bless (breaking all the rules ;)
