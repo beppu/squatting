@@ -13,6 +13,7 @@ Beyond (unreleased)
   * in Squatting::View's POD, teach people how to document views.
   * consider writing a module-setup plugin
   * fix the Tenjin example in the Cookbook
+  * think of ways to work better with Plack
 
 0.80 unreleased
   - Squatting::H->merge renamed to Squatting::H->extend to

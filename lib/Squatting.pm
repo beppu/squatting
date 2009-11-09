@@ -318,13 +318,13 @@ This method takes no parameters and initializes some internal variables.
 B<NOTE>:  You can override this method if you want to do more things when
 the App is initialized.
 
-=head3 App->mount($AnotherApp, $prefix)
+=head3 App->mount($AnotherApp => $prefix)
 
 This method will mount another Squatting app at the specified prefix.
 
-  App->mount('My::Blog',   '/my/ridiculous/rantings');
-  App->mount('Forum',      '/forum');
-  App->mount('ChatterBox', '/chat');
+  App->mount('My::Blog'   => '/my/ridiculous/rantings');
+  App->mount('Forum'      => '/forum');
+  App->mount('ChatterBox' => '/chat');
 
 B<NOTE>:  You can only mount an app once.  Don't try to mount it again
 at some other prefix, because it won't work.
