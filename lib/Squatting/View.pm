@@ -62,7 +62,7 @@ Squatting::View - default view class for Squatting
 =head1 SYNOPSIS
 
   package App::Views;
-  use Squatting 'views';
+  use Squatting ':views';
   our @V = (
     V(
       'example',
