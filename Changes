@@ -8,12 +8,17 @@ Beyond (unreleased)
     Strangely enough, GET is fine.
     Take perlbal out of the setup and everything is fine.
   * implement Squatting::On::Jifty
-  * implement Squatting::On::HTTP::Server::Simple
   * in Squatting::Controller's POD, teach people how to document controllers.
   * in Squatting::View's POD, teach people how to document views.
   * consider writing a module-setup plugin
   * fix the Tenjin example in the Cookbook
   * think of ways to work better with Plack
+  * Things that would make Squatting easier to get started with:
+    - an app generator (using Module::Starter?)
+      - PSGI support by default
+    - make it so that the "Controllers" and "Views" packages
+      don't have to say "use Squatting ':controllers'" and "use Squatting ':views'"
+      respectively.
 
 0.80 unreleased
   - Squatting::H->merge renamed to Squatting::H->extend to
