@@ -14,7 +14,7 @@ Beyond (unreleased)
   * fix the Tenjin example in the Cookbook
   * think of ways to work better with Plack
   * Things that would make Squatting easier to get started with:
-    - an app generator (using Module::Starter?)
+    - an app generator (using Module::Setup?)
       - PSGI support by default
     - make it so that the "Controllers" and "Views" packages
       don't have to say "use Squatting ':controllers'" and "use Squatting ':views'"
