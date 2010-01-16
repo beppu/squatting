@@ -177,7 +177,7 @@ Consider this controller which has an infinite loop in it.
         $cr->next;
       }
     },
-    queue => { get => 'name_of_queue' }
+    continuity => 1,
   )
 
 Here, the code is dropping down to the Continuity level.  The C<$cr> variable
