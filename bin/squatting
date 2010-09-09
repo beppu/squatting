@@ -32,7 +32,7 @@ GetOptions(
 );
 
 sub help {
-  print "[(( Start a Squatting Application ))]
+  print "Squatting $Squatting::VERSION - launch a Squatting web application
 
 Usage: squatting [OPTIONS]... App
 
