@@ -71,23 +71,13 @@ sub import {
     } unless exists ${$app."::"}{D};
   }
 
-  my @c;
-  for (@_) {
-    if ($_ eq ':controllers') {
-      # $controller = C($name => \@urls, %subs)  # shortcut for constructing a Squatting::Controller
-      *{$p."::C"} = sub {
-        Squatting::Controller->new(@_, app => $app);
-      };
-    } elsif ($_ eq ':views') {
-      # $view = V($name, %subs)  # shortcut for constructing a Squatting::View
-      *{$p."::V"} = sub {
-        Squatting::View->new(@_);
-      };
-    } elsif (/::/) {
-      push @c, $_;
-    }
-  }
-  $m->load_components(@c) if @c;
+  *{$p."::C"} = sub {
+    Squatting::Controller->new(@_, app => $app);
+  };
+  *{$p."::V"} = sub {
+    Squatting::View->new(@_);
+  };
+  $m->load_components(grep /::/, @_);
 }
 
 # Squatting plugins may be anywhere in Squatting::*::* but by convention
