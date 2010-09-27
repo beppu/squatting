@@ -84,6 +84,10 @@ squatting MicroWiki -p 4240
 
     perltidy < MicroWiki.pm
 
+  There's also a microwiki.psgi file that lets you run this wiki by typing:
+
+    plackup microwiki.psgi
+
 ______________________________________________________________________________
 squatting CouchWiki -p 4241
 
