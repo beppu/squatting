@@ -3,8 +3,10 @@ use strict;
 use warnings;
 
 {
+  package Foo;
+  use Squatting;
+
   package Foo::Views;
-  use Squatting ':views';
   use Data::Dump 'pp';
   our @V = (
     V(

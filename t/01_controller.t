@@ -3,8 +3,10 @@ use strict;
 use warnings;
 
 {
+  package Foo;
+  use Squatting;
+
   package Foo::Controllers;
-  use Squatting ':controllers';
   our @C = (
     C(
       'Home' => ['/'],

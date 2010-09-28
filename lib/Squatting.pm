@@ -9,6 +9,7 @@ use base 'Class::C3::Componentised';
 use List::Util qw(first);
 use URI::Escape;
 use Carp;
+use Data::Dump 'pp';
 
 our $VERSION = '0.70';
 
@@ -22,62 +23,64 @@ sub import {
   my $m   = shift;
   my $p   = (caller)[0];
   my $app = $p;
-  $app =~ s/::Controllers$//;
-  $app =~ s/::Views$//;
 
-  # $url = R('Controller', @args, { cgi => vars })  # Generate URLs with the routing function
-  if (UNIVERSAL::isa($app, 'Squatting')) {
-    *{$p."::R"} = sub {
-      my ($controller, @args) = @_;
-      my $input;
-      if (@args && ref($args[-1]) eq 'HASH') {
-        $input = pop(@args);
-      }
-      my $c = ${$app."::Controllers::C"}{$controller};
-      croak "$controller controller not found in '\%$app\::Controllers::C" unless $c;
-      my $arity = @args;
-      my $path = first { my @m = /\(.*?\)/g; $arity == @m } @{$c->urls};
-      croak "couldn't find a matching URL path" unless $path;
-      while ($path =~ /\(.*?\)/) {
-        $path =~ s{\(.*?\)}{uri_escape(+shift(@args), "^A-Za-z0-9\-_.!~*’()/")}e;
-      }
-      if ($input) {
-        $path .= "?".  join('&' => 
-          map { 
-            my $k = $_;
-            ref($input->{$_}) eq 'ARRAY'
-              ? map { "$k=".uri_escape($_) } @{$input->{$_}}
-              : "$_=".uri_escape($input->{$_})
-          } keys %$input);
-      }
-      $path;
-    };
-
-    # ($controller, \@regex_captures) = D($path)  # Return controller and captures for a path
-    *{$app."::D"} = sub {
-      no warnings 'once';
-      my $url = uri_unescape($_[0]);
-      my $C = \@{$app.'::Controllers::C'};
-      my ($c, @regex_captures);
-      for $c (@$C) {
-        for (@{$c->urls}) {
-          if (@regex_captures = ($url =~ qr{^$_$})) {
-            pop @regex_captures if ($#+ == 0);
-            return ($c, \@regex_captures);
-          }
-        }
-      }
-      ($Squatting::Controller::r404, []);
-    } unless exists ${$app."::"}{D};
+  if (@_) {
+    return $m->load_components(grep /::/, @_);
   }
 
-  *{$p."::C"} = sub {
+  push @{$p.'::ISA'}, 'Squatting';
+
+  # $url = R('Controller', @args, { cgi => vars })  # Generate URLs with the routing function
+  *{$p."::R"} = sub {
+    my ($controller, @args) = @_;
+    my $input;
+    if (@args && ref($args[-1]) eq 'HASH') {
+      $input = pop(@args);
+    }
+    my $c = ${$app."::Controllers::C"}{$controller};
+    croak "$controller controller not found in '\%$app\::Controllers::C" unless $c;
+    my $arity = @args;
+    my $path = first { my @m = /\(.*?\)/g; $arity == @m } @{$c->urls};
+    croak "couldn't find a matching URL path" unless $path;
+    while ($path =~ /\(.*?\)/) {
+      $path =~ s{\(.*?\)}{uri_escape(+shift(@args), "^A-Za-z0-9\-_.!~*’()/")}e;
+    }
+    if ($input) {
+      $path .= "?".  join('&' => 
+        map { 
+          my $k = $_;
+          ref($input->{$_}) eq 'ARRAY'
+            ? map { "$k=".uri_escape($_) } @{$input->{$_}}
+            : "$_=".uri_escape($input->{$_})
+        } keys %$input);
+    }
+    $path;
+  };
+
+  # ($controller, \@regex_captures) = D($path)  # Return controller and captures for a path
+  *{$app."::D"} = sub {
+    no warnings 'once';
+    my $url = uri_unescape($_[0]);
+    my $C = \@{$app.'::Controllers::C'};
+    my ($c, @regex_captures);
+    for $c (@$C) {
+      for (@{$c->urls}) {
+        if (@regex_captures = ($url =~ qr{^$_$})) {
+          pop @regex_captures if ($#+ == 0);
+          return ($c, \@regex_captures);
+        }
+      }
+    }
+    ($Squatting::Controller::r404, []);
+  } unless exists ${$app."::"}{D};
+
+  *{$p."::Controllers::C"} = sub {
     Squatting::Controller->new(@_, app => $app);
   };
-  *{$p."::V"} = sub {
+  *{$p."::Views::V"} = sub {
     Squatting::View->new(@_);
   };
-  $m->load_components(grep /::/, @_);
+
 }
 
 # Squatting plugins may be anywhere in Squatting::*::* but by convention

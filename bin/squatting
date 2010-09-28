@@ -5,7 +5,6 @@ no  strict 'refs';
 use warnings;
 use lib 'lib';
 
-use Squatting;
 use Squatting::H;
 use Getopt::Long;
 use Data::Dump 'pp';
