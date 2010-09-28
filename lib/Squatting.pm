@@ -20,9 +20,8 @@ require Squatting::View;
 # use App ':views'
 # use App @PLUGINS
 sub import {
-  my $m   = shift;
-  my $p   = (caller)[0];
-  my $app = $p;
+  my $m = shift;
+  my $p = (caller)[0];
 
   if (@_) {
     return $m->load_components(grep /::/, @_);
@@ -37,8 +36,8 @@ sub import {
     if (@args && ref($args[-1]) eq 'HASH') {
       $input = pop(@args);
     }
-    my $c = ${$app."::Controllers::C"}{$controller};
-    croak "$controller controller not found in '\%$app\::Controllers::C" unless $c;
+    my $c = ${$p."::Controllers::C"}{$controller};
+    croak "$controller controller not found in '\%$p\::Controllers::C" unless $c;
     my $arity = @args;
     my $path = first { my @m = /\(.*?\)/g; $arity == @m } @{$c->urls};
     croak "couldn't find a matching URL path" unless $path;
@@ -58,10 +57,10 @@ sub import {
   };
 
   # ($controller, \@regex_captures) = D($path)  # Return controller and captures for a path
-  *{$app."::D"} = sub {
+  *{$p."::D"} = sub {
     no warnings 'once';
     my $url = uri_unescape($_[0]);
-    my $C = \@{$app.'::Controllers::C'};
+    my $C = \@{$p.'::Controllers::C'};
     my ($c, @regex_captures);
     for $c (@$C) {
       for (@{$c->urls}) {
@@ -72,10 +71,10 @@ sub import {
       }
     }
     ($Squatting::Controller::r404, []);
-  } unless exists ${$app."::"}{D};
+  } unless exists ${$p."::"}{D};
 
   *{$p."::Controllers::C"} = sub {
-    Squatting::Controller->new(@_, app => $app);
+    Squatting::Controller->new(@_, app => $p);
   };
   *{$p."::Views::V"} = sub {
     Squatting::View->new(@_);
