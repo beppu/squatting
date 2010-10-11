@@ -30,7 +30,7 @@ sub import {
   push @{$p.'::ISA'}, 'Squatting';
 
   # $url = R('Controller', @args, { cgi => vars })  # Generate URLs with the routing function
-  *{$p."::R"} = sub {
+  *{$p."::Controllers::R"} = *{$p."::Views::R"} = *{$p."::R"} = sub {
     my ($controller, @args) = @_;
     my $input;
     if (@args && ref($args[-1]) eq 'HASH') {
