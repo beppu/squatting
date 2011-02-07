@@ -1,8 +1,7 @@
 package Guess;
-use base 'Squatting';
+use Squatting;
 
 package Guess::Controllers;
-use Squatting ':controllers';
 
 our @C = (
        C(
