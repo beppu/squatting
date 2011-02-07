@@ -32,9 +32,10 @@ our @C = (
       my ($self, $name, $format) = @_;
       $format ||= 'html';
       $self->log->info("format is $format");
-      my $v            = $self->v;
-      $v->{name}       = $name;
-      $v->{controller} = $self->name;
+      my $v             = $self->v;
+      $v->{name}        = $name;
+      $v->{controller}  = $self->name;
+      $v->{description} = "$name is hoping for the best.";
       $v->{_secret_from_json} =
         'The JSON view will purposely omit this data, '.
         'because the $V{json}->profile template was written to '.
