@@ -27,11 +27,12 @@ sub import {
   my $m = shift;
   my $p = (caller)[0];
 
-  push @{$p.'::ISA'}, 'Squatting';
-
-  if (@_) {
-    return $m->load_components(grep /::/, @_);
+  if ($m ne 'Squatting') {
+    $m->load_components(grep /::/, @_) if (@_);
+    return;
   }
+
+  push @{$p.'::ISA'}, 'Squatting';
 
   # $url = R('Controller', @args, { cgi => vars })  # Generate URLs with the routing function
   *{$p."::Controllers::R"} = *{$p."::Views::R"} = *{$p."::R"} = sub {
