@@ -1,5 +1,5 @@
 package Chat;
-use base 'Squatting';
+use Squatting;
 
 # This is a port of eg/chat-ajax-push.pl from the Continuity distribution.
 # We're using the exact same JavaScript, but we've switched the server side
@@ -7,7 +7,6 @@ use base 'Squatting';
 
 package Chat::Controllers;
 use selfvars;
-use Squatting ':controllers';
 
 our @messages;
 our $got_message;
@@ -57,7 +56,6 @@ our @C = (
 
 package Chat::Views;
 use selfvars;
-use Squatting ':views';
 use HTML::AsSubs;
 
 our @V = (
