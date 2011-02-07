@@ -1,7 +1,7 @@
 package CouchWiki;
 use strict;
 use warnings;
-use base 'Squatting';  # TODO - no more use base
+use Squatting;
 use Coro::AnyEvent;
 
 our %CONFIG = (
@@ -83,7 +83,6 @@ sub recent_changes {
 package CouchWiki::Controllers;
 use strict;
 use warnings;
-use Squatting ':controllers';
 use AnyEvent::CouchDB;
 
 *page = \&CouchWiki::Models::page;
@@ -128,7 +127,6 @@ our @C = (
 package CouchWiki::Views;
 use strict;
 use warnings;
-use Squatting ':views';
 use HTML::AsSubs;
 
 sub span  { HTML::AsSubs::_elem('span', @_) }
