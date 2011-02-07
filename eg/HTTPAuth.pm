@@ -1,5 +1,5 @@
 package HTTPAuth;
-use base 'Squatting';
+use Squatting;
 
 our %CONFIG = (
   login    => 'bob',
@@ -13,7 +13,6 @@ sub service {
 }
 
 package HTTPAuth::Controllers;
-use Squatting ':controllers';
 use strict;
 use warnings;
 use MIME::Base64;
@@ -69,7 +68,6 @@ our @C = (
 );
 
 package HTTPAuth::Views;
-use Squatting ':views';
 use strict;
 use warnings;
 use HTML::AsSubs;
@@ -112,7 +110,7 @@ our @V = (
       my ($self, $v) = @_;
       div(
         a({ href => R('Home') }, x('戻る')),
-        p(x("自由になるため仕事をやめた。"))
+        p(x("自由になるため、仕事をやめた。"))
       )->as_HTML;
     },
     unauthorized => sub {
