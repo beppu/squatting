@@ -1,5 +1,5 @@
-package UTF8;
-use base 'Squatting';
+package UTF_8;
+use Squatting;
 
 # == How to Run This App ==
 #
@@ -19,10 +19,9 @@ sub service {
   $app->next::method($c, @args);
 }
 
-package UTF8::Controllers;
+package UTF_8::Controllers;
 use strict;
 use warnings;
-use Squatting ':controllers';
 
 our @C = (
   C(
@@ -35,10 +34,9 @@ our @C = (
 );
 
 
-package UTF8::Views;
+package UTF_8::Views;
 use strict;
 use warnings;
-use Squatting ':views';
 use Encode;
 use HTML::AsSubs;
 
