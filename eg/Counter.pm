@@ -1,9 +1,8 @@
 package Counter;
-use base 'Squatting';
+use Squatting;
 
 package Counter::Controllers;
 use strict;
-use Squatting ':controllers';
 use Tie::IxHash::FixedSize;
 use UUID::Random;
 use Data::Dump 'pp';
