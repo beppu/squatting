@@ -16,9 +16,13 @@ our $VERSION = '0.70';
 require Squatting::Controller;
 require Squatting::View;
 
-# use App ':controllers'
-# use App ':views'
+# XXX - deprecated | use App ':controllers'
+# XXX - deprecated | use App ':views'
 # use App @PLUGINS
+# 
+# No longer have to :  use base 'Squatting';
+# Simply saying     :  use Squatting;
+#   will muck with the calling packages @ISA.
 sub import {
   my $m = shift;
   my $p = (caller)[0];
@@ -71,7 +75,8 @@ sub import {
       }
     }
     ($Squatting::Controller::r404, []);
-  } unless exists ${$p."::"}{D};
+  #} unless exists ${$p."::"}{D};
+  };
 
   *{$p."::Controllers::C"} = sub {
     Squatting::Controller->new(@_, app => $p);
