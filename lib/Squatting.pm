@@ -121,13 +121,11 @@ sub relocate {
 # App->init  # Initialize $app
 sub init {
   $_->init for (@{$_[0]."::O"});
-  %{$_[0]."::Controllers::C"} = map { $_->name => $_ }
-  @{$_[0]."::Controllers::C"};
-  %{$_[0]."::Views::V"} = map { $_->name => $_ }
-  @{$_[0]."::Views::V"};
+  %{$_[0]."::Controllers::C"} = map { $_->name => $_ } @{$_[0]."::Controllers::C"};
+  %{$_[0]."::Views::V"}       = map { $_->name => $_ } @{$_[0]."::Views::V"};
 }
 
-# App->service($controller, @args)  # Handle one RESTful HTTP request
+# App->service($controller, @args)  # Handle an HTTP request
 sub service {
   my ($app, $c, @args) = grep { defined } @_;
   my $method = lc $c->env->{REQUEST_METHOD};

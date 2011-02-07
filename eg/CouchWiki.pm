@@ -1,7 +1,7 @@
 package CouchWiki;
 use strict;
 use warnings;
-use base 'Squatting';
+use base 'Squatting';  # TODO - no more use base
 use Coro::AnyEvent;
 
 our %CONFIG = (
