@@ -3,10 +3,10 @@ use Squatting;
 
 # == How to Run This App ==
 #
-#   squatting UTF8
-#   squatting UTF8 -c view=raw
-#   squatting UTF8 -c view=as_subs
-#   squatting UTF8 -c view=crash
+#   squatting UTF_8
+#   squatting UTF_8 -c view=raw
+#   squatting UTF_8 -c view=as_subs
+#   squatting UTF_8 -c view=crash
 #
 
 our %CONFIG = (
