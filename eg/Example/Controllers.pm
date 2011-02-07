@@ -3,7 +3,6 @@ package Example::Controllers;
 use strict;
 use warnings;
 
-use Squatting ':controllers';
 use Data::Dump qw(dump);
 
 sub add { my $sum = 0; $sum += $_ for(@_); $sum }
