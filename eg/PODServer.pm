@@ -1,8 +1,7 @@
 package PODServer;
-use base 'Squatting';
+use Squatting;
 
 package PODServer::Controllers;
-use Squatting ':controllers';
 use File::Basename;
 use File::Find;
 use Config;
@@ -107,7 +106,6 @@ our @C = (
 );
 
 package PODServer::Views;
-use Squatting ':views';
 use Data::Dump 'pp';
 use HTML::AsSubs;
 use Pod::Simple;
