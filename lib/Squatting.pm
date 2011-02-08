@@ -28,8 +28,7 @@ sub import {
   my $p = (caller)[0];
 
   if ($m ne 'Squatting') {
-    $m->load_components(grep /::/, @_) if (@_);
-    return;
+    return $m->load_components(grep /::/, @_);
   }
 
   push @{$p.'::ISA'}, 'Squatting';
