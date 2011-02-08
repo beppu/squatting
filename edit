@@ -2,7 +2,7 @@
 vim=${vim:-vim}
 case ${1:-base} in
   base)
-    $vim -p bin/squatting lib/squatting.pl lib/Squatting.pm lib/Squatting/Controller.pm lib/Squatting/View.pm lib/Squatting/H.pm lib/Squatting/Mapper.pm lib/Squatting/Cookbook.pod 
+    $vim -p bin/squatting lib/squatting.pl lib/Squatting.pm lib/Squatting/Controller.pm lib/Squatting/View.pm lib/Squatting/H.pm lib/Squatting/Mapper.pm
     ;;
   on)
     $vim -p lib/Squatting/On/*.pm

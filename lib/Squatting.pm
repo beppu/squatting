@@ -410,10 +410,9 @@ L<Squatting::On::MP13>, L<Squatting::On::MP20>,
 L<Squatting::With::AccessTrace>, L<Squatting::With::Log>,
 L<Squatting::With::Coro::Debug>
 
-L<Squatting::Cookbook>
-
-L<Squatting::On::HTTP::Engine>,
-L<Squatting::On::Mojo>
+L<Squatting::On::PSGI>,
+L<Squatting::On::Mojo>,
+L<Squatting::On::HTTP::Engine>
 
 =item B<Squatting's superclass>:
 
