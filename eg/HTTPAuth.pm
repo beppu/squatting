@@ -22,8 +22,7 @@ sub authorized {
   return undef unless defined $self->env->{HTTP_AUTHORIZATION};
   my $auth = $self->env->{HTTP_AUTHORIZATION};
   $auth =~ s/Basic\s*//;
-  my $login_pass =  encode_base64("$CONFIG{login}:$CONFIG{password}");
-  chomp($login_pass);
+  my $login_pass =  encode_base64("$CONFIG{login}:$CONFIG{password}", '');
   if ($auth eq $login_pass) {
     return 1;
   } else {
