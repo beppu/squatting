@@ -167,19 +167,16 @@ Check out our ASCII art logo:
 
 What a basic App looks like:
 
-  # STEP 1 => Subclass Squatting
+  # STEP 1 => Use Squatting for your App
   {
-    package App;
-    use base 'Squatting';
-    #use App::Controllers;
-    #use App::Views;
+    package App;  # <-- I hope it's obvious that this name can whatever you want.
+    use Squatting;
     our %CONFIG;  # <-- standard app config goes here
   }
 
-  # STEP 2 => Create a Controllers package
+  # STEP 2 => Define the App's Controllers
   {
     package App::Controllers;
-    use Squatting ':controllers';
 
     # Setup a list of controller objects in @C using the C() function.
     our @C = (
@@ -197,10 +194,9 @@ What a basic App looks like:
     );
   }
 
-  # STEP 3 => Create a Views package
+  # STEP 3 => Define the App's Views
   {
     package App::Views;
-    use Squatting ':views';
 
     # Setup a list of view objects in @V using the V() function.
     our @V = (
@@ -221,7 +217,7 @@ What a basic App looks like:
 
   # Models?  
   # - The whole world is your model.  ;-)
-  # - I've always been ambivalent about defining policy here.
+  # - I have no interest in defining policy here.
   # - Use whatever works for you.
 
 =head1 DESCRIPTION
@@ -281,7 +277,7 @@ B<Squatting aims to be compatible with EVERYONE.>
 
 You may use any templating system you want, and you may use any ORM you
 want.  We only have a few rules on how the controller code and the view code
-should be organized, but beyond that, you are free.
+should be organized, but beyond that, you are free as you want to be.
 
 =back
 
@@ -292,9 +288,21 @@ B<*> RESTless controllers currently only work when you're L<Squatting::On::Conti
 =head2 Use as a Base Class for Squatting Applications
 
   package App;
-  use base 'Squatting';
+  use Squatting;
   our %CONFIG = ();
   1;
+
+Just C<use>ing Squatting makes a lot of magic happen.  In the example above:
+
+=over 4
+
+=item App becomes a subclass of Squatting.
+
+=item App::Controllers is given this app's R() and C() functions.
+
+=item App::Views is given this app's R() and V() functions.
+
+=back
 
 =head3 App->service($controller, @args)
 
@@ -315,6 +323,10 @@ the App is initialized.
 
 =head3 App->mount($AnotherApp => $prefix)
 
+XXX - The C<mount()> has been moved out of the core and into 
+L<Squatting::With::Mount>.  Furthermore, Squatting::With::Mount has
+been implemented using L<Squatting::On::Squatting>.
+
 This method will mount another Squatting app at the specified prefix.
 
   App->mount('My::Blog'   => '/my/ridiculous/rantings');
@@ -322,7 +334,9 @@ This method will mount another Squatting app at the specified prefix.
   App->mount('ChatterBox' => '/chat');
 
 B<NOTE>:  You can only mount an app once.  Don't try to mount it again
-at some other prefix, because it won't work.
+at some other prefix, because it won't work.  (All the package variables
+I used to keep the code short have the consequence of making it hard to
+have more than one instance of an app in any given process.)
 
 =head3 App->relocate($prefix)
 
