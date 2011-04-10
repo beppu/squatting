@@ -1,5 +1,5 @@
 Beyond (unreleased)
-  * add proper support for file uploads wherever possible.
+  * add proper support for file uploads wherever possible.  #lack-of-maturity
     # I think adding an upload method to the controllers would work.
   * do a better job of simulating requests in squatting -C
   * BUG: POST -> perlbal -> thttpd -> Squatting::On::CGI == FAIL
@@ -7,7 +7,7 @@ Beyond (unreleased)
     Take perlbal out of the setup and everything is fine.
   * implement Squatting::On::Jifty
   * implement Squatting::On::Squatting
-    * move mount method out of core and into Squatting::On::Squatting
+    * move mount method out of the core and into Squatting::With::Mount
   * use Rhetoric and Pod::Server as examples of how to document a Squatting app.
     * OLD: in Squatting::Controller's POD, teach people how to document controllers.
     * OLD: in Squatting::View's POD, teach people how to document views.
@@ -15,6 +15,7 @@ Beyond (unreleased)
   * Things that would make Squatting easier to get started with:
     - an app generator (using Module::Setup?)
       - PSGI support by default
+  * Replace Shell::Perl with something based on Eval::WithLexicals.
 
 0.80 unreleased
   - [ MAJOR API CHANGE! ]
@@ -28,6 +29,8 @@ Beyond (unreleased)
     be consistent w/ the way these words are used in contemporary
     Javascript libraries.
   - Added Squatting::With::PerHostConfig
+  - hacked bin/squatting so that the console experience is a bit nicer.
+    App->get and App->post will work a tiny bit more reliably.
 
 0.70 2009-08-27
   - reimplemented Squatting::With::Log using Squatting::H
