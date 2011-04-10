@@ -114,7 +114,9 @@ if ($app) {
       *{$app."::$method" } = sub {
         my $cc = ${$app."::Controllers::C"}{$_[1]}->clone->mock_init(@_[2..$#_]);
         $cc->env->{REQUEST_METHOD} = $method;
-        #my $content = $cc->$method(@_[2..$#_]);
+        if (ref($_[-1]) eq 'HASH') {
+          $cc->input = pop @_;
+        }
         my $content = $app->service($cc, @_[2..$#_]);
         ($cc, $content);
       };
