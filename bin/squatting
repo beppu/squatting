@@ -102,7 +102,7 @@ if ($app) {
     sub Squatting::Controller::mock_init {
       my $self = shift;
       $self->{cr}          = {}; # TODO - provide a mock Continuity::Request
-      $self->{env}         = { %ENV, REQUEST_PATH => &{"$app"."::Controllers::R"}($self->name, @_) };
+      $self->{env}         = { REQUEST_PATH => &{"$app"."::Controllers::R"}($self->name, @_) };
       $self->{cookies}     = {};
       $self->{input}       = {};
       $self->{headers}     = {};
@@ -113,7 +113,9 @@ if ($app) {
     foreach my $method qw(get post) {
       *{$app."::$method" } = sub {
         my $cc = ${$app."::Controllers::C"}{$_[1]}->clone->mock_init(@_[2..$#_]);
-        my $content = $cc->$method(@_[2..$#_]);
+        $cc->env->{REQUEST_METHOD} = $method;
+        #my $content = $cc->$method(@_[2..$#_]);
+        my $content = $app->service($cc, @_[2..$#_]);
         ($cc, $content);
       };
     }
