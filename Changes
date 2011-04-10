@@ -25,7 +25,9 @@ Beyond (unreleased)
                       use Squatting ':views' anymore
     - use Squatting takes care of what those statements used to do.
   - Squatting::H->merge renamed to Squatting::H->extend to
-    be consistent w/ the way these words are used in Javascript.
+    be consistent w/ the way these words are used in contemporary
+    Javascript libraries.
+  - Added Squatting::With::PerHostConfig
 
 0.70 2009-08-27
   - reimplemented Squatting::With::Log using Squatting::H
