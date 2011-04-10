@@ -62,7 +62,6 @@ sub import {
 
   # ($controller, \@regex_captures) = D($path)  # Return controller and captures for a path
   *{$p."::D"} = sub {
-    no warnings 'once';
     my $url = uri_unescape($_[0]);
     my $C = \@{$p.'::Controllers::C'};
     my ($c, @regex_captures);
@@ -75,14 +74,13 @@ sub import {
       }
     }
     ($Squatting::Controller::r404, []);
-  #} unless exists ${$p."::"}{D};
   };
 
   *{$p."::Controllers::C"} = sub {
-    Squatting::Controller->new(@_, app => $p);
+    Squatting::Controller->new(@_, app => $p)
   };
   *{$p."::Views::V"} = sub {
-    Squatting::View->new(@_);
+    Squatting::View->new(@_)
   };
 
 }
@@ -103,6 +101,7 @@ sub import {
 # (etc)
 sub component_base_class { __PACKAGE__ }
 
+# 1
 # App->mount($AnotherApp, $prefix)  # Map another app on to a URL $prefix.
 sub mount {
   my ($app, $other, $prefix) = @_;
@@ -114,6 +113,7 @@ sub mount {
   } @{$other."::Controllers::C"}
 }
 
+# 2
 # App->relocate($prefix)  # Map main app to a URL $prefix
 sub relocate {
   my ($app, $prefix) = @_;
@@ -121,8 +121,10 @@ sub relocate {
     my $urls = $_->urls;
     $_->urls = [ map { $prefix.$_ } @$urls ];
   }
+  ${$app."::CONFIG"}{relocated} = $prefix;
 }
 
+# 3
 # App->init  # Initialize $app
 sub init {
   $_->init for (@{$_[0]."::O"});
@@ -334,14 +336,16 @@ This method will mount another Squatting app at the specified prefix.
   App->mount('ChatterBox' => '/chat');
 
 B<NOTE>:  You can only mount an app once.  Don't try to mount it again
-at some other prefix, because it won't work.  (All the package variables
-I used to keep the code short have the consequence of making it hard to
-have more than one instance of an app in any given process.)
+at some other prefix, because it won't work.  This is a consequence
+of storing so much information in package variables and a strong argument
+for going all objects all the time.
 
 =head3 App->relocate($prefix)
 
 This method will relocate a Squatting app to the specified prefix.  It's useful
 for embedding a Squatting app into apps written in other frameworks.
+
+This also has a side-effect of setting C<$CONFIG{relocated}> to C<$prefix>.
 
 =head2 Use as a Helper for Controllers
 
