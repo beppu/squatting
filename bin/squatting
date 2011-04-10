@@ -110,7 +110,7 @@ if ($app) {
       $self->{status}      = 200;
       $self;
     };
-    foreach my $method qw(get post) {
+    foreach my $method qw(get post put delete) {
       *{$app."::$method" } = sub {
         my $cc = ${$app."::Controllers::C"}{$_[1]}->clone->mock_init(@_[2..$#_]);
         $cc->env->{REQUEST_METHOD} = $method;
