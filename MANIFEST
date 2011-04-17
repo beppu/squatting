@@ -32,10 +32,15 @@ lib/Squatting/On/CGI.pm
 lib/Squatting/On/Continuity.pm
 lib/Squatting/On/MP13.pm
 lib/Squatting/On/MP20.pm
+lib/Squatting/On/Squatting.pm
 lib/Squatting/View.pm
 lib/Squatting/With/AccessTrace.pm
 lib/Squatting/With/Coro/Debug.pm
 lib/Squatting/With/Log.pm
+lib/Squatting/With/MockRequest.pm
+lib/Squatting/With/Mount.pm
+lib/Squatting/With/PerHostConfig.pm
+lib/Squatting/With/Themes.pm
 Makefile.PL
 MANIFEST			This list of files
 MANIFEST.SKIP
