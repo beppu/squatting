@@ -20,14 +20,14 @@ sub mock_controller_init {
 
 foreach my $method qw(get post put delete head) {
   *{$method} = sub {
-    my $app = shift;
-    my $cc = ${$app."::Controllers::C"}{$_[1]}->clone;
-    $app->mock_controller_init($cc, @_[2..$#_]);
+    my ($app, $controller, @args) = @_;
+    my $cc = ${$app."::Controllers::C"}{$controller}->clone;
+    $app->mock_controller_init($cc, @args);
     $cc->env->{REQUEST_METHOD} = $method;
     if (ref($_[-1]) eq 'HASH') {
-      $cc->input = pop @_;
+      $cc->input = pop @args;
     }
-    my $content = $app->service($cc, @_[2..$#_]);
+    my $content = $app->service($cc, @args);
     ($cc, $content);
   };
 }
