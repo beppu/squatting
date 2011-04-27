@@ -17,6 +17,10 @@ Beyond (unreleased)
       - PSGI support by default
   * Replace Shell::Perl with something based on Eval::WithLexicals.
 
+0.81 2011-04-27
+  - Slight improvements to Squatting::With::MockRequest were made
+    to facilitate doing static exports of Rhetoric sites.
+
 0.80 2011-04-27
   - [ MAJOR API CHANGE! ]
     - You don't say:  use base 'Squatting' anymore.

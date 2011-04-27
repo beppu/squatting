@@ -11,7 +11,7 @@ use URI::Escape;
 use Carp;
 use Data::Dump 'pp';
 
-our $VERSION = '0.80';
+our $VERSION = '0.81';
 
 require Squatting::Controller;
 require Squatting::View;
