@@ -17,7 +17,7 @@ Beyond (unreleased)
       - PSGI support by default
   * Replace Shell::Perl with something based on Eval::WithLexicals.
 
-0.80 unreleased
+0.80 2011-04-27
   - [ MAJOR API CHANGE! ]
     - You don't say:  use base 'Squatting' anymore.
     - When creating a Squatting app,

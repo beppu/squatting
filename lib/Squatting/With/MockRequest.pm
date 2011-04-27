@@ -3,17 +3,17 @@ use common::sense;
 
 # TODO - hook these in to the init
 our %cookies;
-our %state;
-our %env;
+our %state = (mock_request => 1);
 
 sub mock_controller_init {
   my ($app, $cc, @args) = @_;
   $cc->{cr}          = {}; # TODO - provide a mock Continuity::Request
   $cc->{env}         = { REQUEST_PATH => &{"$app"."::Controllers::R"}($cc->name, @args) };
-  $cc->{cookies}     = {};
+  $cc->{cookies}     = \%cookies;
   $cc->{input}       = {};
   $cc->{headers}     = {};
   $cc->{v}           = {};
+  $cc->{state}       = \%state;
   $cc->{status}      = 200;
   $cc;
 };
