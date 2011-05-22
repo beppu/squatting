@@ -443,6 +443,8 @@ installed perl modules.
 
 L<Stardust> - a simple COMET server.
 
+L<Rhetoric> - a simple CPAN-friendly blogging system for Perl.
+
 =back
 
 =head2 Google Group:  squatting-framework
