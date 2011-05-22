@@ -441,7 +441,7 @@ L<Class::C3::Componentised>
 L<Pod::Server> - a nice way to browse through the POD for your locally
 installed perl modules.
 
-L<Stardust> - a simple COMET server.
+L<Stardust> - a simple COMET server.  (DEPRECATED.  Use Web::Hippie or Plack::Middleware::SocketIO instead.)
 
 L<Rhetoric> - a simple CPAN-friendly blogging system for Perl.
 
