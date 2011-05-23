@@ -39,7 +39,6 @@ lib/Squatting/With/Coro/Debug.pm
 lib/Squatting/With/Log.pm
 lib/Squatting/With/MockRequest.pm
 lib/Squatting/With/Mount.pm
-lib/Squatting/With/PerHostConfig.pm
 Makefile.PL
 MANIFEST			This list of files
 MANIFEST.SKIP
