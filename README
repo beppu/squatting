@@ -48,96 +48,173 @@
               ...
 
   http://en.wikipedia.org/wiki/Squatting
-  http://github.com/beppu/squatting/tree/master
+  https://github.com/beppu/squatting
 
 
-                                  RANDOM NOTES
-                                  ============
+The API (should fit comfortably in your head with plenty of room to spare).
+---------------------------------------------------------------------------
 
-              There is an example application in the eg/ directory
-                               called "Example".
+## [0] BEGINNING AN APP
 
-           This is how you currently run this squatting application:
+  package App;
+  use Squatting;  # <-- This use statement is where the magic happens.
+                  #
+                  # %App::CONFIG
+                  # &App::D
+                  # &App::Controllers::R
+                  # @App::Controllers::C
+                  # %App::Controllers::C
+                  # &App::Controllers::C
+                  # &App::Views::R
+                  # @App::Views::V
+                  # %App::Views::V
+                  #
+                  # @App::ISA = qw(Squatting); 
+                  #       # ...and Squatting->isa('Class::C3::Componentised')
 
-                                     cd eg/
-                               squatting Example
+## [1] CUSTOMIZING AN APP
 
-              (Example.pm needs to be discoverable through @INC.)
+  our %CONFIG = (
+    # App configuration goes in a hash.
+  );
 
-                                    - -*- -
+  # Code that needs to run when the app starts goes in init().
+  sub init {
+    my ($class) = @_;
+    $class->next::method();
+  }
 
-                     If you're familiar w/ the Camping API,
-                      the Squatting API will feel similar.
+  # Code that needs to run on every request goes in service().
+  sub service {
+    my ($class, $controller, @args) = @_;
+    
+    # before controller
 
-                                    - -*- -
+    my $content = $class->next::method($controller, @args);
 
-     Example::Controllers is the package that contains all the controllers.
+    # after controller
 
-                                    - -*- -
+    return $content;
+  }
 
-                     Controllers are objects (not classes)
-                  that are constructed using the C() function.
+  1;
 
-                                    - -*- -
+## [2] DEFINE CONTROLLERS
 
-                      Controllers represent HTTP Resources
-                           that support HTTP Methods
-                             like GET and POST with
-                               the object methods
-                                 get and post.
+  package App::Controllers;
+  our @C = (
 
-                        This was the genius of Camping.
-                        I can't think of a better way to
-                          express RESTful controllers.
+    C(
+      'Home' => [ '/' ],
+      get => sub {
+      }
+    ),
 
-                                    - -*- -
+    C(
+      'Post' => [ '/(\d+)/(\d+)/(\w+)' ],
+      get => sub {
+        my ($self, $year, $month, $slug) = @_;
+      },
+      post => sub {
+        my ($self, $year, $month, $slug) = @_;
+      }
+    )
 
-           Example::Views is the package that contains all the views.
+    C(
+      'Comment' => [ '/comment' ],
+      post => sub {
+      }
+    )
 
-                                    - -*- -
+  );
 
-                      Views are also objects (not classes)
-                  that are constructed using the V() function.
+  1;
 
-                                    - -*- -
+## [3] DEFINE VIEWS
 
-               The methods of a view are thought of as templates.
+  package App::Views;
+  our @V = (
+    V(
+      'Default',
 
-                                    - -*- -
+      layout => sub {
+        my ($self, $v, $content) = @_;
+        # This optional method allows you to wrap the content
+        # that your template methods return.
+        return "HEADER $content FOOTER";
+      },
 
-                     The responsibility of a template is to
-                       1) take a hashref of variables and
-                              2) return a string.
+      _partial => sub {
+        my ($self, $v) = @_;
+        # If you want a view to not be wrapped by the layout,
+        # its name should begin with "_".
+        return "exactly what you want";
+      },
 
-                  You may use any templating system you want,
-                              or even none at all.
+      wrapped => sub {
+        my ($self, $v) = @_;
+        # This template's name does not begin with "_" so it
+        # WILL be wrapped by the layout.
+        return "wrapped content";
+      }
 
-                                    - -*- -
+      _ => sub {
+        my ($self, $v) = @_;
+        # If a named template method is not found, this method
+        # will be run.  Think of it as AUTOLOAD for views.
+        return "something";
+      },
 
-                You may define a layout template called 'layout'
-         which will be used to wrap the content of any other template.
-            If you don't want your template to be wrapped, you have
-                     to give it a name with a '_' in front.
+    ),
+  );
+                                    
+  1;
 
-                                    - -*- -
 
-           You may define a generic template called '_' for use when
-                      a specific template can't be found.
+SUMMARY OF THE SQUATTING API
+----------------------------
 
-                                    - -*- -
+%App::CONFIG            Where your app configuration is expected to be
 
-                          You may have multiple views.
+&App::init              Code that runs on applicationn initialization
 
-                                    - -*- -
+&App::service           Code that runs on every HTTP request
 
-                The first view you define is your default view.
+App::Controllers        Package where controllers are expected to be
 
-                                    - -*- -
+@App::Controllers::C    Array where controllers are expected to be
 
-               The optional 2nd parameter to the render() method
-           lets you specify which view you want to use.  For example,
+&App::Controllers::C    Helper function for creating Squatting::Controller
+                        objects
 
-                        $self->render('profile', 'json')
+&App::Controllers::R    Helper function for generating URL paths;
+                        Think "R" for "route".
 
-           would render the 'profile' template using the 'json' view.
+App::Views              Package where views are expected to be
+
+@App::Views::V          Array where views are expected to be
+
+&App::Views::V          Helper function for creating Squatting::View objects
+
+&App::Views::R          Helper function for generating URL paths;
+                        It's the exact same function as &App::Controllers::R.
+                        &App::Controllers::R == &App::Views::R
+
+
+You should be able to memorize this quite easily, and I hope you
+never have to use a search engine to figure out how any of this works.
+The entire API should fit comfortably inside your mind with plenty of
+room to spare.
+
+
+For more information: 
+  `perldoc Squatting`
+  `perldoc Squatting::Controller`
+  `perldoc Squatting::View`
+
+
+For practical examples, see:
+  Rhetoric     (a simple blogging system)
+  Pod::Server  (a POD browser)
+  Stardust     (a COMET server)
 

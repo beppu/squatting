@@ -1,0 +1,90 @@
+                                  RANDOM NOTES
+                                  ============
+
+              There is an example application in the eg/ directory
+                               called "Example".
+
+           This is how you currently run this squatting application:
+
+                                     cd eg/
+                               squatting Example
+
+              (Example.pm needs to be discoverable through @INC.)
+
+                                    - -*- -
+
+                     If you're familiar w/ the Camping API,
+                      the Squatting API will feel similar.
+
+                                    - -*- -
+
+     Example::Controllers is the package that contains all the controllers.
+
+                                    - -*- -
+
+                     Controllers are objects (not classes)
+                  that are constructed using the C() function.
+
+                                    - -*- -
+
+                      Controllers represent HTTP Resources
+                           that support HTTP Methods
+                             like GET and POST with
+                               the object methods
+                                 get and post.
+
+                        This was the genius of Camping.
+                        I can't think of a better way to
+                          express RESTful controllers.
+
+                                    - -*- -
+
+           Example::Views is the package that contains all the views.
+
+                                    - -*- -
+
+                      Views are also objects (not classes)
+                  that are constructed using the V() function.
+
+                                    - -*- -
+
+               The methods of a view are thought of as templates.
+
+                                    - -*- -
+
+                     The responsibility of a template is to
+                       1) take a hashref of variables and
+                              2) return a string.
+
+                  You may use any templating system you want,
+                              or even none at all.
+
+                                    - -*- -
+
+                You may define a layout template called 'layout'
+         which will be used to wrap the content of any other template.
+            If you don't want your template to be wrapped, you have
+                     to give it a name with a '_' in front.
+
+                                    - -*- -
+
+           You may define a generic template called '_' for use when
+                      a specific template can't be found.
+
+                                    - -*- -
+
+                          You may have multiple views.
+
+                                    - -*- -
+
+                The first view you define is your default view.
+
+                                    - -*- -
+
+               The optional 2nd parameter to the render() method
+           lets you specify which view you want to use.  For example,
+
+                        $self->render('profile', 'json')
+
+           would render the 'profile' template using the 'json' view.
+
