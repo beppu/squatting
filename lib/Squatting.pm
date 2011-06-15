@@ -139,6 +139,7 @@ sub service {
   my $content;
 
   eval { $content = $c->$method(@args) };
+  die $@ if (ref($@) =~ /^HTTP::Exception/); # Pass HTTP::Exceptions on up
   warn "EXCEPTION: $@" if ($@);
 
   my $cookies = $c->cookies;
