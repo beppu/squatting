@@ -17,11 +17,12 @@ Beyond (unreleased)
       - PSGI support by default
   * Replace Shell::Perl with something based on Eval::WithLexicals.
 
-0.82 unreleased
+0.82 2013-08-11
   - Squatting::With::PerHostConfig was removed, because I realized
     that it couldn't work the way I wanted it, too.  By the time
     it modified %CONFIG, it would be too late to affect the response
     in a meaningful way.
+  - Small patch from Duncan Garland to remove warnings issued by perl 5.14
 
 0.81 2011-04-27
   - Slight improvements to Squatting::With::MockRequest were made
