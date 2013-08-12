@@ -30,12 +30,12 @@ sub clone {
 # view    - name of default view
 # log     - logging object
 # app     - name of our app
-for my $m (qw(name urls cr env input cookies state v status headers log view app)) {
+for my $m (qw/name urls cr env input cookies state v status headers log view app/) {
   *{$m} = sub : lvalue { $_[0]->{$m} }
 }
 
 # HTTP methods
-for my $m (qw(get post head put delete options trace connect)) {
+for my $m (qw/get post head put delete options trace connect/) {
   *{$m} = sub { $_[0]->{$m}->(@_) }
 }
 
