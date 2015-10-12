@@ -18,7 +18,7 @@ sub mock_controller_init {
   $cc;
 };
 
-foreach my $method qw(get post put delete head) {
+foreach my $method ( qw(get post put delete head) ) {
   *{$method} = sub {
     my ($app, $controller, @args) = @_;
     my $cc = ${$app."::Controllers::C"}{$controller}->clone;
