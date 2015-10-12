@@ -491,7 +491,7 @@ Combining coroutines with an event loop is a surprisingly powerful technique.
 Squatting is descended from Camping, so studying the Camping API
 will indirectly teach you much of the Squatting API.
 
-L<http://github.com/why/camping/tree/master>
+L<http://github.com/camping/camping/tree/master>
 
 =head2 Prototype-based OO
 
