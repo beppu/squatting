@@ -2,8 +2,8 @@ package Squatting::Controller;
 
 use strict;
 no strict 'refs';
-#use warnings;
-#no  warnings 'redefine';
+use warnings;
+no  warnings 'redefine';
 
 # constructor
 sub new {

@@ -1,6 +1,7 @@
 package Squatting::With::AccessTrace;
 
 use strict;
+use warnings;
 
 use Data::Dump 'pp';
 our $I = 1;

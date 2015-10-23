@@ -1,7 +1,7 @@
 package Squatting::Mapper;
 
 use strict;
-#use warnings;
+use warnings;
 use base 'Continuity::Mapper';
 
 sub get_session_id_from_hit {

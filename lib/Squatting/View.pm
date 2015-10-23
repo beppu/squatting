@@ -1,8 +1,8 @@
 package Squatting::View;
 
 use strict;
-#use warnings;
-#no  warnings 'redefine';
+use warnings;
+no  warnings 'redefine';
 
 our $AUTOLOAD;
 

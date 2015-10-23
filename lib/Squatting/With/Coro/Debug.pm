@@ -1,7 +1,7 @@
 package Squatting::With::Coro::Debug;
 
 use strict;
-#use warnings;
+use warnings;
 use Coro::Debug;
 
 sub init {

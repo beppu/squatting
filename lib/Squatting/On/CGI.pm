@@ -2,7 +2,7 @@ package Squatting::On::CGI;
 
 use strict;
 no  strict 'refs';
-#use warnings;
+use warnings;
 use CGI;
 use CGI::Cookie;
 use HTTP::Response;
