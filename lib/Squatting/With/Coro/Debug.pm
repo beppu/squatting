@@ -1,6 +1,6 @@
 package Squatting::With::Coro::Debug;
 
-#use strict;
+use strict;
 #use warnings;
 use Coro::Debug;
 

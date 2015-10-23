@@ -1,5 +1,7 @@
 package Squatting::With::AccessTrace;
 
+use strict;
+
 use Data::Dump 'pp';
 our $I = 1;
 

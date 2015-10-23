@@ -1,10 +1,10 @@
 package Squatting::View;
 
-#use strict;
+use strict;
 #use warnings;
 #no  warnings 'redefine';
 
-#our $AUTOLOAD;
+our $AUTOLOAD;
 
 # constructor
 sub new {

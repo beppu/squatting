@@ -1,7 +1,6 @@
 package Squatting::Mapper;
 
-#use strict;
-#no  strict 'refs'
+use strict;
 #use warnings;
 use base 'Continuity::Mapper';
 
@@ -10,7 +9,11 @@ sub get_session_id_from_hit {
   my $app = $self->{app};
   my $session_id = $self->SUPER::get_session_id_from_hit($request);
   my $path = $request->uri->path;
-  my ($controller, $params) = &{$app."::D"}($path);
+  my ($controller, $params);
+  {
+    no strict 'refs';
+    ($controller, $params) = &{$app."::D"}($path);
+  }
   my $method = lc $request->method;
   my $queue = $controller->{queue}->{$method};
   if (defined($queue)) {

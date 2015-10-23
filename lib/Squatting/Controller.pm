@@ -1,11 +1,9 @@
 package Squatting::Controller;
 
-#use strict;
-#no  strict 'refs';
+use strict;
+no strict 'refs';
 #use warnings;
 #no  warnings 'redefine';
-
-#our $AUTOLOAD;
 
 # constructor
 sub new {
