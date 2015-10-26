@@ -52,4 +52,5 @@ t/20_squatting_with_log.t
 xt/01_podspell.t
 xt/02_perlcritic.t
 xt/03_pod.t
+xt/04_kwalitee.t
 xt/perlcriticrc

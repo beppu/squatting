@@ -2,8 +2,8 @@ package Squatting;
 
 use strict;
 no  strict 'refs';
-#use warnings;
-#no  warnings 'redefine';
+use warnings;
+no  warnings 'redefine';
 use base 'Class::C3::Componentised';
 
 use List::Util qw(first);

@@ -27,6 +27,7 @@ WriteMakefile1(
     'HTTP::Response'           => 0,
     'Clone'                    => 0,
   },
+  MIN_PERL_VERSION => 5.006001,
   depend => { distmeta => 'metamunge' }
 );
 
